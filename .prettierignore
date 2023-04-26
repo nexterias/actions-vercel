@@ -1,0 +1,4 @@
+dist/
+cache/
+.vercel/
+/pnpm-lock.yaml

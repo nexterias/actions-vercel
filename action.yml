@@ -1,0 +1,37 @@
+name: Vercel Actions
+description: Vercel deploy from GitHub Actions
+
+inputs:
+  token:
+    description: 'Vercel token: https://vercel.com/account/tokens'
+    required: true
+  project-id:
+    description: Vercel project ID
+    required: true
+  org-id:
+    description: User ID within Vercel
+    required: true
+  github-token:
+    description: GitHub Token
+  production:
+    description: Create a production deployment
+    default: 'false'
+  prebuilt:
+    description: Use the --prebuilt option
+    default: 'false'
+  cwd:
+    description: 'Current Working Directory (default: process.cwd())'
+  domain-alias:
+    description: Assign domains (multiple domains can be specified)
+  github-deployment-environment:
+    description: Name for the target deployment environment
+
+outputs:
+  deployment-url:
+    description: Vercel deployment URL
+  deployment-status:
+    description: '"QUEUED" | "BUILDING" | "ERROR" | "INITIALIZING" | "READY" | "CANCELED"'
+
+runs:
+  using: node16
+  main: ./dist/index.js
