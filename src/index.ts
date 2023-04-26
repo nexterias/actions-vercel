@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as vercel from './vercel'
 import * as input from './input'
-import { domainAlias, isProduction } from './input'
 
 async function run() {
   try {
@@ -10,7 +9,7 @@ async function run() {
     if (input.isPrebuilt) await vercel.build()
     const deploymentUrl = await vercel.deploy()
     const { readyState } = await vercel.getDeployment(deploymentUrl)
-    if (domainAlias.length) await vercel.setAlias(deploymentUrl)
+    if (input.domainAlias.length) await vercel.setAlias(deploymentUrl)
 
     core.setOutput('deployment-url', deploymentUrl)
     core.setOutput('deployment-status', readyState)
@@ -21,7 +20,7 @@ async function run() {
     const ref =
       github.context.payload.pull_request?.head.sha ?? github.context.sha
     const environment =
-      input.githubDeploymentEnvironment ?? isProduction
+      input.githubDeploymentEnvironment ?? input.isProduction
         ? 'Production'
         : 'Preview'
 
