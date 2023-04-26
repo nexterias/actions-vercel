@@ -44,7 +44,6 @@ jobs:
 
       - run: pnpm build
 
-
       - uses: actions/upload-artifact@v3
         with:
           name: actions-vercel-dist
@@ -93,7 +92,7 @@ jobs:
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           org-id: ${{ secrets.VERCEL_ORG_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - run: |
           echo ${{ steps.vercel.outputs.deployment-url }}
           echo ${{ steps.vercel.outputs.deployment-status }}

@@ -6,9 +6,7 @@ export default defineConfig({
   description: 'Vercel deploy from GitHub Actions',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-    ],
+    nav: [{ text: 'Home', link: '/' }],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/nexterias/actions-vercel' },
     ],

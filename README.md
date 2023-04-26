@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: nexterias/actions-vercel@main
         with:
           token: Your Vercel token
