@@ -19,11 +19,7 @@ body = """
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | upper_first }}
     {% for commit in commits %}
-        {% if version %}\
-            - [`{{ commit.id | truncate(length=7) }}`](https://github.com/nexterias/actions-vercel/tree/{{ version }}/{{ commit.id }})\
-        {% else %}\
-            - [`{{ commit.id | truncate(length=7) }}`](https://github.com/nexterias/actions-vercel/tree/main/{{ commit.id }})\
-        {% endif %}\
+        - [`{{ commit.id | truncate(length=7, end="") }}`](https://github.com/nexterias/actions-vercel/commit/{{ commit.id }})\
     {% endfor %}
 {% endfor %}\n
 """
