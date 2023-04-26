@@ -49,8 +49,7 @@ export const build = async () =>
     const command: string[] = ['build']
     if (input.isProduction) command.push('--prod')
 
-    const buildLogs = await execute(command)
-    core.setOutput('BUILD_LOGS', buildLogs)
+    await execute(command)
   })
 
 export const deploy = () =>
