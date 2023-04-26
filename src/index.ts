@@ -7,7 +7,7 @@ import { domainAlias, isProduction } from './input'
 async function run() {
   try {
     await vercel.pull()
-    if (isProduction) await vercel.build()
+    if (input.isPrebuilt) await vercel.build()
     const deploymentUrl = await vercel.deploy()
     const { readyState } = await vercel.getDeployment(deploymentUrl)
     if (domainAlias.length) await vercel.setAlias(deploymentUrl)
