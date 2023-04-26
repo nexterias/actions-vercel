@@ -62,7 +62,6 @@ jobs:
     needs: [build]
     name: Deploy
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/')
     permissions:
       contents: read
       deployments: write
