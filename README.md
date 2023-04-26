@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 18
       
-      - uses: nexterias/actions-vercel@v1
+      - uses: nexterias/actions-vercel@main
         with:
           token: Your Vercel token
           org-id: Your Vercel org id
