@@ -17,3 +17,7 @@ export const githubDeploymentEnvironment =
 export const buildEnvironments = core
   .getMultilineInput('build-env')
   .filter(it => environmentPattern.test(it))
+
+export const environments = core
+  .getMultilineInput('env')
+  .filter(it => environmentPattern.test(it))

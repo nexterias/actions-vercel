@@ -61,6 +61,7 @@ export const deploy = () =>
     if (input.isPublic) command.push('--public')
 
     input.buildEnvironments.forEach(it => command.push('-b', it))
+    input.environments.forEach(it => command.push('-e', it))
 
     const deploymentUrl = await execute(command, true)
 

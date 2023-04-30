@@ -30,6 +30,8 @@ inputs:
     default: 'false'
   build-env:
     description: Similar to env option but for build time only.
+  env:
+    description: Include an env var during run time
 
 outputs:
   deployment-url:
