@@ -25,6 +25,9 @@ inputs:
     description: Assign domains (multiple domains can be specified)
   github-deployment-environment:
     description: Name for the target deployment environment
+  public:
+    description: source code is publicly available in the "/_src" path
+    default: 'false'
 
 outputs:
   deployment-url:

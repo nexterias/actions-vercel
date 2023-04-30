@@ -5,6 +5,7 @@ export const projectId = core.getInput('project-id', { required: true })
 export const token = core.getInput('token', { required: true })
 export const isProduction = core.getBooleanInput('production')
 export const isPrebuilt = core.getBooleanInput('prebuilt')
+export const isPublic = core.getBooleanInput('public')
 export const cwd = core.getInput('cwd') || process.cwd()
 export const domainAlias = core.getMultilineInput('domain-alias')
 export const githubToken = core.getInput('github-token') || void 0

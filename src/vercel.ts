@@ -58,6 +58,7 @@ export const deploy = () =>
 
     if (input.isProduction) command.push('--prod')
     if (input.isPrebuilt) command.push('--prebuilt')
+    if (input.isPublic) command.push('--public')
 
     const deploymentUrl = await execute(command, true)
 
