@@ -28,6 +28,8 @@ inputs:
   public:
     description: Deployment is public (`/_src` is exposed)
     default: 'false'
+  build-env:
+    description: Similar to env option but for build time only.
 
 outputs:
   deployment-url:
