@@ -60,8 +60,8 @@ export const deploy = () =>
     if (input.isPrebuilt) command.push('--prebuilt')
     if (input.isPublic) command.push('--public')
 
-    input.buildEnvironments.forEach(it => command.push('-b', it))
-    input.environments.forEach(it => command.push('-e', it))
+    input.buildEnvironments.forEach(it => command.push('--build-env', it))
+    input.environments.forEach(it => command.push('--env', it))
 
     const deploymentUrl = await execute(command, true)
 
