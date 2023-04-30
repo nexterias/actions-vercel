@@ -26,7 +26,7 @@ inputs:
   github-deployment-environment:
     description: Name for the target deployment environment
   public:
-    description: source code is publicly available in the "/_src" path
+    description: Deployment is public (`/_src` is exposed)
     default: 'false'
 
 outputs:
