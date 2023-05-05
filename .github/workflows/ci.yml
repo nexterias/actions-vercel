@@ -61,7 +61,10 @@ jobs:
   deploy:
     needs: [build]
     name: Deploy
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
       deployments: write
@@ -87,7 +90,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           prebuilt: true
-          production: ${{ github.ref == 'refs/heads/main' }}
+          production: ${{ github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest' }}
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           org-id: ${{ secrets.VERCEL_ORG_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
