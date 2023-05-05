@@ -1,8 +1,20 @@
 import * as core from '@actions/core'
 import * as input from './input'
-import { getExecOutput } from '@actions/exec'
+import { exec, getExecOutput } from '@actions/exec'
 import { fetch } from 'undici'
 import { GetDeploymentByIdOrUrlResponse } from './types'
+
+/**
+ * Install Vercel CLI
+ */
+export const install = () =>
+  core.group('Install Vercel CLI', async () => {
+    const code = await exec('which', ['vercel'], { ignoreReturnCode: true })
+
+    if (code === 0)
+      core.info('Skip this step since the Vercel CLI is already installed.')
+    else await exec('npm', ['install', '-g', 'vercel'])
+  })
 
 const globalOptions = [
   `--token=${input.token}`,

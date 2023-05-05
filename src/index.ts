@@ -5,6 +5,7 @@ import * as input from './input'
 
 async function run() {
   try {
+    await vercel.install()
     await vercel.pull()
     if (input.isPrebuilt) await vercel.build()
     const deploymentUrl = await vercel.deploy()
