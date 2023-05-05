@@ -40,7 +40,7 @@ async function run() {
         deployment_id: (deployment.data as { id: number }).id,
         state: readyState === 'READY' ? 'success' : 'error',
         environment_url: deploymentUrl,
-        auto_inactive: false,
+        auto_inactive: input.isProduction,
       })
     } catch (error: any) {
       core.warning(
