@@ -80,6 +80,11 @@ export const deploy = () =>
       ['githubDeployment', '1'],
       ['githubCommitAuthorName', github.context.actor],
       ['githubCommitAuthorLogin', github.context.actor],
+      [
+        'githubCommitRef',
+        github.context.payload.pull_request?.head?.ref ??
+          github.context.ref.replace('refs/heads', ''),
+      ],
       ['githubPrId', github.context.payload.pull_request?.number.toString()],
     ]
 
