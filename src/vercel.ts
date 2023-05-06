@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import * as input from './input'
 import { exec, getExecOutput } from '@actions/exec'
 import { fetch } from 'undici'
@@ -74,6 +75,24 @@ export const deploy = () =>
 
     input.buildEnvironments.forEach(it => command.push('--build-env', it))
     input.environments.forEach(it => command.push('--env', it))
+
+    const metadata = [
+      ['githubDeployment', '1'],
+      ['githubCommitAuthorName', github.context.actor],
+      ['githubCommitAuthorLogin', github.context.actor],
+      ['githubCommitRef', github.context.ref],
+      ['githubCommitOrg', github.context.repo.owner],
+      ['githubCommitRepo', github.context.repo.repo],
+      ['githubOrg', github.context.repo.owner],
+      ['githubRepo', github.context.repo.repo],
+      ['githubPrId', github.context.payload.pull_request?.number.toString()],
+    ]
+
+    for (const [key, value] of metadata) {
+      if (!value) continue
+
+      command.push('--meta', `${key}=${value}`)
+    }
 
     const deploymentUrl = await execute(command, true)
 
