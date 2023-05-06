@@ -76,8 +76,15 @@ export const deploy = () =>
     input.buildEnvironments.forEach(it => command.push('--build-env', it))
     input.environments.forEach(it => command.push('--env', it))
 
+    const { stdout: commitMessage } = await getExecOutput('git', [
+      'log',
+      '-1',
+      '--format="%s"',
+    ])
+
     const metadata = [
       ['githubDeployment', '1'],
+      ['githubCommitMessage', commitMessage],
       ['githubCommitAuthorName', github.context.actor],
       ['githubCommitAuthorLogin', github.context.actor],
       [
