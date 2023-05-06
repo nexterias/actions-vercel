@@ -78,6 +78,7 @@ export const deploy = () =>
 
     const metadata = [
       ['githubDeployment', '1'],
+      ['githubCommitSha', github.context.sha],
       ['githubCommitAuthorName', github.context.actor],
       ['githubCommitAuthorLogin', github.context.actor],
       [
