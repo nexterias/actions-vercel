@@ -79,7 +79,8 @@ export const deploy = (octokit?: Octokit) =>
     const commitMessage = await octokit?.rest.repos
       .getCommit({
         ...github.context.repo,
-        ref: github.context.payload.pull_request?.head.sha ?? github.context.sha,
+        ref:
+          github.context.payload.pull_request?.head.sha ?? github.context.sha,
       })
       .then(it => it.data.commit.message)
 
@@ -88,12 +89,24 @@ export const deploy = (octokit?: Octokit) =>
       ['githubCommitSha', github.context.sha],
       ['githubCommitAuthorName', github.context.actor],
       ['githubCommitAuthorLogin', github.context.actor],
+      [
+        'githubCommitOrg',
+        github.context.payload.pull_request?.head.owner.login ??
+          github.context.repo.owner,
+      ],
+      [
+        'githubCommitRepo',
+        github.context.payload.pull_request?.head.name ??
+          github.context.repo.repo,
+      ],
       ['githubCommitMessage', commitMessage],
       [
         'githubCommitRef',
         github.context.payload.pull_request?.head?.ref ??
           github.context.ref.replace('refs/heads', ''),
       ],
+      ['githubOrg', github.context.repo.owner],
+      ['githubRepo', github.context.repo.repo],
       ['githubPrId', github.context.payload.pull_request?.number.toString()],
     ]
 
