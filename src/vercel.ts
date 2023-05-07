@@ -1,8 +1,9 @@
 import * as core from '@actions/core'
+import * as github from '@actions/github'
 import * as input from './input'
 import { exec, getExecOutput } from '@actions/exec'
 import { fetch } from 'undici'
-import { GetDeploymentByIdOrUrlResponse } from './types'
+import { GetDeploymentByIdOrUrlResponse, Octokit } from './types'
 
 /**
  * Install Vercel CLI
@@ -64,7 +65,7 @@ export const build = async () =>
     await execute(command)
   })
 
-export const deploy = () =>
+export const deploy = (octokit?: Octokit) =>
   core.group('Run `vercel deploy`', async () => {
     const command: string[] = ['deploy']
 
@@ -74,6 +75,47 @@ export const deploy = () =>
 
     input.buildEnvironments.forEach(it => command.push('--build-env', it))
     input.environments.forEach(it => command.push('--env', it))
+
+    const commitMessage = await octokit?.rest.repos
+      .getCommit({
+        ...github.context.repo,
+        ref:
+          github.context.payload.pull_request?.head.sha ?? github.context.sha,
+      })
+      .then(it => it.data.commit.message)
+
+    const metadata = [
+      ['gitDirty', '0'],
+      ['githubDeployment', '1'],
+      ['githubCommitSha', github.context.sha],
+      ['githubCommitAuthorName', github.context.actor],
+      ['githubCommitAuthorLogin', github.context.actor],
+      [
+        'githubCommitOrg',
+        github.context.payload.pull_request?.head.repo.owner.login ??
+          github.context.repo.owner,
+      ],
+      [
+        'githubCommitRepo',
+        github.context.payload.pull_request?.head.repo.name ??
+          github.context.repo.repo,
+      ],
+      ['githubCommitMessage', commitMessage],
+      [
+        'githubCommitRef',
+        github.context.payload.pull_request?.head?.ref ??
+          github.context.ref.replace('refs/heads', ''),
+      ],
+      ['githubOrg', github.context.repo.owner],
+      ['githubRepo', github.context.repo.repo],
+      ['githubPrId', github.context.payload.pull_request?.number.toString()],
+    ]
+
+    for (const [key, value] of metadata) {
+      if (!value) continue
+
+      command.push('--meta', `${key}=${value}`)
+    }
 
     const deploymentUrl = await execute(command, true)
 
