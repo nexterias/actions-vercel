@@ -91,12 +91,12 @@ export const deploy = (octokit?: Octokit) =>
       ['githubCommitAuthorLogin', github.context.actor],
       [
         'githubCommitOrg',
-        github.context.payload.pull_request?.head.owner.login ??
+        github.context.payload.pull_request?.head.repo.owner.login ??
           github.context.repo.owner,
       ],
       [
         'githubCommitRepo',
-        github.context.payload.pull_request?.head.name ??
+        github.context.payload.pull_request?.head.repo.name ??
           github.context.repo.repo,
       ],
       ['githubCommitMessage', commitMessage],
