@@ -79,7 +79,7 @@ export const deploy = (octokit?: Octokit) =>
     const commitMessage = await octokit?.rest.repos
       .getCommit({
         ...github.context.repo,
-        ref: github.context.sha,
+        ref: github.context.payload.pull_request?.head.sha ?? github.context.sha,
       })
       .then(it => it.data.commit.message)
 
