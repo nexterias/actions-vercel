@@ -3,7 +3,7 @@ import * as github from '@actions/github'
 import * as input from './input'
 import { exec, getExecOutput } from '@actions/exec'
 import { fetch } from 'undici'
-import { GetDeploymentByIdOrUrlResponse } from './types'
+import { GetDeploymentByIdOrUrlResponse, Octokit } from './types'
 
 /**
  * Install Vercel CLI
@@ -65,7 +65,7 @@ export const build = async () =>
     await execute(command)
   })
 
-export const deploy = () =>
+export const deploy = (octokit?: Octokit) =>
   core.group('Run `vercel deploy`', async () => {
     const command: string[] = ['deploy']
 
@@ -76,11 +76,19 @@ export const deploy = () =>
     input.buildEnvironments.forEach(it => command.push('--build-env', it))
     input.environments.forEach(it => command.push('--env', it))
 
+    const commitMessage = await octokit?.rest.repos
+      .getCommit({
+        ...github.context.repo,
+        ref: github.context.sha,
+      })
+      .then(it => it.data.commit.message)
+
     const metadata = [
       ['githubDeployment', '1'],
       ['githubCommitSha', github.context.sha],
       ['githubCommitAuthorName', github.context.actor],
       ['githubCommitAuthorLogin', github.context.actor],
+      ['githubCommitMessage', commitMessage],
       [
         'githubCommitRef',
         github.context.payload.pull_request?.head?.ref ??

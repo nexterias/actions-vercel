@@ -1,3 +1,7 @@
+import { getOctokit } from '@actions/github'
+
+export type Octokit = ReturnType<typeof getOctokit>
+
 export type GetDeploymentByIdOrUrlResponse =
   | {
       aliasAssignedAt?: (number | boolean) | null

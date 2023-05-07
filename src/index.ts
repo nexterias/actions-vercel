@@ -5,19 +5,22 @@ import * as input from './input'
 
 async function run() {
   try {
+    const octokit = input.githubToken
+      ? github.getOctokit(input.githubToken)
+      : void 0
+
     await vercel.install()
     await vercel.pull()
     if (input.isPrebuilt) await vercel.build()
-    const deploymentUrl = await vercel.deploy()
+    const deploymentUrl = await vercel.deploy(octokit)
     const { readyState } = await vercel.getDeployment(deploymentUrl)
     if (input.domainAlias.length) await vercel.setAlias(deploymentUrl)
 
     core.setOutput('deployment-url', deploymentUrl)
     core.setOutput('deployment-status', readyState)
 
-    if (!input.githubToken) return
+    if (!octokit) return
 
-    const octokit = github.getOctokit(input.githubToken)
     const ref =
       github.context.payload.pull_request?.head.sha ?? github.context.sha
     const environment =
