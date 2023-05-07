@@ -85,6 +85,7 @@ export const deploy = (octokit?: Octokit) =>
       .then(it => it.data.commit.message)
 
     const metadata = [
+      ['gitDirty', '0'],
       ['githubDeployment', '1'],
       ['githubCommitSha', github.context.sha],
       ['githubCommitAuthorName', github.context.actor],
