@@ -104,7 +104,7 @@ export const deploy = (octokit?: Octokit) =>
       [
         'githubCommitRef',
         github.context.payload.pull_request?.head?.ref ??
-          github.context.ref.replace('refs/heads', ''),
+          github.context.ref.replace('refs/heads/', ''),
       ],
       ['githubOrg', github.context.repo.owner],
       ['githubRepo', github.context.repo.repo],
