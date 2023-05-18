@@ -16,8 +16,8 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^18.16.12
-    version: 18.16.12
+    specifier: ^18.16.13
+    version: 18.16.13
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.59.6
     version: 5.59.6(@typescript-eslint/parser@5.59.6)(eslint@8.39.0)(typescript@5.0.4)
@@ -41,7 +41,7 @@ devDependencies:
     version: 5.0.4
   vitepress:
     specifier: 1.0.0-alpha.76
-    version: 1.0.0-alpha.76(@algolia/client-search@4.17.0)(@types/node@18.16.12)
+    version: 1.0.0-alpha.76(@algolia/client-search@4.17.0)(@types/node@18.16.13)
 
 packages:
 
@@ -627,8 +627,8 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
-  /@types/node@18.16.12:
-    resolution: {integrity: sha512-tIRrjbY9C277MOfP8M3zjMIhtMlUJ6YVqkGgLjz+74jVsdf4/UjC6Hku4+1N0BS0qyC0JAS6tJLUk9H6JUKviQ==}
+  /@types/node@18.16.13:
+    resolution: {integrity: sha512-uZRomboV1vBL61EBXneL4j9/hEn+1Yqa4LQdpGrKmXFyJmVfWc9JV9+yb2AlnOnuaDnb2PDO3hC6/LKmzJxP1A==}
     dev: true
 
   /@types/semver@7.3.13:
@@ -781,7 +781,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.3.8(@types/node@18.16.12)
+      vite: 4.3.8(@types/node@18.16.13)
       vue: 3.3.4
     dev: true
 
@@ -1862,7 +1862,7 @@ packages:
     hasBin: true
     dev: false
 
-  /vite@4.3.8(@types/node@18.16.12):
+  /vite@4.3.8(@types/node@18.16.13):
     resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -1887,7 +1887,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 18.16.12
+      '@types/node': 18.16.13
       esbuild: 0.17.18
       postcss: 8.4.23
       rollup: 3.21.2
@@ -1895,7 +1895,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress@1.0.0-alpha.76(@algolia/client-search@4.17.0)(@types/node@18.16.12):
+  /vitepress@1.0.0-alpha.76(@algolia/client-search@4.17.0)(@types/node@18.16.13):
     resolution: {integrity: sha512-fzR1pDpGnSMeCJ+AnDdMe/ETD2G0Go+g6mTxDv9ps7Hmr1JjVqw97nasCyZg3jgfQxi2nt78EJ/bw7hY5n/rlw==}
     hasBin: true
     dependencies:
@@ -1910,7 +1910,7 @@ packages:
       mark.js: 8.11.1
       minisearch: 6.1.0
       shiki: 0.14.2
-      vite: 4.3.8(@types/node@18.16.12)
+      vite: 4.3.8(@types/node@18.16.13)
       vue: 3.3.4
     transitivePeerDependencies:
       - '@algolia/client-search'
