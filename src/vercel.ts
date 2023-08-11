@@ -73,8 +73,8 @@ export const deploy = (octokit?: Octokit) =>
     if (input.isPrebuilt) command.push('--prebuilt')
     if (input.isPublic) command.push('--public')
 
-    input.buildEnvironments.forEach(it => command.push('--build-env', it))
-    input.environments.forEach(it => command.push('--env', it))
+    input.buildEnvironments.forEach((it) => command.push('--build-env', it))
+    input.environments.forEach((it) => command.push('--env', it))
 
     const commitMessage = await octokit?.rest.repos
       .getCommit({
@@ -82,7 +82,7 @@ export const deploy = (octokit?: Octokit) =>
         ref:
           github.context.payload.pull_request?.head.sha ?? github.context.sha,
       })
-      .then(it => it.data.commit.message)
+      .then((it) => it.data.commit.message)
 
     const metadata = [
       ['gitDirty', '0'],

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "author": "InkoHX <me@inkohx.dev>",
   "license": "MIT",
+  "prettier": "@nexterias/prettier-config",
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "ncc build -t --minify --license=license.txt ./src/index.ts",

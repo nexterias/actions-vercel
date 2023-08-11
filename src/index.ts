@@ -73,4 +73,4 @@ async function run() {
   }
 }
 
-run().catch(error => core.setFailed(error))
+run().catch((error) => core.setFailed(error))
