@@ -21,6 +21,9 @@ importers:
         specifier: ^5.23.0
         version: 5.23.0
     devDependencies:
+      '@nexterias/prettier-config':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@types/node':
         specifier: ^18.17.4
         version: 18.17.4
@@ -586,6 +589,10 @@ packages:
 
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
+    dev: true
+
+  /@nexterias/prettier-config@1.0.1:
+    resolution: {integrity: sha512-ggLBIutLC7yupcdmq2hsZYw+7fDpWFYfQ+gR5qDdQLlgwtXU8Aq9dP8dVBPx/ijWWZjTwpyftZ9mmX/xc1bHlg==}
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:

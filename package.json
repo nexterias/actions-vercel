@@ -18,6 +18,7 @@
     "undici": "^5.23.0"
   },
   "devDependencies": {
+    "@nexterias/prettier-config": "^1.0.1",
     "@types/node": "^18.17.4",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
