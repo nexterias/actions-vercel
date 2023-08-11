@@ -9,10 +9,7 @@
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "lint:fix": "eslint ./src --fix"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
@@ -28,7 +25,6 @@
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.1",
-    "typescript": "^5.1.6",
-    "vitepress": "1.0.0-beta.7"
+    "typescript": "^5.1.6"
   }
 }
