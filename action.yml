@@ -1,5 +1,5 @@
 name: Vercel Actions
-description: Vercel deploy from GitHub Actions
+description: Deploy to Vercel with GitHub Actions
 branding:
   icon: arrow-up-circle
   color: gray-dark
