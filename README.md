@@ -14,8 +14,8 @@ on:
   pull_request:
 
 jobs:
-  homepage:
-    name: Homepage
+  deploy:
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,11 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: nexterias/actions-vercel@main
+      - uses: nexterias/actions-vercel@v1
         with:
-          token: Your Vercel token
-          org-id: Your Vercel org id
-          project-id: Your Vercel project id
+          token: ${{ secrets.YOUR_VERCEL_TOKEN }}
+          org-id: ${{ secrets.YOUR_VERCEL_ORG_ID }}
+          project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           production: ${{ github.ref == 'refs/heads/main' }}
+          prebuilt: true # If set to true, build will be performed using GitHub Actions.
 ```
