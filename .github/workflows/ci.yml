@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
-          node-version: 18
+          node-version: 20
 
       - run: pnpm i --frozen-lock
 
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
-          node-version: 18
+          node-version: 20
 
       - uses: actions/download-artifact@v3
         with:
@@ -115,7 +115,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
-          node-version: 18
+          node-version: 20
 
       - name: Setup git-cliff
         uses: kenji-miyake/setup-git-cliff@v1
