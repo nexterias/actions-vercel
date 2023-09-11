@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/nexterias/actions-vercel/actions/workflows/ci.yml/badge.svg)](https://github.com/nexterias/actions-vercel/actions/workflows/ci.yml)
 
-Vercel deploy from GitHub Actions
+Deploy to Vercel with GitHub Actions
 
 ## Usage
 

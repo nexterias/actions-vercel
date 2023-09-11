@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: 'Vercel Actions'
-  text: 'Vercel deploy from GitHub Actions'
+  text: 'Deploy to Vercel with GitHub Actions'
   actions:
     - theme: brand
       text: Getting Started
