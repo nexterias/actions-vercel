@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@nexterias/prettier-config": "^1.0.1",
-    "@types/node": "^18.17.15",
+    "@types/node": "^20.6.0",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
     "@vercel/ncc": "^0.38.0",

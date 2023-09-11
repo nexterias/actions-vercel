@@ -40,5 +40,5 @@ outputs:
     description: '"QUEUED" | "BUILDING" | "ERROR" | "INITIALIZING" | "READY" | "CANCELED"'
 
 runs:
-  using: node16
+  using: node20
   main: ./dist/index.js
