@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as input from './input'
 import { exec, getExecOutput } from '@actions/exec'
-import { fetch } from 'undici'
 import { GetDeploymentByIdOrUrlResponse, Octokit } from './types'
 
 /**
