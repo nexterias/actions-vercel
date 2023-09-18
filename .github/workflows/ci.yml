@@ -134,6 +134,8 @@ jobs:
     name: Tag
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/') && github.actor != 'github-actions'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
         with:
