@@ -100,7 +100,8 @@ export const deploy = (octokit?: Octokit) =>
         github.context.payload.pull_request?.head.repo.name ??
           github.context.repo.repo,
       ],
-      ['githubCommitMessage', commitMessage],
+      // メッセージの1行目をgithubCommitMessageに設定
+      ['githubCommitMessage', commitMessage?.trim().split('\n')[0]],
       [
         'githubCommitRef',
         github.context.payload.pull_request?.head?.ref ??
