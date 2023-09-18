@@ -122,15 +122,19 @@ jobs:
       - name: Setup git-cliff
         uses: kenji-miyake/setup-git-cliff@v1
 
-      - name: Generate changelog
+      - uses: actions/github-script@v6
         id: git-cliff
-        run: echo "content=$(git cliff -l --strip header)" >> $GITHUB_OUTPUT
+        with:
+          result-encoding: string
+          script: |
+            const { stdout } = await exec.getExecOutput('git', ['cliff', '-l', '--strip', 'header'])
+            return stdout
 
       - name: Create draft release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
-          body: ${{ steps.git-cliff.outputs.content }}
+          body: ${{ steps.git-cliff.outputs.result }}
 
   tag:
     needs: [build]
