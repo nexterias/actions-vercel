@@ -157,4 +157,4 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git tag -f ${{ steps.tag.outputs.name }} ${{ github.ref }}
-          git push -f origin ${{ steps.tag.outputs.name }}
+          git push -f --tags origin ${{ steps.tag.outputs.name }}
