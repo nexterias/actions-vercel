@@ -150,7 +150,7 @@ jobs:
 
       - name: Get target tag
         id: tag
-        run: echo "name=$(echo '${{ github.ref }}' | sed -r 's/refs\/tags\/(v[0-9]+)\..*/\1/')"
+        run: echo "name=$(echo '${{ github.ref }}' | sed -r 's/refs\/tags\/(v[0-9]+)\..*/\1/')" >> $GITHUB_OUTPUT
 
       - name: Update & Push tag
         run: |
