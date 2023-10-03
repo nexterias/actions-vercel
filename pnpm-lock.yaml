@@ -18,8 +18,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1
       undici:
-        specifier: ^5.25.3
-        version: 5.25.3
+        specifier: ^5.25.4
+        version: 5.25.4
     devDependencies:
       '@nexterias/prettier-config':
         specifier: ^1.0.1
@@ -1859,8 +1859,8 @@ packages:
     hasBin: true
     dev: true
 
-  /undici@5.25.3:
-    resolution: {integrity: sha512-7lmhlz3K1+IKB6IUjkdzV2l0jKY8/0KguEMdEpzzXCug5pEGIp3DxUg0DEN65DrVoxHiRKpPORC/qzX+UglSkQ==}
+  /undici@5.25.4:
+    resolution: {integrity: sha512-450yJxT29qKMf3aoudzFpIciqpx6Pji3hEWaXqXmanbXF58LTAGCKxcJjxMXWu3iG+Mudgo3ZUfDB6YDFd/dAw==}
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.0.0
