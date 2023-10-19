@@ -16,7 +16,7 @@
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
-    "undici": "^5.26.3"
+    "undici": "^5.26.4"
   },
   "devDependencies": {
     "@nexterias/prettier-config": "^1.0.1",
