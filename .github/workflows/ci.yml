@@ -120,7 +120,7 @@ jobs:
           node-version: 20
 
       - name: Setup git-cliff
-        uses: kenji-miyake/setup-git-cliff@v1
+        uses: kenji-miyake/setup-git-cliff@v2
 
       - uses: actions/github-script@v6
         id: git-cliff
