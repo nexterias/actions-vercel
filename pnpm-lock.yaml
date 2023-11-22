@@ -30,9 +30,6 @@ importers:
       '@vercel/ncc':
         specifier: ^0.38.1
         version: 0.38.1
-      prettier:
-        specifier: ^3.0.3
-        version: 3.1.0
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
@@ -1087,12 +1084,6 @@ packages:
 
   /preact@10.13.2:
     resolution: {integrity: sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==}
-    dev: true
-
-  /prettier@3.1.0:
-    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
-    engines: {node: '>=14'}
-    hasBin: true
     dev: true
 
   /rollup@4.4.1:
