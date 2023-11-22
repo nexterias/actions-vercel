@@ -51,6 +51,7 @@ async function run() {
 				environment_url: deploymentUrl,
 				auto_inactive: input.isProduction,
 			});
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		} catch (error: any) {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "deployments"',
@@ -68,12 +69,14 @@ async function run() {
 				context: "Vercel",
 				description: environment,
 			});
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		} catch (error: any) {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "statuses"',
 			);
 			core.error(error);
 		}
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	} catch (error: any) {
 		core.setFailed(error);
 	}
