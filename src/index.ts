@@ -11,15 +11,21 @@ async function run() {
 
 		await vercel.install();
 		await vercel.pull();
-		if (input.isPrebuilt) await vercel.build();
+		if (input.isPrebuilt) {
+			await vercel.build();
+		}
 		const deploymentUrl = await vercel.deploy(octokit);
 		const { readyState } = await vercel.getDeployment(deploymentUrl);
-		if (input.domainAlias.length) await vercel.setAlias(deploymentUrl);
+		if (input.domainAlias.length) {
+			await vercel.setAlias(deploymentUrl);
+		}
 
 		core.setOutput("deployment-url", deploymentUrl);
 		core.setOutput("deployment-status", readyState);
 
-		if (!octokit) return;
+		if (!octokit) {
+			return;
+		}
 
 		const ref =
 			github.context.payload.pull_request?.head.sha ?? github.context.sha;

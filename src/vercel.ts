@@ -12,9 +12,11 @@ export const install = () =>
 	core.group("Install Vercel CLI", async () => {
 		const code = await exec("which", ["vercel"], { ignoreReturnCode: true });
 
-		if (code === 0)
+		if (code === 0) {
 			core.info("Skip this step since the Vercel CLI is already installed.");
-		else await exec("npm", ["install", "-g", "vercel"]);
+		} else {
+			await exec("npm", ["install", "-g", "vercel"]);
+		}
 	});
 
 const globalOptions = [
@@ -42,8 +44,10 @@ const execute = async (args: string[], ignoreError = false) => {
 	);
 
 	if (exitCode !== 0 && !ignoreError) {
-		if (stderr) throw stderr;
-		else throw `Failed to execute \`vercel\` command. Exit code: ${exitCode}`;
+		if (stderr) {
+			throw stderr;
+		}
+		throw `Failed to execute \`vercel\` command. Exit code: ${exitCode}`;
 	}
 
 	return stdout;
@@ -60,7 +64,9 @@ export const pull = () =>
 export const build = async () =>
 	core.group("Run `vercel build`", async () => {
 		const command: string[] = ["build"];
-		if (input.isProduction) command.push("--prod");
+		if (input.isProduction) {
+			command.push("--prod");
+		}
 
 		await execute(command);
 	});
@@ -69,9 +75,15 @@ export const deploy = (octokit?: Octokit) =>
 	core.group("Run `vercel deploy`", async () => {
 		const command: string[] = ["deploy"];
 
-		if (input.isProduction) command.push("--prod");
-		if (input.isPrebuilt) command.push("--prebuilt");
-		if (input.isPublic) command.push("--public");
+		if (input.isProduction) {
+			command.push("--prod");
+		}
+		if (input.isPrebuilt) {
+			command.push("--prebuilt");
+		}
+		if (input.isPublic) {
+			command.push("--public");
+		}
 
 		input.buildEnvironments.forEach((it) => command.push("--build-env", it));
 		input.environments.forEach((it) => command.push("--env", it));
@@ -113,7 +125,9 @@ export const deploy = (octokit?: Octokit) =>
 		];
 
 		for (const [key, value] of metadata) {
-			if (!value) continue;
+			if (!value) {
+				continue;
+			}
 
 			command.push("--meta", `${key}=${value}`);
 		}
