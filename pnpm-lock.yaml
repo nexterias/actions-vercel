@@ -36,9 +36,6 @@ importers:
       '@vercel/ncc':
         specifier: ^0.38.1
         version: 0.38.1
-      eslint:
-        specifier: ^8.54.0
-        version: 8.54.0
       eslint-config-prettier:
         specifier: ^9.0.0
         version: 9.0.0(eslint@8.54.0)
