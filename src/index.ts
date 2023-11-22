@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import * as vercel from "./vercel";
 import * as input from "./input";
+import * as vercel from "./vercel";
 
 async function run() {
 	try {
