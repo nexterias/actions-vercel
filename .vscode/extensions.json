@@ -1,7 +1,7 @@
 {
-  "recommendations": [
-    "github.vscode-github-actions",
-    "vivaxy.vscode-conventional-commits",
-    "biomejs.biome"
-  ]
+	"recommendations": [
+		"github.vscode-github-actions",
+		"vivaxy.vscode-conventional-commits",
+		"biomejs.biome"
+	]
 }
