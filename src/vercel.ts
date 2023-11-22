@@ -85,8 +85,13 @@ export const deploy = (octokit?: Octokit) =>
 			command.push("--public");
 		}
 
-		input.buildEnvironments.forEach((it) => command.push("--build-env", it));
-		input.environments.forEach((it) => command.push("--env", it));
+		for (const value of input.buildEnvironments) {
+			command.push("--build-env", value);
+		}
+
+		for (const value of input.environments) {
+			command.push("--env", value);
+		}
 
 		const commitMessage = await octokit?.rest.repos
 			.getCommit({
