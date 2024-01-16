@@ -37,8 +37,8 @@ importers:
   docs:
     devDependencies:
       vitepress:
-        specifier: 1.0.0-rc.37
-        version: 1.0.0-rc.37(@algolia/client-search@4.19.1)(@types/node@20.10.8)(search-insights@2.7.0)(typescript@5.3.3)
+        specifier: 1.0.0-rc.39
+        version: 1.0.0-rc.39(@algolia/client-search@4.19.1)(@types/node@20.10.8)(search-insights@2.7.0)(typescript@5.3.3)
 
 packages:
 
@@ -1055,15 +1055,6 @@ packages:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
 
-  /postcss@8.4.32:
-    resolution: {integrity: sha512-D/kj5JNu6oo2EIy+XL/26JEDTlIbB8hw85G8StOE6L74RQAVVP5rej6wxCNqyMbR4RkPfqvezVbPw81Ngd6Kcw==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
-    dev: true
-
   /postcss@8.4.33:
     resolution: {integrity: sha512-Kkpbhhdjw2qQs2O2DGX+8m5OVqEcbB9HRBvuYM9pgrjEFUg30A9LmXNlTAUj4S9kgtGyrMbTzVjH7E+s5Re2yg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -1200,14 +1191,14 @@ packages:
     dependencies:
       '@types/node': 20.10.8
       esbuild: 0.19.5
-      postcss: 8.4.32
+      postcss: 8.4.33
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-rc.37(@algolia/client-search@4.19.1)(@types/node@20.10.8)(search-insights@2.7.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-Z2X+M0id+bUdxcWxvFRUzfLyV2GtPWRcejLSMGOHRiwA1DV/dNmELKJ3U9D1HBYQK0FBzunpuQD0a2jZ7FZvJA==}
+  /vitepress@1.0.0-rc.39(@algolia/client-search@4.19.1)(@types/node@20.10.8)(search-insights@2.7.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-EcgoRlAAp37WOxUOYv45oxyhLrcy3Upey+mKpqW3ldsg6Ol4trPndRBk2GO0QiSvEKlb9BMerk49D/bFICN6kg==}
     hasBin: true
     peerDependencies:
       markdown-it-mathjax3: ^4.3.2
