@@ -18,8 +18,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       undici:
-        specifier: ^6.4.0
-        version: 6.4.0
+        specifier: ^6.5.0
+        version: 6.5.0
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.4.1
@@ -1145,8 +1145,8 @@ packages:
       '@fastify/busboy': 2.0.0
     dev: false
 
-  /undici@6.4.0:
-    resolution: {integrity: sha512-wYaKgftNqf6Je7JQ51YzkEkEevzOgM7at5JytKO7BjaURQpERW8edQSMrr2xb+Yv4U8Yg47J24+lc9+NbeXMFA==}
+  /undici@6.5.0:
+    resolution: {integrity: sha512-/MUmPb2ptTvp1j7lPvdMSofMdqPxcOhAaKZi4k55sqm6XMeKI3n1dZJ5cnD4gLjpt2l7CIlthR1IXM59xKhpxw==}
     engines: {node: '>=18.0'}
     dependencies:
       '@fastify/busboy': 2.0.0
