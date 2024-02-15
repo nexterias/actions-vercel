@@ -17,7 +17,7 @@
     "undici": "^6.6.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.4.1",
+    "@biomejs/biome": "^1.5.3",
     "@types/node": "^20.11.17",
     "@vercel/ncc": "^0.38.1",
     "typescript": "^5.3.3"
