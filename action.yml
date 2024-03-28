@@ -16,6 +16,8 @@ inputs:
     required: true
   github-token:
     description: GitHub Token
+    required: false
+    default: ${{ github.token }}
   production:
     description: Create a production deployment
     default: 'false'
