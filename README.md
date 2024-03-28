@@ -19,7 +19,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Vercel
+    name: Deploy
     runs-on: ubuntu-latest
     permissions:
       contents: read
