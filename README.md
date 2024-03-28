@@ -7,7 +7,11 @@ Deploy to Vercel with GitHub Actions
 ## Usage
 
 ```yml
-name: Deploy
+name: Vercel
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   push:
