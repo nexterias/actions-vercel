@@ -30,7 +30,6 @@ jobs:
           token: ${{ secrets.YOUR_VERCEL_TOKEN }}
           org-id: ${{ secrets.YOUR_VERCEL_ORG_ID }}
           project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           production: ${{ github.ref == 'refs/heads/main' }}
           prebuilt: true # If set to true, build will be performed using GitHub Actions.
 ```
