@@ -1,25 +1,25 @@
 {
-  "name": "actions-vercel",
-  "version": "1.0.3",
-  "author": "InkoHX <me@inkohx.dev>",
-  "license": "MIT",
-  "scripts": {
-    "type-check": "tsc --noEmit",
-    "build": "ncc build -t --minify --license=license.txt ./src/index.ts",
-    "check": "biome check .",
-    "check:apply": "biome check . --apply",
-    "check:apply-unsafe": "biome check . --apply-unsafe"
-  },
-  "dependencies": {
-    "@actions/core": "^1.10.1",
-    "@actions/exec": "^1.1.1",
-    "@actions/github": "^6.0.0",
-    "undici": "^6.6.2"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.6.3",
-    "@types/node": "^20.11.30",
-    "@vercel/ncc": "^0.38.1",
-    "typescript": "^5.4.3"
-  }
+	"name": "actions-vercel",
+	"version": "1.0.3",
+	"author": "InkoHX <me@inkohx.dev>",
+	"license": "MIT",
+	"scripts": {
+		"type-check": "tsc --noEmit",
+		"build": "ncc build -t --minify --license=license.txt ./src/index.ts",
+		"check": "biome check .",
+		"check:apply": "biome check . --apply",
+		"check:apply-unsafe": "biome check . --apply-unsafe"
+	},
+	"dependencies": {
+		"@actions/core": "^1.10.1",
+		"@actions/exec": "^1.1.1",
+		"@actions/github": "^6.0.0",
+		"undici": "^6.6.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.6.3",
+		"@types/node": "^20.11.30",
+		"@vercel/ncc": "^0.38.1",
+		"typescript": "^5.4.3"
+	}
 }
