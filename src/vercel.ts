@@ -3,7 +3,7 @@ import { exec, getExecOutput } from "@actions/exec";
 import * as github from "@actions/github";
 import { fetch } from "undici";
 import * as input from "./input";
-import { GetDeploymentByIdOrUrlResponse, Octokit } from "./types";
+import type { GetDeploymentByIdOrUrlResponse, Octokit } from "./types";
 
 /**
  * Install Vercel CLI
