@@ -15,7 +15,7 @@ inputs:
     description: User ID within Vercel
     required: true
   github-token:
-    description: GitHub Token
+    description: Personal Access Token (PAT) is used to create commit status and deployments.
     required: false
     default: ${{ github.token }}
   production:
