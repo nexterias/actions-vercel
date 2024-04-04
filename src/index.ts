@@ -3,8 +3,9 @@ import * as github from "@actions/github";
 import {
 	type VercelDeploymentIssueComment,
 	upsertIssueComment,
-} from "./comment";
+} from "./github/comment";
 import { GitHubCommitStatus } from "./github/commit-status";
+import { deploymentEnvironmentName } from "./github/constants";
 import { GitHubDeployment } from "./github/deployment";
 import * as input from "./input";
 import * as vercel from "./vercel";
@@ -39,9 +40,10 @@ async function run() {
 			core.error(settledResultComment.reason);
 		}
 
-		if (settledCommitStatus.status === "fulfilled")
+		if (settledCommitStatus.status === "fulfilled") {
 			commitStatus = settledCommitStatus.value;
-		else {
+			await commitStatus.update({ state: "pending", description: "Pending" });
+		} else {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "statuses"',
 			);
@@ -60,14 +62,38 @@ async function run() {
 	}
 
 	try {
+		await commitStatus?.update({
+			state: "pending",
+			description: "Installing Vercel CLI...",
+		});
 		await vercel.install();
+
+		await commitStatus?.update({
+			state: "pending",
+			description: "Pulling Vercel project settings...",
+		});
 		await vercel.pull();
+
 		if (input.isPrebuilt) {
+			await commitStatus?.update({
+				state: "pending",
+				description: "Building...",
+			});
 			await vercel.build();
 		}
+
+		await commitStatus?.update({
+			state: "pending",
+			description: "Deploying...",
+		});
 		const deploymentUrl = await vercel.deploy(octokit);
 		const { readyState } = await vercel.fetchDeployment(deploymentUrl);
+
 		if (input.domainAlias.length) {
+			await commitStatus?.update({
+				state: "pending",
+				description: "Setting domain alias...",
+			});
 			await vercel.setAlias(deploymentUrl);
 		}
 
@@ -77,7 +103,11 @@ async function run() {
 		await resultComment?.update({ deploymentUrl, status: "Ready" });
 		await commitStatus?.update({
 			deploymentUrl,
-			isReady: readyState === "READY",
+			state: readyState === "READY" ? "success" : "failure",
+			description:
+				readyState === "READY"
+					? `Ready for ${deploymentEnvironmentName}`
+					: "Failed",
 		});
 		await deployment?.update({
 			deploymentUrl,
@@ -87,7 +117,7 @@ async function run() {
 	} catch (error: any) {
 		core.setFailed(error);
 		await resultComment?.update({ status: "Failed" });
-		await commitStatus?.update({ isReady: false });
+		await commitStatus?.update({ state: "error", description: "Failed" });
 		await deployment?.update({ state: "error" });
 	}
 }

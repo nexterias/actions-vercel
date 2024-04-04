@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { context as githubContext } from "@actions/github";
-import { projectId } from "./input";
-import type { Octokit } from "./types";
+import { projectId } from "../input";
+import type { Octokit } from "../types";
 
 const commentIdentifier = createHash("sha256").update(projectId).digest("hex");
 const commentHeader = `<!-- actions-vercel by The NEXTERIAS - ${commentIdentifier} -->`;

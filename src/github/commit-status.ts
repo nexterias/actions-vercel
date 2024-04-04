@@ -4,7 +4,8 @@ import { commitRef, deploymentEnvironmentName } from "./constants";
 
 interface CreateCommitStatusPayload {
 	deploymentUrl?: string | null;
-	isReady: boolean;
+	state: "pending" | "error" | "success" | "failure";
+	description: string;
 }
 
 export class GitHubCommitStatus {
@@ -18,9 +19,9 @@ export class GitHubCommitStatus {
 			...githubContext.repo,
 			sha: commitRef,
 			target_url: payload.deploymentUrl,
-			state: payload.isReady ? "success" : "error",
+			state: payload.state,
 			context: this.context,
-			description: deploymentEnvironmentName,
+			description: payload.description,
 		});
 	}
 
