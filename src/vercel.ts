@@ -151,7 +151,7 @@ export const setAlias = (deploymentUrl: string) =>
 		}
 	});
 
-export const getDeployment = async (
+export const fetchDeployment = async (
 	url: string,
 ): Promise<GetDeploymentByIdOrUrlResponse> => {
 	const response = await fetch(
@@ -162,9 +162,23 @@ export const getDeployment = async (
 			headers: {
 				Authorization: `Bearer ${input.token}`,
 			},
-			method: "get",
 		},
 	);
 
 	return response.json() as Promise<GetDeploymentByIdOrUrlResponse>;
+};
+
+export const fetchProjectName = async () => {
+	const response = await fetch(
+		`https://api.vercel.com/v9/projects/${input.projectId}`,
+		{
+			headers: {
+				Authorization: `Bearer ${input.token}`,
+			},
+		},
+	);
+
+	const { name } = (await response.json()) as { name: string };
+
+	return name;
 };
