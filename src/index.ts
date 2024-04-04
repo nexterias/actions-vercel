@@ -40,13 +40,9 @@ async function run() {
 			core.error(settledResultComment.reason);
 		}
 
-		if (settledCommitStatus.status === "fulfilled") {
+		if (settledCommitStatus.status === "fulfilled")
 			commitStatus = settledCommitStatus.value;
-			await commitStatus.update({
-				state: "pending",
-				description: "Starting...",
-			});
-		} else {
+		else {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "statuses"',
 			);

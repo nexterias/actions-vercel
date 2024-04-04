@@ -26,6 +26,13 @@ export class GitHubCommitStatus {
 	}
 
 	public static async create(octokit: Octokit, context: string) {
+		await octokit.rest.repos.createCommitStatus({
+			...githubContext.repo,
+			sha: commitRef,
+			state: "pending",
+			context,
+		});
+
 		return new GitHubCommitStatus(octokit, context);
 	}
 }
