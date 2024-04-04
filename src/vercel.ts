@@ -1,7 +1,6 @@
 import * as core from "@actions/core";
 import { exec, getExecOutput } from "@actions/exec";
 import * as github from "@actions/github";
-import { fetch } from "undici";
 import * as input from "./input";
 import type { GetDeploymentByIdOrUrlResponse, Octokit } from "./types";
 
