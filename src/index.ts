@@ -34,7 +34,7 @@ async function run() {
 		if (settledResultComment.status === "fulfilled")
 			resultComment = settledResultComment.value;
 		else {
-			core.error(
+			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "pull_requests"',
 			);
 			core.error(settledResultComment.reason);
