@@ -25,6 +25,7 @@ jobs:
       contents: read
       deployments: write
       statuses: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v3
