@@ -38,3 +38,7 @@ jobs:
           production: ${{ github.ref == 'refs/heads/main' }}
           prebuilt: true # If set to true, build will be performed using GitHub Actions.
 ```
+
+## Examples
+
+- [nexterias/homepage](https://github.com/nexterias/homepage)
