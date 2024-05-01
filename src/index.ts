@@ -15,6 +15,7 @@ async function run() {
 		? github.getOctokit(input.githubToken)
 		: void 0;
 	const projectName = await vercel.fetchProjectName();
+	const isDebug = core.isDebug();
 
 	let resultComment: VercelDeploymentIssueComment | undefined;
 	let commitStatus: GitHubCommitStatus | undefined;
@@ -37,7 +38,8 @@ async function run() {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "pull_requests"',
 			);
-			core.error(settledResultComment.reason);
+
+			if (isDebug) core.error(settledResultComment.reason);
 		}
 
 		if (settledCommitStatus.status === "fulfilled")
@@ -46,7 +48,8 @@ async function run() {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "statuses"',
 			);
-			core.error(settledCommitStatus.reason);
+
+			if (isDebug) core.error(settledCommitStatus.reason);
 		}
 
 		if (settledDeployment.status === "fulfilled") {
@@ -56,7 +59,8 @@ async function run() {
 			core.warning(
 				'May need "GITHUB_TOKEN" with "write" permission to "deployments"',
 			);
-			core.error(settledDeployment.reason);
+
+			if (isDebug) core.error(settledDeployment.reason);
 		}
 	}
 
