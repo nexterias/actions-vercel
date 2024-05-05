@@ -6,7 +6,6 @@ export default defineConfig({
 	titleTemplate: ":title | actions-vercel",
 	description: "Deploy to Vercel with GitHub Actions",
 	lang: "ja_JP",
-	sitemap: { hostname: "actions-vercel.nexterias.dev" },
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		search: {
