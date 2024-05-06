@@ -14,17 +14,3 @@ export const githubDeploymentEnvironment =
 	core.getInput("github-deployment-environment") || void 0;
 export const buildEnvironments = parseDotenv(core.getInput("build-env"));
 export const environments = parseDotenv(core.getInput("env"));
-
-core.startGroup("inputs");
-core.startGroup("buildEnvironments");
-for (const [key, value] of Object.entries(buildEnvironments)) {
-	core.info(`${key}=${value}`);
-}
-core.endGroup(); // End buildEnvironments
-
-core.startGroup("environments");
-for (const [key, value] of Object.entries(environments)) {
-	core.info(`${key}=${value}`);
-}
-core.endGroup(); // End environments
-core.endGroup(); // End inputs
