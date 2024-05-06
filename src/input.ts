@@ -15,29 +15,16 @@ export const githubDeploymentEnvironment =
 export const buildEnvironments = parseDotenv(core.getInput("build-env"));
 export const environments = parseDotenv(core.getInput("env"));
 
-if (core.isDebug()) {
-	core.startGroup("Inputs");
-	core.debug(`orgId: ${orgId}`);
-	core.debug(`projectId: ${projectId}`);
-	core.debug(`token: ${token}`);
-	core.debug(`isProduction: ${isProduction}`);
-	core.debug(`isPrebuilt: ${isPrebuilt}`);
-	core.debug(`isPublic: ${isPublic}`);
-	core.debug(`cwd: ${cwd}`);
-	core.debug(`domainAlias: ${domainAlias}`);
-	core.debug(`githubToken: ${githubToken}`);
-	core.debug(`githubDeploymentEnvironment: ${githubDeploymentEnvironment}`);
-
-	core.startGroup("buildEnvironments");
-	for (const [key, value] of Object.entries(buildEnvironments)) {
-		core.debug(`${key}=${value}`);
-	}
-	core.endGroup();
-
-	core.startGroup("environments");
-	for (const [key, value] of Object.entries(environments)) {
-		core.debug(`${key}=${value}`);
-	}
-	core.endGroup();
-	core.endGroup();
+core.startGroup("inputs");
+core.startGroup("buildEnvironments");
+for (const [key, value] of Object.entries(buildEnvironments)) {
+	core.debug(`${key}=${value}`);
 }
+core.endGroup(); // End buildEnvironments
+
+core.startGroup("environments");
+for (const [key, value] of Object.entries(environments)) {
+	core.debug(`${key}=${value}`);
+}
+core.endGroup(); // End environments
+core.endGroup(); // End inputs
