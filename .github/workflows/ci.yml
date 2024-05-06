@@ -92,6 +92,12 @@ jobs:
           production: ${{ github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest' }}
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           org-id: ${{ secrets.VERCEL_ORG_ID }}
+          build-end: |
+            HOGE=FUGA
+            FUGA=PIYO
+          env: |
+            FOO=BAR
+            BAR=BAZ
 
       - run: |
           echo ${{ steps.vercel.outputs.deployment-url }}
