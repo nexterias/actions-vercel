@@ -25,10 +25,18 @@ const globalOptions = [
 	"--no-color",
 ];
 
+interface ExecuteOptions {
+	ignoreError?: boolean;
+	env?: Record<string, string>;
+}
+
 /**
  * Execute `vercel ...args ...globalOptions` command
  */
-const execute = async (args: string[], ignoreError = false) => {
+const execute = async (
+	args: string[],
+	{ env = {}, ignoreError = false }: ExecuteOptions | undefined = {},
+) => {
 	const { exitCode, stderr, stdout } = await getExecOutput(
 		"vercel",
 		[...args, ...globalOptions],
@@ -37,6 +45,7 @@ const execute = async (args: string[], ignoreError = false) => {
 				VERCEL_ORG_ID: input.orgId,
 				VERCEL_PROJECT_ID: input.projectId,
 				...process.env,
+				...env,
 			},
 			ignoreReturnCode: ignoreError,
 		},
@@ -63,11 +72,12 @@ export const pull = () =>
 export const build = async () =>
 	core.group("Run `vercel build`", async () => {
 		const command: string[] = ["build"];
+
 		if (input.isProduction) {
 			command.push("--prod");
 		}
 
-		await execute(command);
+		await execute(command, { env: input.buildEnvironments });
 	});
 
 export const deploy = (octokit?: Octokit) =>
@@ -77,19 +87,20 @@ export const deploy = (octokit?: Octokit) =>
 		if (input.isProduction) {
 			command.push("--prod");
 		}
-		if (input.isPrebuilt) {
-			command.push("--prebuilt");
-		}
 		if (input.isPublic) {
 			command.push("--public");
 		}
 
-		for (const value of input.buildEnvironments) {
-			command.push("--build-env", value);
+		if (input.isPrebuilt) {
+			command.push("--prebuilt");
+		} else {
+			for (const [key, value] of Object.entries(input.buildEnvironments)) {
+				command.push("--build-env", `${key}=${value}`);
+			}
 		}
 
-		for (const value of input.environments) {
-			command.push("--env", value);
+		for (const [key, value] of Object.entries(input.environments)) {
+			command.push("--env", `${key}=${value}`);
 		}
 
 		const commitMessage = await octokit?.rest.repos
@@ -136,7 +147,7 @@ export const deploy = (octokit?: Octokit) =>
 			command.push("--meta", `${key}=${value}`);
 		}
 
-		const deploymentUrl = await execute(command, true);
+		const deploymentUrl = await execute(command, { ignoreError: true });
 
 		return deploymentUrl;
 	});
