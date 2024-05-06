@@ -18,13 +18,13 @@ export const environments = parseDotenv(core.getInput("env"));
 core.startGroup("inputs");
 core.startGroup("buildEnvironments");
 for (const [key, value] of Object.entries(buildEnvironments)) {
-	core.debug(`${key}=${value}`);
+	core.info(`${key}=${value}`);
 }
 core.endGroup(); // End buildEnvironments
 
 core.startGroup("environments");
 for (const [key, value] of Object.entries(environments)) {
-	core.debug(`${key}=${value}`);
+	core.info(`${key}=${value}`);
 }
 core.endGroup(); // End environments
 core.endGroup(); // End inputs
