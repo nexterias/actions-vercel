@@ -14,3 +14,12 @@ export const githubDeploymentEnvironment =
 	core.getInput("github-deployment-environment") || void 0;
 export const buildEnvironments = parseDotenv(core.getInput("build-env"));
 export const environments = parseDotenv(core.getInput("env"));
+
+if (domainAlias.length)
+	core.warning(
+		'"domain-alias" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/domain-alias',
+	);
+if (githubDeploymentEnvironment)
+	core.warning(
+		'"github-deployment-environment" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/github-deployment-environment',
+	);
