@@ -89,7 +89,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           prebuilt: true
-          production: ${{ github.ref == 'refs/heads/main' && matrix.os == 'ubuntu-latest' }}
+          production: ${{ startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest' }}
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           org-id: ${{ secrets.VERCEL_ORG_ID }}
 
