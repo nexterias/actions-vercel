@@ -9,9 +9,9 @@ title: prebuilt
 
 GitHub Actions側でビルドを行い、そのデータをVercelにデプロイする場合は`true`に設定してください。
 
-## 利点
-
-- GitHub Actions上でビルドを行うことで、Vercel側のビルド時間をゼロにできます
+::: warning 注意
+ビルドに必要なソフトウェア（Node.js等）が正しくインストールされていないと機能しません。
+:::
 
 ## 使用例
 
