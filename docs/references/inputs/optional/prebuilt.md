@@ -5,7 +5,7 @@ title: prebuilt
 
 # `prebuilt`
 
-`vercel build`と`vercel deploy --prebuilt`を使用する為のオプションです。
+`vercel build`と`vercel deploy --prebuilt`を使用するためのオプションです。
 
 GitHub Actions側でビルドを行い、そのデータをVercelにデプロイする場合は`true`に設定してください。
 
