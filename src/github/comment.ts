@@ -55,12 +55,17 @@ export const upsertIssueComment = async (
 
 	for await (const response of requests) {
 		for (const comment of response.data) {
-			if (comment.body?.includes(commentHeader))
-				return new VercelDeploymentIssueComment(
+			if (comment.body?.includes(commentHeader)) {
+				const obj = new VercelDeploymentIssueComment(
 					octokit,
 					comment.id,
 					payload.projectName,
 				);
+
+				await obj.update(payload);
+
+				return obj;
+			}
 		}
 	}
 
