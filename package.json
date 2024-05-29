@@ -3,6 +3,7 @@
 	"version": "1.2.1",
 	"author": "InkoHX <me@inkohx.dev>",
 	"license": "MIT",
+	"packageManager": "pnpm@9.1.3",
 	"scripts": {
 		"type-check": "tsc --noEmit",
 		"build": "ncc build -t --minify --license=license.txt ./src/index.ts",
