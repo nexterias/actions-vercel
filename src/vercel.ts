@@ -147,7 +147,7 @@ export const deploy = (octokit?: Octokit) =>
 			command.push("--meta", `${key}=${value}`);
 		}
 
-		const deploymentUrl = await execute(command, { ignoreError: true });
+		const deploymentUrl = await execute(command);
 
 		return deploymentUrl;
 	});
