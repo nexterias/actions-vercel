@@ -25,8 +25,8 @@ importers:
         specifier: ^1.8.3
         version: 1.8.3
       '@types/node':
-        specifier: ^20.14.12
-        version: 20.14.12
+        specifier: ^20.14.13
+        version: 20.14.13
       '@vercel/ncc':
         specifier: ^0.38.1
         version: 0.38.1
@@ -38,7 +38,7 @@ importers:
     devDependencies:
       vitepress:
         specifier: 1.3.1
-        version: 1.3.1(@algolia/client-search@4.22.1)(@types/node@20.14.12)(postcss@8.4.39)(search-insights@2.13.0)(typescript@5.4.5)
+        version: 1.3.1(@algolia/client-search@4.22.1)(@types/node@20.14.13)(postcss@8.4.39)(search-insights@2.13.0)(typescript@5.4.5)
 
 packages:
 
@@ -506,8 +506,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-  '@types/node@20.14.12':
-    resolution: {integrity: sha512-r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==}
+  '@types/node@20.14.13':
+    resolution: {integrity: sha512-+bHoGiZb8UiQ0+WEtmph2IWQCjIqg8MDZMAV+ppRRhUZnquF5mQkP/9vpSwJClEiSM/C7fZZExPzfU0vJTyp8w==}
 
   '@types/unist@3.0.2':
     resolution: {integrity: sha512-dqId9J8K/vGi5Zr7oo212BGii5m3q5Hxlkwy3WpYuKPklmBEvsbMYYyLxAQpSffdLl/gdW0XUpKWFvYmyoWCoQ==}
@@ -1230,7 +1230,7 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-  '@types/node@20.14.12':
+  '@types/node@20.14.13':
     dependencies:
       undici-types: 5.26.5
 
@@ -1240,9 +1240,9 @@ snapshots:
 
   '@vercel/ncc@0.38.1': {}
 
-  '@vitejs/plugin-vue@5.0.5(vite@5.3.4(@types/node@20.14.12))(vue@3.4.31(typescript@5.4.5))':
+  '@vitejs/plugin-vue@5.0.5(vite@5.3.4(@types/node@20.14.13))(vue@3.4.31(typescript@5.4.5))':
     dependencies:
-      vite: 5.3.4(@types/node@20.14.12)
+      vite: 5.3.4(@types/node@20.14.13)
       vue: 3.4.31(typescript@5.4.5)
 
   '@vue/compiler-core@3.4.31':
@@ -1511,23 +1511,23 @@ snapshots:
 
   uuid@8.3.2: {}
 
-  vite@5.3.4(@types/node@20.14.12):
+  vite@5.3.4(@types/node@20.14.13):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.13.0
     optionalDependencies:
-      '@types/node': 20.14.12
+      '@types/node': 20.14.13
       fsevents: 2.3.3
 
-  vitepress@1.3.1(@algolia/client-search@4.22.1)(@types/node@20.14.12)(postcss@8.4.39)(search-insights@2.13.0)(typescript@5.4.5):
+  vitepress@1.3.1(@algolia/client-search@4.22.1)(@types/node@20.14.13)(postcss@8.4.39)(search-insights@2.13.0)(typescript@5.4.5):
     dependencies:
       '@docsearch/css': 3.6.0
       '@docsearch/js': 3.6.0(@algolia/client-search@4.22.1)(search-insights@2.13.0)
       '@shikijs/core': 1.10.3
       '@shikijs/transformers': 1.10.3
       '@types/markdown-it': 14.1.1
-      '@vitejs/plugin-vue': 5.0.5(vite@5.3.4(@types/node@20.14.12))(vue@3.4.31(typescript@5.4.5))
+      '@vitejs/plugin-vue': 5.0.5(vite@5.3.4(@types/node@20.14.13))(vue@3.4.31(typescript@5.4.5))
       '@vue/devtools-api': 7.3.6
       '@vue/shared': 3.4.31
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.4.5))
@@ -1536,7 +1536,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.0.1
       shiki: 1.10.3
-      vite: 5.3.4(@types/node@20.14.12)
+      vite: 5.3.4(@types/node@20.14.13)
       vue: 3.4.31(typescript@5.4.5)
     optionalDependencies:
       postcss: 8.4.39
