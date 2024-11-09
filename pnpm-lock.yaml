@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@actions/core':
-        specifier: ^1.10.1
-        version: 1.10.1
+        specifier: ^1.11.1
+        version: 1.11.1
       '@actions/exec':
         specifier: ^1.1.1
         version: 1.1.1
@@ -42,17 +42,14 @@ importers:
 
 packages:
 
-  '@actions/core@1.10.1':
-    resolution: {integrity: sha512-3lBR9EDAY+iYIpTnTIXmWcNbX3T2kCkAEQGIQx4NVQ0575nk2k3GRZDTPQG+vVtS2izSLmINlxXf0uLtnrTP+g==}
+  '@actions/core@1.11.1':
+    resolution: {integrity: sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==}
 
   '@actions/exec@1.1.1':
     resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
 
   '@actions/github@6.0.0':
     resolution: {integrity: sha512-alScpSVnYmjNEXboZjarjukQEzgCRmjMv6Xj47fsdnqGS73bjJNDpiiXmp8jr0UZLdUB6d9jW63IcmddUP+l0g==}
-
-  '@actions/http-client@2.1.0':
-    resolution: {integrity: sha512-BonhODnXr3amchh4qkmjPMUO8mFi/zLaaCeCAJZqch8iQqyDnVIkySjB38VHAC8IJ+bnlgfOqlhpyCUZHlQsqw==}
 
   '@actions/http-client@2.2.0':
     resolution: {integrity: sha512-q+epW0trjVUUHboliPb4UF9g2msf+w61b32tAkFEwL/IwP0DQWgbCMM0Hbe3e3WXSKz5VcUXbzJQgy8Hkra/Lg==}
@@ -753,10 +750,6 @@ packages:
   universal-user-agent@6.0.0:
     resolution: {integrity: sha512-isyNax3wXoKaulPDZWHQqbmIx1k2tb9fb3GGDBRxCscfYV2Ch7WxPArBsFEG8s/safwXTT7H4QGhaIkTp9447w==}
 
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-
   vite@5.4.1:
     resolution: {integrity: sha512-1oE6yuNXssjrZdblI9AfBbHCC41nnyoVoEZxQnID6yvQZAFBzxxkqoFLtHUMkYunL8hwOLEjgTuxpkRxvba3kA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -824,10 +817,10 @@ packages:
 
 snapshots:
 
-  '@actions/core@1.10.1':
+  '@actions/core@1.11.1':
     dependencies:
-      '@actions/http-client': 2.1.0
-      uuid: 8.3.2
+      '@actions/exec': 1.1.1
+      '@actions/http-client': 2.2.0
 
   '@actions/exec@1.1.1':
     dependencies:
@@ -839,10 +832,6 @@ snapshots:
       '@octokit/core': 5.0.1
       '@octokit/plugin-paginate-rest': 9.0.0(@octokit/core@5.0.1)
       '@octokit/plugin-rest-endpoint-methods': 10.0.0(@octokit/core@5.0.1)
-
-  '@actions/http-client@2.1.0':
-    dependencies:
-      tunnel: 0.0.6
 
   '@actions/http-client@2.2.0':
     dependencies:
@@ -1496,8 +1485,6 @@ snapshots:
       '@fastify/busboy': 2.0.0
 
   universal-user-agent@6.0.0: {}
-
-  uuid@8.3.2: {}
 
   vite@5.4.1(@types/node@20.14.15):
     dependencies:
