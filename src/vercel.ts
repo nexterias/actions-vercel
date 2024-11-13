@@ -180,7 +180,7 @@ export const fetchDeployment = async (
 
 export const fetchProjectName = async () => {
 	const response = await fetch(
-		`https://api.vercel.com/v9/projects/${input.projectId}`,
+		`https://api.vercel.com/v9/projects/${input.projectId}?teamId=${input.orgId}`,
 		{
 			headers: {
 				Authorization: `Bearer ${input.token}`,
