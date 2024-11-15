@@ -28,8 +28,8 @@ importers:
         specifier: ^20.14.15
         version: 20.14.15
       '@vercel/ncc':
-        specifier: ^0.38.2
-        version: 0.38.2
+        specifier: ^0.38.3
+        version: 0.38.3
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -512,8 +512,8 @@ packages:
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
 
-  '@vercel/ncc@0.38.2':
-    resolution: {integrity: sha512-3yel3jaxUg9pHBv4+KeC9qlbdZPug+UMtUOlhvpDYCMSgcNSrS2Hv1LoqMsOV7hf2lYscx+BESfJOIla1WsmMQ==}
+  '@vercel/ncc@0.38.3':
+    resolution: {integrity: sha512-rnK6hJBS6mwc+Bkab+PGPs9OiS0i/3kdTO+CkI8V0/VrW3vmz7O2Pxjw/owOlmo6PKEIxRSeZKv/kuL9itnpYA==}
     hasBin: true
 
   '@vitejs/plugin-vue@5.1.2':
@@ -1223,7 +1223,7 @@ snapshots:
 
   '@types/web-bluetooth@0.0.20': {}
 
-  '@vercel/ncc@0.38.2': {}
+  '@vercel/ncc@0.38.3': {}
 
   '@vitejs/plugin-vue@5.1.2(vite@5.4.1(@types/node@20.14.15))(vue@3.4.38(typescript@5.4.5))':
     dependencies:
