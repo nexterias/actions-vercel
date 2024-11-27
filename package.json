@@ -6,7 +6,7 @@
 	"packageManager": "pnpm@9.7.1",
 	"scripts": {
 		"type-check": "tsc --noEmit",
-		"build": "ncc build -t --minify --license=license.txt ./src/index.ts",
+		"build": "ncc build -t --license=license.txt ./src/index.ts",
 		"check": "biome check .",
 		"check:apply": "biome check . --apply",
 		"check:apply-unsafe": "biome check . --apply-unsafe"
