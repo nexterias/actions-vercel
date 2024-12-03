@@ -18,8 +18,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       dotenv:
-        specifier: ^16.4.6
-        version: 16.4.6
+        specifier: ^16.4.7
+        version: 16.4.7
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.9.4
@@ -691,8 +691,8 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  dotenv@16.4.6:
-    resolution: {integrity: sha512-JhcR/+KIjkkjiU8yEpaB/USlzVi3i5whwOjpIRNGi9svKEXZSe+Qp6IWAjFjv+2GViAoDRCUv/QLNziQxsLqDg==}
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   emoji-regex-xs@1.0.0:
@@ -1554,7 +1554,7 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  dotenv@16.4.6: {}
+  dotenv@16.4.7: {}
 
   emoji-regex-xs@1.0.0: {}
 
