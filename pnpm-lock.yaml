@@ -25,7 +25,7 @@ importers:
         specifier: ^1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: ^20.17.58
+        specifier: ^20.19.0
         version: 20.19.0
       '@vercel/ncc':
         specifier: ^0.38.3
