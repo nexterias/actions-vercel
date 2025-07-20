@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@types/node": "^20.19.8",
+		"@types/node": "^20.19.9",
 		"@vercel/ncc": "^0.38.3",
 		"typescript": "^5.4.5"
 	}
