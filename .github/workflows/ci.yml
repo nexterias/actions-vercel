@@ -27,7 +27,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -73,7 +73,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 10
       - uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
@@ -111,7 +111,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 10
       - uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
