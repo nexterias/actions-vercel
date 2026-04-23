@@ -1,7 +1,8 @@
 import path from "node:path";
+import { defineConfig } from "@rspack/cli";
 import { LicenseWebpackPlugin } from "license-webpack-plugin";
 
-export default {
+export default defineConfig({
 	entry: "./src/index.ts",
 	output: {
 		path: path.resolve("dist"),
@@ -11,22 +12,19 @@ export default {
 		chunkLoading: "import",
 	},
 	resolve: {
-		extensions: [".ts", "..."],
+		extensions: [".ts", ".js"],
 	},
 	target: "node24",
 	mode: "production",
 	module: {
 		rules: [
 			{
-				test: /\.ts$/,
-				exclude: /node_modules/,
+				type: "javascript/auto",
+				test: /\.(?:ts|tsx)$/,
 				loader: "builtin:swc-loader",
 				options: {
-					jsc: {
-						parser: { syntax: "typescript" },
-					},
+					detectSyntax: "auto",
 				},
-				type: "javascript/auto",
 			},
 		],
 	},
@@ -40,4 +38,4 @@ export default {
 			outputFilename: "licenses.txt",
 		}),
 	],
-};
+});
