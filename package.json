@@ -19,7 +19,7 @@
 		"dotenv": "^16.4.7"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
+		"@biomejs/biome": "^2.4.12",
 		"@rspack/cli": "^2.0.0",
 		"@rspack/core": "^2.0.0",
 		"@types/node": "^24.0.0",
