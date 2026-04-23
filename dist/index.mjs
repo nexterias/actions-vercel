@@ -838,12 +838,12 @@ class DecodedURL extends URL {
 //# sourceMappingURL=proxy.js.map
 
 },
-3908(module, __unused_rspack_exports, __webpack_require__) {
+4248(module, __unused_rspack_exports, __webpack_require__) {
 const fs = __webpack_require__(9896)
 const path = __webpack_require__(6928)
 const os = __webpack_require__(857)
 const crypto = __webpack_require__(6982)
-const packageJson = __webpack_require__(5778)
+const packageJson = __webpack_require__(7662)
 
 const version = packageJson.version
 
@@ -889,10 +889,11 @@ function parse (src) {
 }
 
 function _parseVault (options) {
-  const vaultPath = _vaultPath(options)
+  options = options || {}
 
-  // Parse .env.vault
-  const result = DotenvModule.configDotenv({ path: vaultPath })
+  const vaultPath = _vaultPath(options)
+  options.path = vaultPath // parse .env.vault
+  const result = DotenvModule.configDotenv(options)
   if (!result.parsed) {
     const err = new Error(`MISSING_DATA: Cannot parse ${vaultPath} for an unknown reason`)
     err.code = 'MISSING_DATA'
@@ -930,16 +931,16 @@ function _parseVault (options) {
   return DotenvModule.parse(decrypted)
 }
 
-function _log (message) {
-  console.log(`[dotenv@${version}][INFO] ${message}`)
-}
-
 function _warn (message) {
   console.log(`[dotenv@${version}][WARN] ${message}`)
 }
 
 function _debug (message) {
   console.log(`[dotenv@${version}][DEBUG] ${message}`)
+}
+
+function _log (message) {
+  console.log(`[dotenv@${version}] ${message}`)
 }
 
 function _dotenvKey (options) {
@@ -1029,7 +1030,12 @@ function _resolveHome (envPath) {
 }
 
 function _configVault (options) {
-  _log('Loading env from encrypted .env.vault')
+  const debug = Boolean(options && options.debug)
+  const quiet = options && 'quiet' in options ? options.quiet : true
+
+  if (debug || !quiet) {
+    _log('Loading env from encrypted .env.vault')
+  }
 
   const parsed = DotenvModule._parseVault(options)
 
@@ -1047,6 +1053,7 @@ function configDotenv (options) {
   const dotenvPath = path.resolve(process.cwd(), '.env')
   let encoding = 'utf8'
   const debug = Boolean(options && options.debug)
+  const quiet = options && 'quiet' in options ? options.quiet : true
 
   if (options && options.encoding) {
     encoding = options.encoding
@@ -1092,6 +1099,24 @@ function configDotenv (options) {
   }
 
   DotenvModule.populate(processEnv, parsedAll, options)
+
+  if (debug || !quiet) {
+    const keysCount = Object.keys(parsedAll).length
+    const shortPaths = []
+    for (const filePath of optionPaths) {
+      try {
+        const relative = path.relative(process.cwd(), filePath)
+        shortPaths.push(relative)
+      } catch (e) {
+        if (debug) {
+          _debug(`Failed to load ${filePath} ${e.message}`)
+        }
+        lastError = e
+      }
+    }
+
+    _log(`injecting env (${keysCount}) from ${shortPaths.join(',')}`)
+  }
 
   if (lastError) {
     return { parsed: parsedAll, error: lastError }
@@ -28950,8 +28975,8 @@ __webpack_unused_export__ = defaultContentType
 
 
 },
-5778(module) {
-module.exports = {"version":"16.4.7"}
+7662(module) {
+module.exports = {"version":"16.6.1"}
 
 },
 
@@ -36235,8 +36260,8 @@ function getOctokit(token, options, ...additionalPlugins) {
 //# sourceMappingURL=github.js.map
 // EXTERNAL MODULE: external "node:crypto"
 var external_node_crypto_ = __webpack_require__(7598);
-// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@16.4.7/node_modules/dotenv/lib/main.js
-var main = __webpack_require__(3908);
+// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@16.6.1/node_modules/dotenv/lib/main.js
+var main = __webpack_require__(4248);
 ;// CONCATENATED MODULE: ./src/input.ts
 
 
