@@ -42,7 +42,7 @@ jobs:
 
       - run: pnpm build
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: actions-vercel-dist
           path: ./dist
@@ -79,7 +79,7 @@ jobs:
           cache: 'pnpm'
           node-version: 20
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: actions-vercel-dist
           path: ./dist
