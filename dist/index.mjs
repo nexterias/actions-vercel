@@ -31808,7 +31808,7 @@ function core_isDebug() {
  * @param message debug message
  */
 function core_debug(message) {
-    issueCommand('debug', {}, message);
+    command_issueCommand('debug', {}, message);
 }
 /**
  * Adds an error issue
@@ -36562,13 +36562,17 @@ const fetchDeployment = async (url)=>{
     return response.json();
 };
 const fetchProjectName = async ()=>{
+    // https://vercel.com/docs/rest-api/projects/find-a-project-by-id-or-name
     const response = await fetch(`https://api.vercel.com/v9/projects/${projectId}?teamId=${orgId}`, {
+        method: "GET",
         headers: {
-            Authorization: `Bearer ${input_token}`
+            Authorization: `Bearer ${input_token}`,
+            "Content-Type": "application/json"
         }
     });
-    const { name } = await response.json();
-    return name;
+    const body = await response.json();
+    core_debug(`fetchProjectName: ${JSON.stringify(body, null, 2)}`);
+    return body.name;
 };
 
 ;// CONCATENATED MODULE: ./src/index.ts
