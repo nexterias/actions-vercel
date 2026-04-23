@@ -4,7 +4,7 @@
 	"author": "InkoHX <me@inkohx.dev>",
 	"license": "MIT",
 	"type": "module",
-	"packageManager": "pnpm@9.15.9",
+	"packageManager": "pnpm@10.33.0",
 	"scripts": {
 		"type-check": "tsc --noEmit",
 		"build": "rspack build",
