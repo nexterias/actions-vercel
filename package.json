@@ -22,7 +22,7 @@
 		"@biomejs/biome": "^1.9.4",
 		"@rspack/cli": "^2.0.0",
 		"@rspack/core": "^2.0.0",
-		"@types/node": "^24.0.0",
+		"@types/node": "^24.0.15",
 		"license-webpack-plugin": "^4.0.2",
 		"typescript": "^5.4.5"
 	}
