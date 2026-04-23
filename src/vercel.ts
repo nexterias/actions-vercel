@@ -179,16 +179,20 @@ export const fetchDeployment = async (
 };
 
 export const fetchProjectName = async () => {
+	// https://vercel.com/docs/rest-api/projects/find-a-project-by-id-or-name
 	const response = await fetch(
 		`https://api.vercel.com/v9/projects/${input.projectId}?teamId=${input.orgId}`,
 		{
+			method: "GET",
 			headers: {
 				Authorization: `Bearer ${input.token}`,
+				"Content-Type": "application/json",
 			},
 		},
 	);
+	const body = (await response.json()) as { name: string };
 
-	const { name } = (await response.json()) as { name: string };
+	core.debug(`fetchProjectName: ${JSON.stringify(body, null, 2)}`);
 
-	return name;
+	return body.name;
 };
