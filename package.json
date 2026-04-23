@@ -3,24 +3,27 @@
 	"version": "1.2.3",
 	"author": "InkoHX <me@inkohx.dev>",
 	"license": "MIT",
+	"type": "module",
 	"packageManager": "pnpm@9.15.9",
 	"scripts": {
 		"type-check": "tsc --noEmit",
-		"build": "ncc build -t --license=license.txt ./src/index.ts",
+		"build": "rspack build",
 		"check": "biome check .",
 		"check:apply": "biome check . --apply",
 		"check:apply-unsafe": "biome check . --apply-unsafe"
 	},
 	"dependencies": {
-		"@actions/core": "^1.11.1",
-		"@actions/exec": "^1.1.1",
-		"@actions/github": "^6.0.1",
+		"@actions/core": "^3.0.1",
+		"@actions/exec": "^3.0.0",
+		"@actions/github": "^9.1.1",
 		"dotenv": "^16.4.7"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@types/node": "^20.19.39",
-		"@vercel/ncc": "^0.38.4",
+		"@rspack/cli": "^2.0.0",
+		"@rspack/core": "^2.0.0",
+		"@types/node": "^24.0.0",
+		"license-webpack-plugin": "^4.0.2",
 		"typescript": "^5.4.5"
 	}
 }

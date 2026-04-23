@@ -44,5 +44,5 @@ outputs:
     description: '"QUEUED" | "BUILDING" | "ERROR" | "INITIALIZING" | "READY" | "CANCELED"'
 
 runs:
-  using: node20
-  main: ./dist/index.js
+  using: node24
+  main: ./dist/index.mjs
