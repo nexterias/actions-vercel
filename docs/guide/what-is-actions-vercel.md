@@ -8,7 +8,7 @@ title: ガイド
 **nexterias/actions-vercel**は、GitHub Actionsを使用してVercelにデプロイを行うためのアクションです。
 
 - Vercelのビルド、デプロイまでのプロセスをGitHub Actionsに組み込むことが可能になる
- - GitHub Actionsの良さを活かしたCI/CDを構築できるようになります
+- GitHub Actionsの良さを活かしたCI/CDを構築できるようになります
 - `vercel build`, `vercel deploy --prebuilt`をサポート
   - ビルドをGitHub Actions上で行い、そのデータをVercelにデプロイすることが可能
     - Vercel側のビルド時間をゼロにすることができます

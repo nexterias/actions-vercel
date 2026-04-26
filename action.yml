@@ -6,7 +6,7 @@ branding:
 
 inputs:
   token:
-    description: 'Vercel token: https://vercel.com/account/tokens'
+    description: "Vercel token: https://vercel.com/account/tokens"
     required: true
   project-id:
     description: Vercel project ID
@@ -19,19 +19,19 @@ inputs:
     default: ${{ github.token }}
   production:
     description: Create a production deployment
-    default: 'false'
+    default: "false"
   prebuilt:
     description: Use the --prebuilt option
-    default: 'false'
+    default: "false"
   cwd:
-    description: 'Current Working Directory (default: process.cwd())'
+    description: "Current Working Directory (default: process.cwd())"
   domain-alias:
     description: Assign domains (multiple domains can be specified)
   github-deployment-environment:
     description: Name for the target deployment environment
   public:
     description: Deployment is public (`/_src` is exposed)
-    default: 'false'
+    default: "false"
   build-env:
     description: Similar to env option but for build time only.
   env:
