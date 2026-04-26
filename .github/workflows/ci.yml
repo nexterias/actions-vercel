@@ -31,14 +31,14 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version: 24
 
       - run: pnpm i --frozen-lock
 
-      - run: pnpm type-check
+      - run: pnpm lint
 
-      - run: pnpm biome ci .
+      - run: pnpm fmt:check
 
       - run: pnpm build
 
@@ -76,7 +76,7 @@ jobs:
           version: 10
       - uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version: 24
 
       - uses: actions/download-artifact@v8
@@ -114,7 +114,7 @@ jobs:
           version: 10
       - uses: actions/setup-node@v6
         with:
-          cache: 'pnpm'
+          cache: "pnpm"
           node-version: 24
 
       - name: Setup git-cliff

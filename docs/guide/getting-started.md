@@ -46,16 +46,15 @@ cat ./vercel/project.json | jq -r '.projectId'
 cat ./vercel/project.json | jq -r '.orgId'
 ```
 
-## Vercelのアクセストークンを作成 
+## Vercelのアクセストークンを作成
 
 [アカウントの設定](https://vercel.com/account/tokens)に移動し、アクセストークンを作成してください。
 
-| 項目 | 説明 |
-| --- | --- |
-| **NAME** | 任意の名前を入力 |
-| **SCOPE** | 作成したVercelプロジェクトがあるチームを選択 |
-| **EXPIRATION** | 任意の値を設定 |
-
+| 項目           | 説明                                         |
+| -------------- | -------------------------------------------- |
+| **NAME**       | 任意の名前を入力                             |
+| **SCOPE**      | 作成したVercelプロジェクトがあるチームを選択 |
+| **EXPIRATION** | 任意の値を設定                               |
 
 上記の項目を埋めて、**Create**を押すとアクセストークンが手に入るので値を控えてください。
 
@@ -68,11 +67,11 @@ cat ./vercel/project.json | jq -r '.orgId'
 
 **New repository secret**から、上記の値を以下のように登録します。
 
-| 名前 | 値 |
-| --- | --- |
-| `VERCEL_PROJECT_ID` | `projectId`の値 |
-| `VERCEL_ORG_ID` | `orgId`の値 |
-| `VERCEL_TOKEN ` | 作成したアクセストークン |
+| 名前                | 値                       |
+| ------------------- | ------------------------ |
+| `VERCEL_PROJECT_ID` | `projectId`の値          |
+| `VERCEL_ORG_ID`     | `orgId`の値              |
+| `VERCEL_TOKEN `     | 作成したアクセストークン |
 
 ## GitHub Actionsの設定
 
@@ -85,11 +84,11 @@ cat ./vercel/project.json | jq -r '.orgId'
 ::: tip `GITHUB_TOKEN`の権限
 `jobs.*.permissions`で指定している項目について補足
 
-| 権限 | 説明 |
-| --- | --- |
-| `contents` | `actions/checkout`で必要 |
-| `deployments` | デプロイメントを作成、更新する為に`write`に設定 |
-| `statuses` | コミットステータスを作成、更新する為に`write`に設定 |
+| 権限            | 説明                                                |
+| --------------- | --------------------------------------------------- |
+| `contents`      | `actions/checkout`で必要                            |
+| `deployments`   | デプロイメントを作成、更新する為に`write`に設定     |
+| `statuses`      | コミットステータスを作成、更新する為に`write`に設定 |
 | `pull-requests` | プルリクエストにコメントを作成する為に`write`に設定 |
 
 `contents`を`read`だけに設定しても動作しますが、**VercelのGitHub連携を模倣する機能**が使えなくなります。

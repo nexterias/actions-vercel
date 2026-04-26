@@ -28,4 +28,4 @@ jobs:
           org-id: ${{ secrets.VERCEL_ORG_ID }}
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           production: ${{ github.ref == 'refs/heads/main' }}
-          cwd: './your-ultimate-app'
+          cwd: "./your-ultimate-app"

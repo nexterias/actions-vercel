@@ -1,29 +1,31 @@
 {
-	"name": "actions-vercel",
-	"version": "1.2.3",
-	"author": "InkoHX <me@inkohx.dev>",
-	"license": "MIT",
-	"type": "module",
-	"packageManager": "pnpm@10.33.0",
-	"scripts": {
-		"type-check": "tsc --noEmit",
-		"build": "rspack build",
-		"check": "biome check .",
-		"check:apply": "biome check . --apply",
-		"check:apply-unsafe": "biome check . --apply-unsafe"
-	},
-	"dependencies": {
-		"@actions/core": "^3.0.1",
-		"@actions/exec": "^3.0.0",
-		"@actions/github": "^9.1.1",
-		"dotenv": "^17.4.2"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@rspack/cli": "^2.0.0",
-		"@rspack/core": "^2.0.0",
-		"@types/node": "^24.12.2",
-		"license-webpack-plugin": "^4.0.2",
-		"typescript": "^5.4.5"
-	}
+  "name": "actions-vercel",
+  "version": "1.2.3",
+  "license": "MIT",
+  "author": "InkoHX <me@inkohx.dev>",
+  "type": "module",
+  "scripts": {
+    "build": "rspack build",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt . --check"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/exec": "^3.0.0",
+    "@actions/github": "^9.1.1",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@rspack/cli": "^2.0.0",
+    "@rspack/core": "^2.0.0",
+    "@types/node": "^24.12.2",
+    "@typescript/native-preview": "7.0.0-dev.20260426.1",
+    "license-webpack-plugin": "^4.0.2",
+    "oxfmt": "^0.46.0",
+    "oxlint": "^1.61.0",
+    "oxlint-tsgolint": "^0.22.0"
+  },
+  "packageManager": "pnpm@10.33.0"
 }

@@ -36724,7 +36724,6 @@ async function run() {
             deploymentUrl,
             state: readyState === "READY" ? "success" : "error"
         });
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error) {
         setFailed(error);
         await resultComment?.update({

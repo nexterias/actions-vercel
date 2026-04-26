@@ -4,8 +4,8 @@ layout: home
 title: ホーム
 
 hero:
-  name: 'Vercel Actions'
-  text: 'Deploy to Vercel with GitHub Actions'
+  name: "Vercel Actions"
+  text: "Deploy to Vercel with GitHub Actions"
   tagline: VercelのプロセスをGitHub Actionsに組み込み、高度なワークフローを構築しよう！
   actions:
     - theme: brand
