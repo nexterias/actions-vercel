@@ -2,11 +2,12 @@ import { defineConfig } from "oxlint";
 
 export default defineConfig({
   plugins: ["typescript"],
-  categories: { correctness: "error" },
-  rules: {},
+  categories: {
+    correctness: "error",
+  },
   options: {
     typeAware: true,
     typeCheck: true,
   },
-  ignorePatterns: ["dist/**", ".vercel/**/*"],
+  ignorePatterns: ["dist/", "node_modules/"],
 });
