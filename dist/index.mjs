@@ -838,14 +838,43 @@ class DecodedURL extends URL {
 //# sourceMappingURL=proxy.js.map
 
 },
-4248(module, __unused_rspack_exports, __webpack_require__) {
+3008(module, __unused_rspack_exports, __webpack_require__) {
 const fs = __webpack_require__(9896)
 const path = __webpack_require__(6928)
 const os = __webpack_require__(857)
 const crypto = __webpack_require__(6982)
-const packageJson = __webpack_require__(7662)
 
-const version = packageJson.version
+// Array of tips to display randomly
+const TIPS = [
+  '◈ encrypted .env [www.dotenvx.com]',
+  '◈ secrets for agents [www.dotenvx.com]',
+  '⌁ auth for agents [www.vestauth.com]',
+  '⌘ custom filepath { path: \'/custom/path/.env\' }',
+  '⌘ enable debugging { debug: true }',
+  '⌘ override existing { override: true }',
+  '⌘ suppress logs { quiet: true }',
+  '⌘ multiple files { path: [\'.env.local\', \'.env\'] }'
+]
+
+// Get a random tip from the tips array
+function _getRandomTip () {
+  return TIPS[Math.floor(Math.random() * TIPS.length)]
+}
+
+function parseBoolean (value) {
+  if (typeof value === 'string') {
+    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
+  }
+  return Boolean(value)
+}
+
+function supportsAnsi () {
+  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
+}
+
+function dim (text) {
+  return supportsAnsi() ? `\x1b[2m${text}\x1b[0m` : text
+}
 
 const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
 
@@ -932,15 +961,15 @@ function _parseVault (options) {
 }
 
 function _warn (message) {
-  console.log(`[dotenv@${version}][WARN] ${message}`)
+  console.error(`⚠ ${message}`)
 }
 
 function _debug (message) {
-  console.log(`[dotenv@${version}][DEBUG] ${message}`)
+  console.log(`┆ ${message}`)
 }
 
 function _log (message) {
-  console.log(`[dotenv@${version}] ${message}`)
+  console.log(`◇ ${message}`)
 }
 
 function _dotenvKey (options) {
@@ -1030,11 +1059,11 @@ function _resolveHome (envPath) {
 }
 
 function _configVault (options) {
-  const debug = Boolean(options && options.debug)
-  const quiet = options && 'quiet' in options ? options.quiet : true
+  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
+  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
 
   if (debug || !quiet) {
-    _log('Loading env from encrypted .env.vault')
+    _log('loading env from encrypted .env.vault')
   }
 
   const parsed = DotenvModule._parseVault(options)
@@ -1052,14 +1081,18 @@ function _configVault (options) {
 function configDotenv (options) {
   const dotenvPath = path.resolve(process.cwd(), '.env')
   let encoding = 'utf8'
-  const debug = Boolean(options && options.debug)
-  const quiet = options && 'quiet' in options ? options.quiet : true
+  let processEnv = process.env
+  if (options && options.processEnv != null) {
+    processEnv = options.processEnv
+  }
+  let debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || (options && options.debug))
+  let quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || (options && options.quiet))
 
   if (options && options.encoding) {
     encoding = options.encoding
   } else {
     if (debug) {
-      _debug('No encoding is specified. UTF-8 is used by default')
+      _debug('no encoding is specified (UTF-8 is used by default)')
     }
   }
 
@@ -1087,21 +1120,20 @@ function configDotenv (options) {
       DotenvModule.populate(parsedAll, parsed, options)
     } catch (e) {
       if (debug) {
-        _debug(`Failed to load ${path} ${e.message}`)
+        _debug(`failed to load ${path} ${e.message}`)
       }
       lastError = e
     }
   }
 
-  let processEnv = process.env
-  if (options && options.processEnv != null) {
-    processEnv = options.processEnv
-  }
+  const populated = DotenvModule.populate(processEnv, parsedAll, options)
 
-  DotenvModule.populate(processEnv, parsedAll, options)
+  // handle user settings DOTENV_CONFIG_ options inside .env file(s)
+  debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || debug)
+  quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || quiet)
 
   if (debug || !quiet) {
-    const keysCount = Object.keys(parsedAll).length
+    const keysCount = Object.keys(populated).length
     const shortPaths = []
     for (const filePath of optionPaths) {
       try {
@@ -1109,13 +1141,13 @@ function configDotenv (options) {
         shortPaths.push(relative)
       } catch (e) {
         if (debug) {
-          _debug(`Failed to load ${filePath} ${e.message}`)
+          _debug(`failed to load ${filePath} ${e.message}`)
         }
         lastError = e
       }
     }
 
-    _log(`injecting env (${keysCount}) from ${shortPaths.join(',')}`)
+    _log(`injected env (${keysCount}) from ${shortPaths.join(',')} ${dim(`// tip: ${_getRandomTip()}`)}`)
   }
 
   if (lastError) {
@@ -1136,7 +1168,7 @@ function config (options) {
 
   // dotenvKey exists but .env.vault file does not exist
   if (!vaultPath) {
-    _warn(`You set DOTENV_KEY but you are missing a .env.vault file at ${vaultPath}. Did you forget to build it?`)
+    _warn(`you set DOTENV_KEY but you are missing a .env.vault file at ${vaultPath}`)
 
     return DotenvModule.configDotenv(options)
   }
@@ -1179,6 +1211,7 @@ function decrypt (encrypted, keyStr) {
 function populate (processEnv, parsed, options = {}) {
   const debug = Boolean(options && options.debug)
   const override = Boolean(options && options.override)
+  const populated = {}
 
   if (typeof parsed !== 'object') {
     const err = new Error('OBJECT_REQUIRED: Please check the processEnv argument being passed to populate')
@@ -1191,6 +1224,7 @@ function populate (processEnv, parsed, options = {}) {
     if (Object.prototype.hasOwnProperty.call(processEnv, key)) {
       if (override === true) {
         processEnv[key] = parsed[key]
+        populated[key] = parsed[key]
       }
 
       if (debug) {
@@ -1202,8 +1236,11 @@ function populate (processEnv, parsed, options = {}) {
       }
     } else {
       processEnv[key] = parsed[key]
+      populated[key] = parsed[key]
     }
   }
+
+  return populated
 }
 
 const DotenvModule = {
@@ -28975,10 +29012,6 @@ __webpack_unused_export__ = defaultContentType
 
 
 },
-7662(module) {
-module.exports = {"version":"16.6.1"}
-
-},
 
 });
 // The module cache
@@ -36260,8 +36293,8 @@ function getOctokit(token, options, ...additionalPlugins) {
 //# sourceMappingURL=github.js.map
 // EXTERNAL MODULE: external "node:crypto"
 var external_node_crypto_ = __webpack_require__(7598);
-// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@16.6.1/node_modules/dotenv/lib/main.js
-var main = __webpack_require__(4248);
+// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@17.4.2/node_modules/dotenv/lib/main.js
+var main = __webpack_require__(3008);
 ;// CONCATENATED MODULE: ./src/input.ts
 
 
