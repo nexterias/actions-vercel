@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: nexterias/actions-vercel@v1
+      - uses: nexterias/actions-vercel@v2
         with:
           token: ${{ secrets.YOUR_VERCEL_TOKEN }}
           org-id: ${{ secrets.YOUR_VERCEL_ORG_ID }}
