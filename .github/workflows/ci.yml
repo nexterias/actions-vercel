@@ -36,9 +36,9 @@ jobs:
 
       - run: pnpm i --frozen-lock
 
-      - run: pnpm type-check
+      - run: pnpm lint
 
-      - run: pnpm biome ci .
+      - run: pnpm fmt:check
 
       - run: pnpm build
 
