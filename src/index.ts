@@ -102,7 +102,6 @@ async function run() {
       deploymentUrl,
       state: readyState === "READY" ? "success" : "error",
     });
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   } catch (error: any) {
     core.setFailed(error);
     await resultComment?.update({ status: "Failed" });
