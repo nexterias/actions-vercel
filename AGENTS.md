@@ -4,15 +4,15 @@
 
 ```sh
 # 型チェック
-pnpm type-check
+pnpm lint
 
-# lint & format
-pnpm check
+# フォーマット確認
+pnpm fmt:check
 ```
 
 ## 開発ルール
 
-- ソースコードを変更した場合、`pnpm type-check && pnpm check`が必ず通過することを確認する
+- ソースコードを変更した場合、`pnpm lint && pnpm fmt:check`が必ず通過することを確認する
 - `src/`配下のソースコードを変更した場合、`docs/`配下のドキュメントを更新する必要があるか確認し、ユーザーの指示を仰ぐこと
 
 ## コミットメッセージ
