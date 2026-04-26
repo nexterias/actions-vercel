@@ -25,22 +25,22 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
 
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          node-version: 24
+      - name: Pre-build devShell
+        run: nix build --no-link .#devShells.$(nix eval --impure --raw --expr 'builtins.currentSystem').default
 
-      - run: pnpm i --frozen-lock
+      - shell: "nix develop -c bash -e {0}"
+        run: pnpm i --frozen-lock
 
-      - run: pnpm type-check
+      - shell: "nix develop -c bash -e {0}"
+        run: pnpm type-check
 
-      - run: pnpm biome ci .
+      - shell: "nix develop -c bash -e {0}"
+        run: pnpm biome ci .
 
-      - run: pnpm build
+      - shell: "nix develop -c bash -e {0}"
+        run: pnpm build
 
       - uses: actions/upload-artifact@v7
         with:
@@ -48,6 +48,7 @@ jobs:
           path: ./dist
 
       - name: Commit dist files
+        shell: "nix develop -c bash -e {0}"
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           git config user.name github-actions
@@ -71,13 +72,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          node-version: 24
+
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+
+      - name: Pre-build devShell
+        run: nix build --no-link .#devShells.$(nix eval --impure --raw --expr 'builtins.currentSystem').default
 
       - uses: actions/download-artifact@v8
         with:
@@ -109,13 +108,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          node-version: 24
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+
+      - name: Pre-build devShell
+        run: nix build --no-link .#devShells.$(nix eval --impure --raw --expr 'builtins.currentSystem').default
 
       - name: Setup git-cliff
         uses: kenji-miyake/setup-git-cliff@v2
