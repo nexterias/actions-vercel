@@ -25,7 +25,7 @@
     "license-webpack-plugin": "^4.0.2",
     "oxfmt": "^0.46.0",
     "oxlint": "^1.61.0",
-    "oxlint-tsgolint": "^0.22.0"
+    "oxlint-tsgolint": "^0.22.1"
   },
   "packageManager": "pnpm@10.33.2"
 }
