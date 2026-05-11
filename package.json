@@ -20,7 +20,7 @@
   "devDependencies": {
     "@rspack/cli": "^2.0.1",
     "@rspack/core": "^2.0.1",
-    "@types/node": "^24.12.2",
+    "@types/node": "^24.12.3",
     "@typescript/native-preview": "7.0.0-dev.20260507.1",
     "license-webpack-plugin": "^4.0.2",
     "oxfmt": "^0.47.0",
