@@ -21,7 +21,7 @@
     "@rspack/cli": "^2.0.4",
     "@rspack/core": "^2.0.4",
     "@types/node": "^24.12.4",
-    "@typescript/native-preview": "7.0.0-dev.20260525.1",
+    "@typescript/native-preview": "7.0.0-dev.20260526.1",
     "license-webpack-plugin": "^4.0.2",
     "oxfmt": "^0.47.0",
     "oxlint": "^1.61.0",
