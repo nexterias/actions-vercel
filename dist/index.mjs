@@ -1539,7 +1539,7 @@ exports.debug = debug; // for test
 
 },
 4992(module, __unused_rspack_exports, __webpack_require__) {
-var __webpack_unused_export__;
+var __rspack_unused_export;
 
 
 const Client = __webpack_require__(1349)
@@ -1567,29 +1567,29 @@ const createRedirectInterceptor = __webpack_require__(7796)
 
 Object.assign(Dispatcher.prototype, api)
 
-__webpack_unused_export__ = Dispatcher
-__webpack_unused_export__ = Client
-__webpack_unused_export__ = Pool
-__webpack_unused_export__ = BalancedPool
-__webpack_unused_export__ = Agent
+__rspack_unused_export = Dispatcher
+__rspack_unused_export = Client
+__rspack_unused_export = Pool
+__rspack_unused_export = BalancedPool
+__rspack_unused_export = Agent
 module.exports.ProxyAgent = ProxyAgent
-__webpack_unused_export__ = EnvHttpProxyAgent
-__webpack_unused_export__ = RetryAgent
-__webpack_unused_export__ = RetryHandler
+__rspack_unused_export = EnvHttpProxyAgent
+__rspack_unused_export = RetryAgent
+__rspack_unused_export = RetryHandler
 
-__webpack_unused_export__ = DecoratorHandler
-__webpack_unused_export__ = RedirectHandler
-__webpack_unused_export__ = createRedirectInterceptor
-__webpack_unused_export__ = {
+__rspack_unused_export = DecoratorHandler
+__rspack_unused_export = RedirectHandler
+__rspack_unused_export = createRedirectInterceptor
+__rspack_unused_export = {
   redirect: __webpack_require__(1674),
   retry: __webpack_require__(5450),
   dump: __webpack_require__(12),
   dns: __webpack_require__(9931)
 }
 
-__webpack_unused_export__ = buildConnector
-__webpack_unused_export__ = errors
-__webpack_unused_export__ = {
+__rspack_unused_export = buildConnector
+__rspack_unused_export = errors
+__rspack_unused_export = {
   parseHeaders: util.parseHeaders,
   headerNameToString: util.headerNameToString
 }
@@ -1643,8 +1643,8 @@ function makeDispatcher (fn) {
   }
 }
 
-__webpack_unused_export__ = setGlobalDispatcher
-__webpack_unused_export__ = getGlobalDispatcher
+__rspack_unused_export = setGlobalDispatcher
+__rspack_unused_export = getGlobalDispatcher
 
 const fetchImpl = (__webpack_require__(6302)/* .fetch */.fetch)
 module.exports.hd = async function fetch (init, options = undefined) {
@@ -1662,53 +1662,53 @@ module.exports.hd = async function fetch (init, options = undefined) {
 /* unused reexport */ __webpack_require__(840)/* .Response */.Response
 /* unused reexport */ __webpack_require__(2335)/* .Request */.Request
 /* unused reexport */ __webpack_require__(8054)/* .FormData */.FormData
-__webpack_unused_export__ = globalThis.File ?? (__webpack_require__(4573)/* .File */.File)
+__rspack_unused_export = globalThis.File ?? (__webpack_require__(4573)/* .File */.File)
 /* unused reexport */ __webpack_require__(6755)/* .FileReader */.FileReader
 
 const { setGlobalOrigin, getGlobalOrigin } = __webpack_require__(7091)
 
-__webpack_unused_export__ = setGlobalOrigin
-__webpack_unused_export__ = getGlobalOrigin
+__rspack_unused_export = setGlobalOrigin
+__rspack_unused_export = getGlobalOrigin
 
 const { CacheStorage } = __webpack_require__(6093)
 const { kConstruct } = __webpack_require__(7773)
 
 // Cache & CacheStorage are tightly coupled with fetch. Even if it may run
 // in an older version of Node, it doesn't have any use without fetch.
-__webpack_unused_export__ = new CacheStorage(kConstruct)
+__rspack_unused_export = new CacheStorage(kConstruct)
 
 const { deleteCookie, getCookies, getSetCookies, setCookie } = __webpack_require__(7701)
 
-__webpack_unused_export__ = deleteCookie
-__webpack_unused_export__ = getCookies
-__webpack_unused_export__ = getSetCookies
-__webpack_unused_export__ = setCookie
+__rspack_unused_export = deleteCookie
+__rspack_unused_export = getCookies
+__rspack_unused_export = getSetCookies
+__rspack_unused_export = setCookie
 
 const { parseMIMEType, serializeAMimeType } = __webpack_require__(1036)
 
-__webpack_unused_export__ = parseMIMEType
-__webpack_unused_export__ = serializeAMimeType
+__rspack_unused_export = parseMIMEType
+__rspack_unused_export = serializeAMimeType
 
 const { CloseEvent, ErrorEvent, MessageEvent } = __webpack_require__(2996)
 /* unused reexport */ __webpack_require__(1550)/* .WebSocket */.WebSocket
-__webpack_unused_export__ = CloseEvent
-__webpack_unused_export__ = ErrorEvent
-__webpack_unused_export__ = MessageEvent
+__rspack_unused_export = CloseEvent
+__rspack_unused_export = ErrorEvent
+__rspack_unused_export = MessageEvent
 
-__webpack_unused_export__ = makeDispatcher(api.request)
-__webpack_unused_export__ = makeDispatcher(api.stream)
-__webpack_unused_export__ = makeDispatcher(api.pipeline)
-__webpack_unused_export__ = makeDispatcher(api.connect)
-__webpack_unused_export__ = makeDispatcher(api.upgrade)
+__rspack_unused_export = makeDispatcher(api.request)
+__rspack_unused_export = makeDispatcher(api.stream)
+__rspack_unused_export = makeDispatcher(api.pipeline)
+__rspack_unused_export = makeDispatcher(api.connect)
+__rspack_unused_export = makeDispatcher(api.upgrade)
 
-__webpack_unused_export__ = MockClient
-__webpack_unused_export__ = MockPool
-__webpack_unused_export__ = MockAgent
-__webpack_unused_export__ = mockErrors
+__rspack_unused_export = MockClient
+__rspack_unused_export = MockPool
+__rspack_unused_export = MockAgent
+__rspack_unused_export = mockErrors
 
 const { EventSource } = __webpack_require__(3846)
 
-__webpack_unused_export__ = EventSource
+__rspack_unused_export = EventSource
 
 
 },
@@ -11148,10 +11148,10 @@ module.exports = globalOpts => {
 
 },
 4408(__unused_rspack_module, exports, __webpack_require__) {
-var __webpack_unused_export__;
+var __rspack_unused_export;
 
-__webpack_unused_export__ = ({ value: true });
-__webpack_unused_export__ = exports.ww = __webpack_unused_export__ = exports.oC = __webpack_unused_export__ = exports.GP = __webpack_unused_export__ = exports.e9 = __webpack_unused_export__ = exports.l5 = exports.Xc = __webpack_unused_export__ = exports.M$ = exports.N_ = exports.pF = __webpack_unused_export__ = exports.Y6 = exports.Nh = exports.CV = exports.KO = exports.XV = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.J8 = exports.W4 = exports.Wg = exports.TYPE = exports.ERROR = void 0;
+__rspack_unused_export = ({ value: true });
+__rspack_unused_export = exports.ww = __rspack_unused_export = exports.oC = __rspack_unused_export = exports.GP = __rspack_unused_export = exports.e9 = __rspack_unused_export = exports.l5 = exports.Xc = __rspack_unused_export = exports.M$ = exports.N_ = exports.pF = __rspack_unused_export = exports.Y6 = exports.Nh = exports.CV = exports.KO = exports.XV = __rspack_unused_export = __rspack_unused_export = __rspack_unused_export = exports.J8 = exports.W4 = exports.Wg = exports.TYPE = exports.ERROR = void 0;
 const utils_1 = __webpack_require__(5452);
 // C headers
 var ERROR;
@@ -11267,7 +11267,7 @@ var METHODS;
     /* RAOP */
     METHODS[METHODS["FLUSH"] = 45] = "FLUSH";
 })(METHODS = exports.J8 || (exports.J8 = {}));
-__webpack_unused_export__ = [
+__rspack_unused_export = [
     METHODS.DELETE,
     METHODS.GET,
     METHODS.HEAD,
@@ -11305,10 +11305,10 @@ __webpack_unused_export__ = [
     // TODO(indutny): should we allow it with HTTP?
     METHODS.SOURCE,
 ];
-__webpack_unused_export__ = [
+__rspack_unused_export = [
     METHODS.SOURCE,
 ];
-__webpack_unused_export__ = [
+__rspack_unused_export = [
     METHODS.OPTIONS,
     METHODS.DESCRIBE,
     METHODS.ANNOUNCE,
@@ -11349,7 +11349,7 @@ exports.Y6 = {
     0: 0, 1: 1, 2: 2, 3: 3, 4: 4,
     5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
 };
-__webpack_unused_export__ = {
+__rspack_unused_export = {
     0: 0, 1: 1, 2: 2, 3: 3, 4: 4,
     5: 5, 6: 6, 7: 7, 8: 8, 9: 9,
     A: 0XA, B: 0XB, C: 0XC, D: 0XD, E: 0XE, F: 0XF,
@@ -11360,7 +11360,7 @@ exports.pF = [
 ];
 exports.N_ = exports.Nh.concat(exports.pF);
 exports.M$ = ['-', '_', '.', '!', '~', '*', '\'', '(', ')'];
-__webpack_unused_export__ = exports.N_.concat(exports.M$)
+__rspack_unused_export = exports.N_.concat(exports.M$)
     .concat(['%', ';', ':', '&', '=', '+', '$', ',']);
 // TODO(indutny): use RFC
 exports.Xc = [
@@ -11376,7 +11376,7 @@ exports.l5 = exports.Xc.concat(['\t', '\f']);
 for (let i = 0x80; i <= 0xff; i++) {
     exports.l5.push(i);
 }
-__webpack_unused_export__ = exports.pF.concat(['a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F']);
+__rspack_unused_export = exports.pF.concat(['a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F']);
 /* Tokens as defined by rfc 2616. Also lowercases them.
  *        token       = 1*<any CHAR except CTLs or separators>
  *     separators     = "(" | ")" | "<" | ">" | "@"
@@ -11390,7 +11390,7 @@ exports.e9 = [
     '^', '_', '`',
     '|', '~',
 ].concat(exports.N_);
-__webpack_unused_export__ = exports.e9.concat([' ']);
+__rspack_unused_export = exports.e9.concat([' ']);
 /*
  * Verify that a char is a valid visible (printable) US-ASCII
  * character or %x80-FF
@@ -11402,9 +11402,9 @@ for (let i = 32; i <= 255; i++) {
     }
 }
 // ',' = \x44
-__webpack_unused_export__ = exports.GP.filter((c) => c !== 44);
+__rspack_unused_export = exports.GP.filter((c) => c !== 44);
 exports.oC = exports.Y6;
-__webpack_unused_export__ = exports.oC;
+__rspack_unused_export = exports.oC;
 var HEADER_STATE;
 (function (HEADER_STATE) {
     HEADER_STATE[HEADER_STATE["GENERAL"] = 0] = "GENERAL";
@@ -11417,7 +11417,7 @@ var HEADER_STATE;
     HEADER_STATE[HEADER_STATE["CONNECTION_UPGRADE"] = 7] = "CONNECTION_UPGRADE";
     HEADER_STATE[HEADER_STATE["TRANSFER_ENCODING_CHUNKED"] = 8] = "TRANSFER_ENCODING_CHUNKED";
 })(HEADER_STATE = exports.ww || (exports.ww = {}));
-__webpack_unused_export__ = {
+__rspack_unused_export = {
     'connection': HEADER_STATE.CONNECTION,
     'content-length': HEADER_STATE.CONTENT_LENGTH,
     'proxy-connection': HEADER_STATE.CONNECTION,
@@ -11446,9 +11446,9 @@ module.exports = Buffer.from('AGFzbQEAAAABJwdgAX8Bf2ADf39/AX9gAX8AYAJ/fwBgBH9/f3
 
 },
 5452(__unused_rspack_module, exports) {
-var __webpack_unused_export__;
+var __rspack_unused_export;
 
-__webpack_unused_export__ = ({ value: true });
+__rspack_unused_export = ({ value: true });
 exports.enumToMap = void 0;
 function enumToMap(obj) {
     const res = {};
@@ -11724,7 +11724,7 @@ module.exports = {
 
 },
 9015(module, __unused_rspack_exports, __webpack_require__) {
-var __webpack_unused_export__;
+var __rspack_unused_export;
 
 
 const { getResponseData, buildKey, addMockDispatch } = __webpack_require__(9109)
@@ -11931,7 +11931,7 @@ class MockInterceptor {
 }
 
 module.exports.MockInterceptor = MockInterceptor
-__webpack_unused_export__ = MockScope
+__rspack_unused_export = MockScope
 
 
 },
@@ -28839,7 +28839,7 @@ module.exports = __rspack_createRequire_require("util");
 
 },
 6411(module) {
-var __webpack_unused_export__;
+var __rspack_unused_export;
 
 
 const NullObject = function NullObject () { }
@@ -29005,10 +29005,10 @@ function safeParse (header) {
   return result
 }
 
-__webpack_unused_export__ = { parse, safeParse }
-__webpack_unused_export__ = parse
+__rspack_unused_export = { parse, safeParse }
+__rspack_unused_export = parse
 module.exports.xL = safeParse
-__webpack_unused_export__ = defaultContentType
+__rspack_unused_export = defaultContentType
 
 
 },
