@@ -1,10 +1,7 @@
 import { defineConfig } from "@rspress/core";
 
 export default defineConfig({
-  root: ".",
-  route: {
-    exclude: ["rspress.config.ts", "doc_build/**"],
-  },
+  root: "content",
   title: "actions-vercel",
   description: "Deploy to Vercel with GitHub Actions",
   lang: "ja",
@@ -30,7 +27,7 @@ export default defineConfig({
       },
     ],
     editLink: {
-      docRepoBaseUrl: "https://github.com/nexterias/actions-vercel/tree/main/docs",
+      docRepoBaseUrl: "https://github.com/nexterias/actions-vercel/tree/main/docs/content",
     },
     lastUpdated: true,
     sidebar: {
