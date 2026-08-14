@@ -1,6 +1,7 @@
 import { defineConfig } from "@rspress/core";
 
 export default defineConfig({
+  llms: true,
   root: "content",
   title: "actions-vercel",
   description: "Deploy to Vercel with GitHub Actions",
