@@ -9,7 +9,6 @@ export default defineConfig({
   description: "Deploy to Vercel with GitHub Actions",
   lang: "ja",
   themeConfig: {
-    search: true,
     nav: [
       { text: "ホーム", link: "/" },
       {
@@ -54,13 +53,9 @@ export default defineConfig({
           items: [
             {
               text: "Inputs",
-              collapsible: true,
-              collapsed: false,
               items: [
                 {
                   text: "Required",
-                  collapsible: true,
-                  collapsed: false,
                   items: [
                     { text: "token", link: "/references/inputs/required/token" },
                     {
@@ -72,8 +67,6 @@ export default defineConfig({
                 },
                 {
                   text: "Optional",
-                  collapsible: true,
-                  collapsed: false,
                   items: [
                     { text: "build-env", link: "/references/inputs/optional/build-env" },
                     { text: "cwd", link: "/references/inputs/optional/cwd" },
@@ -99,8 +92,6 @@ export default defineConfig({
             },
             {
               text: "Outputs",
-              collapsible: true,
-              collapsed: false,
               items: [
                 {
                   text: "deployment-url",
