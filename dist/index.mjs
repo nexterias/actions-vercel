@@ -36316,8 +36316,8 @@ const githubToken = getInput("github-token") || void 0;
 const githubDeploymentEnvironment = getInput("github-deployment-environment") || void 0;
 const buildEnvironments = (0,main.parse)(getInput("build-env"));
 const environments = (0,main.parse)(getInput("env"));
-if (domainAlias.length) warning('"domain-alias" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/domain-alias');
-if (githubDeploymentEnvironment) warning('"github-deployment-environment" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/github-deployment-environment');
+if (domainAlias.length) warning('"domain-alias" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/domain-alias');
+if (githubDeploymentEnvironment) warning('"github-deployment-environment" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/github-deployment-environment');
 
 ;// CONCATENATED MODULE: ./src/github/comment.ts
 

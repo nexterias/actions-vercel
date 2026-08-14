@@ -16,9 +16,9 @@ export const environments = parseDotenv(core.getInput("env"));
 
 if (domainAlias.length)
   core.warning(
-    '"domain-alias" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/domain-alias',
+    '"domain-alias" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/domain-alias',
   );
 if (githubDeploymentEnvironment)
   core.warning(
-    '"github-deployment-environment" is deprecated. See https://actions-vercel.nexterias.dev/references/inputs/optional/github-deployment-environment',
+    '"github-deployment-environment" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/github-deployment-environment',
   );
