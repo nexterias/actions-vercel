@@ -23,7 +23,9 @@ title: ガイド
 
 下記のようなワークフローファイルを作成することで、GitHub Actionsを利用してVercelにデプロイを行うことができます。
 
-<<< @/snippets/basic-workflow.yml
+```yaml file="/snippets/basic-workflow.yml"
+
+```
 
 ## 使用例
 

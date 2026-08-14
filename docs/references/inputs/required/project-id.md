@@ -13,4 +13,6 @@ VercelのプロジェクトIDを入力してください。この項目は**必�
 
 ## 使用例
 
-<<< @/snippets/basic-workflow.yml{29}
+```yaml {29} file="/snippets/basic-workflow.yml"
+
+```

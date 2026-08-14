@@ -33,7 +33,9 @@ GitHubのPersonal Access Tokenまたは`secrets.GITHUB_TOKEN`を指定してく�
 | `statuses`      | コミットステータスを作成、更新する場合は`write`に設定 |
 | `pull-requests` | プルリクエストにコメントを作成する場合は`write`に設定 |
 
-<<< @/snippets/references/inputs/github-token.yml{18-20,31}
+```yaml {18-20,31} file="/snippets/references/inputs/github-token.yml"
+
+```
 
 ### Personal Access Tokenの場合
 

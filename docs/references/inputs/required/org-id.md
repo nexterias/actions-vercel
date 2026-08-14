@@ -13,4 +13,6 @@ title: org-id
 
 ## 使用例
 
-<<< @/snippets/basic-workflow.yml{28}
+```yaml {28} file="/snippets/basic-workflow.yml"
+
+```

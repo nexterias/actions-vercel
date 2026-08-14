@@ -1,4 +1,4 @@
 node_modules/
-/docs/.vitepress/dist/
-/docs/.vitepress/cache/
+/.rspress/
+/doc_build/
 .vercel

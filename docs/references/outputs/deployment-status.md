@@ -13,4 +13,6 @@ title: deployment-status
 
 ## 使用例
 
-<<< @/snippets/references/outputs/deployment-status.yml{26,33-34}
+```yaml {26,33-34} file="/snippets/references/outputs/deployment-status.yml"
+
+```

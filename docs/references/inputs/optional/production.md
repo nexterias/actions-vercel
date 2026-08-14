@@ -9,4 +9,6 @@ title: production
 
 ## 使用例
 
-<<< @/snippets/basic-workflow.yml{30}
+```yaml {30} file="/snippets/basic-workflow.yml"
+
+```

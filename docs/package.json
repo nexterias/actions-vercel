@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "build": "vitepress build",
-    "preview": "vitepress preview"
+    "dev": "cd .. && rspress dev",
+    "build": "cd .. && rspress build",
+    "preview": "cd .. && rspress preview"
   },
   "devDependencies": {
-    "vitepress": "1.6.4"
+    "@rspress/core": "2.0.19"
   }
 }
