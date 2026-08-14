@@ -18,8 +18,8 @@
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
-    "@rspack/cli": "^2.1.8",
-    "@rspack/core": "^2.1.8",
+    "@rspack/cli": "^2.1.9",
+    "@rspack/core": "^2.1.9",
     "@types/node": "^24.13.3",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "license-webpack-plugin": "^4.0.2",
