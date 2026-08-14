@@ -1,4 +1,4 @@
 node_modules/
-/.rspress/
-/doc_build/
+/docs/.rspress/
+/docs/doc_build/
 .vercel

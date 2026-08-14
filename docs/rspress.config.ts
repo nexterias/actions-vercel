@@ -1,5 +1,10 @@
-export default {
-  root: "docs",
+import { defineConfig } from "@rspress/core";
+
+export default defineConfig({
+  root: ".",
+  route: {
+    exclude: ["rspress.config.ts"],
+  },
   title: "actions-vercel",
   description: "Deploy to Vercel with GitHub Actions",
   lang: "ja",
@@ -112,4 +117,4 @@ export default {
       ],
     },
   },
-};
+});

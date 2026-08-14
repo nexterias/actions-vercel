@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cd .. && rspress dev",
-    "build": "cd .. && rspress build",
-    "preview": "cd .. && rspress preview"
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
   },
   "devDependencies": {
     "@rspress/core": "2.0.19"
