@@ -3,7 +3,7 @@ import { defineConfig } from "@rspress/core";
 export default defineConfig({
   root: ".",
   route: {
-    exclude: ["rspress.config.ts"],
+    exclude: ["rspress.config.ts", "doc_build/**"],
   },
   title: "actions-vercel",
   description: "Deploy to Vercel with GitHub Actions",
