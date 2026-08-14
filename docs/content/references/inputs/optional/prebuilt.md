@@ -15,4 +15,6 @@ GitHub Actions側でビルドを行い、そのデータをVercelにデプロイ
 
 ## 使用例
 
-<<< @/snippets/references/inputs/prebuilt.yml
+```yaml file="/snippets/references/inputs/prebuilt.yml"
+
+```

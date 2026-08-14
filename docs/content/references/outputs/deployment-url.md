@@ -11,4 +11,6 @@ title: deployment-url
 
 ## 使用例
 
-<<< @/snippets/references/outputs/deployment-url.yml{26,33-34}
+```yaml {26,33-34} file="/snippets/references/outputs/deployment-url.yml"
+
+```

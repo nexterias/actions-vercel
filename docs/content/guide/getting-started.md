@@ -7,8 +7,6 @@ title: はじめる
 
 このセクションでは、実際に**nexterias/actions-vercel**を利用してVercelにデプロイを行うための手順について説明します。
 
-[[toc]]
-
 ## 必要なもの
 
 - GitHubアカウント
@@ -77,7 +75,9 @@ cat ./vercel/project.json | jq -r '.orgId'
 
 リポジトリに`.github/workflows`ディレクトリを作成し、その中に`vercel.yml`というファイルを下記の内容を書き込んで作成してください。
 
-<<< @/snippets/basic-workflow.yml
+```yaml file="/snippets/basic-workflow.yml"
+
+```
 
 これで、GitHub Actionsを利用してVercelにデプロイを行うことができるようになります。
 

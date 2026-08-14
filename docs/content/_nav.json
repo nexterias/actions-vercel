@@ -1,0 +1,16 @@
+[
+  {
+    "text": "ホーム",
+    "link": "/"
+  },
+  {
+    "text": "ガイド",
+    "link": "/guide/what-is-actions-vercel",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "リファレンス",
+    "link": "/references/inputs/required/token",
+    "activeMatch": "/references/"
+  }
+]

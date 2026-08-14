@@ -9,7 +9,9 @@ title: public
 
 ## 使用例
 
-<<< @/snippets/references/inputs/public.yml{31}
+```yaml {31} file="/snippets/references/inputs/public.yml"
+
+```
 
 ## 関連
 

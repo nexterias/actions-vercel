@@ -13,4 +13,6 @@ Vercel側でビルドする際に設定する環境変数を指定するため�
 
 ## 使用例
 
-<<< @/snippets/references/inputs/build-env.yml{31-33}
+```yaml {31-33} file="/snippets/references/inputs/build-env.yml"
+
+```

@@ -1,5 +1,15 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
-  }
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["**/_meta.json"],
+      "url": "./docs/node_modules/@rspress/core/meta-json-schema.json"
+    },
+    {
+      "fileMatch": ["**/_nav.json"],
+      "url": "./docs/node_modules/@rspress/core/nav-json-schema.json"
+    }
+  ]
 }

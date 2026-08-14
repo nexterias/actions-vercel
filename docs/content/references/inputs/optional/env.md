@@ -13,4 +13,6 @@ Vercelのダッシュボードからも設定することができます。詳�
 
 ## 使用例
 
-<<< @/snippets/references/inputs/env.yml{31-33}
+```yaml {31-33} file="/snippets/references/inputs/env.yml"
+
+```

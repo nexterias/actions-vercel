@@ -17,4 +17,6 @@ pnpm workspace等を利用している場合、`cwd`に各プロジェクトの�
 
 ## 使用例
 
-<<< @/snippets/references/inputs/cwd.yml{31}
+```yaml {31} file="/snippets/references/inputs/cwd.yml"
+
+```
