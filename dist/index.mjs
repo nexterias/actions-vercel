@@ -37361,7 +37361,11 @@ const deleteDeploymentsByBranch = (branch)=>group("Clean up deleted branch Verce
             if (deployment.target !== null && deployment.target !== undefined) continue;
             deployments.push(deployment);
         }
-        const results = await Promise.allSettled(deployments.map((deployment)=>deleteDeploymentById(deployment.uid)));
+        core_info(`Found ${deployments.length} Vercel deployments for deleted branch "${branch}".`);
+        const results = await Promise.allSettled(deployments.map(async (deployment)=>{
+            await deleteDeploymentById(deployment.uid);
+            core_info(`Deleted Vercel deployment "${deployment.uid}" (https://${deployment.url}).`);
+        }));
         const errors = results.flatMap((result)=>result.status === "rejected" ? [
                 result.reason instanceof Error ? result.reason : new Error(String(result.reason))
             ] : []);
