@@ -22,6 +22,11 @@ interface ListDeploymentsResponse {
   };
 }
 
+interface ListDeploymentsParameters {
+  branch: string;
+  until?: number | string | null;
+}
+
 /**
  * Install Vercel CLI
  */
@@ -223,7 +228,17 @@ const deleteDeploymentById = async (id: string) => {
   }
 };
 
-const fetchDeployments = async (parameters = new URLSearchParams()) => {
+const fetchDeployments = async ({ branch, until }: ListDeploymentsParameters) => {
+  const parameters = new URLSearchParams({
+    projectId: input.projectId,
+    teamId: input.orgId,
+    branch,
+  });
+
+  if (until !== undefined && until !== null) {
+    parameters.set("until", String(until));
+  }
+
   const response = await fetch(`https://api.vercel.com/v6/deployments?${parameters.toString()}`, {
     method: "GET",
     headers: {
@@ -238,11 +253,10 @@ const fetchDeployments = async (parameters = new URLSearchParams()) => {
   return response.json() as Promise<ListDeploymentsResponse>;
 };
 
-async function* paginateDeployments(parameters = new URLSearchParams()) {
-  const pageParameters = new URLSearchParams(parameters);
+async function* paginateDeployments(branch: string) {
   const deploymentUids = new Set<string>();
   const cursors = new Set<string>();
-  let until: number | string | null | undefined = pageParameters.get("until");
+  let until: number | string | null | undefined;
 
   do {
     if (until !== undefined && until !== null) {
@@ -253,10 +267,9 @@ async function* paginateDeployments(parameters = new URLSearchParams()) {
       }
 
       cursors.add(cursor);
-      pageParameters.set("until", cursor);
     }
 
-    const body = await fetchDeployments(pageParameters);
+    const body = await fetchDeployments({ branch, until });
 
     for (const deployment of body.deployments) {
       if (deploymentUids.has(deployment.uid)) continue;
@@ -271,14 +284,9 @@ async function* paginateDeployments(parameters = new URLSearchParams()) {
 
 export const deleteDeploymentsByBranch = (branch: string) =>
   core.group("Clean up deleted branch Vercel deployments", async () => {
-    const parameters = new URLSearchParams({
-      projectId: input.projectId,
-      teamId: input.orgId,
-      branch,
-    });
     const deployments: VercelDeploymentSummary[] = [];
 
-    for await (const deployment of paginateDeployments(parameters)) {
+    for await (const deployment of paginateDeployments(branch)) {
       if (deployment.meta?.githubCommitOrg !== github.context.repo.owner) continue;
       if (deployment.meta.githubCommitRepo !== github.context.repo.repo) continue;
       if (deployment.meta.githubCommitRef !== branch) continue;
