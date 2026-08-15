@@ -198,6 +198,31 @@ export const fetchProjectName = async () => {
   return body.name;
 };
 
+const deleteDeploymentById = async (id: string) => {
+  let response: Response;
+
+  try {
+    response = await fetch(
+      `https://api.vercel.com/v13/deployments/${encodeURIComponent(id)}?teamId=${encodeURIComponent(input.orgId)}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${input.token}`,
+        },
+      },
+    );
+  } catch (error) {
+    throw new Error(
+      `Failed to delete Vercel deployment ${id}: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete Vercel deployment ${id}: HTTP ${response.status}.`);
+  }
+};
+
 export const deleteDeploymentsByBranch = (branch: string) =>
   core.group("Clean up deleted branch Vercel deployments", async () => {
     const deploymentsByUid = new Map<string, VercelDeploymentSummary>();
@@ -254,27 +279,14 @@ export const deleteDeploymentsByBranch = (branch: string) =>
         deployment.meta.githubCommitRef === branch &&
         (deployment.target === null || deployment.target === undefined),
     );
-    const errors: Error[] = [];
-
-    for (const deployment of candidates) {
-      const response = await fetch(
-        `https://api.vercel.com/v13/deployments/${encodeURIComponent(deployment.uid)}?teamId=${encodeURIComponent(input.orgId)}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${input.token}`,
-          },
-        },
-      );
-
-      if (!response.ok) {
-        errors.push(
-          new Error(
-            `Failed to delete Vercel deployment ${deployment.uid}: HTTP ${response.status}.`,
-          ),
-        );
-      }
-    }
+    const results = await Promise.allSettled(
+      candidates.map((deployment) => deleteDeploymentById(deployment.uid)),
+    );
+    const errors = results.flatMap((result) =>
+      result.status === "rejected"
+        ? [result.reason instanceof Error ? result.reason : new Error(String(result.reason))]
+        : [],
+    );
 
     if (errors.length) {
       throw new AggregateError(
