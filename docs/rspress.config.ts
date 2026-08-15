@@ -1,7 +1,36 @@
-import { defineConfig } from "@rspress/core";
+import { defineConfig, type LlmsTxtRenderer } from "@rspress/core";
+
+import i18n from "./i18n.json";
+
+const i18nText: Record<string, Record<string, string>> = i18n;
+
+const renderLlmsTxt: LlmsTxtRenderer = ({ title, description, lang, sections }) => {
+  const summary = title ? `# ${title}${description ? `\n\n> ${description}` : ""}` : "";
+  const lines = sections.flatMap((section) => {
+    const translations =
+      i18nText[section.title] ??
+      Object.values(i18nText).find((text) => Object.values(text).includes(section.title));
+    const sectionTitle = translations?.[lang] ?? section.title;
+
+    return [
+      `\n## ${sectionTitle}\n`,
+      ...section.pages.map(
+        (page) =>
+          `- [${page.title}](${page.link})${page.description ? `: ${page.description}` : ""}`,
+      ),
+    ];
+  });
+
+  if (summary) {
+    return lines.length > 0 ? `${summary}\n${lines.join("\n")}` : summary;
+  }
+  return lines.join("\n").trimStart();
+};
 
 export default defineConfig({
-  llms: true,
+  llms: {
+    llmsTxt: renderLlmsTxt,
+  },
   root: "content",
   title: "actions-vercel",
   lang: "en",
