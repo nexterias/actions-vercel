@@ -10,11 +10,10 @@ Deploy to Vercel with GitHub Actions
 
 ## Features
 
-- Switch between preview and production deployments.
-- Deploy the build result from GitHub Actions with `prebuilt: true`.
-- Integrate deployments with pull request comments, commit statuses, and GitHub Deployments.
-- Add custom steps such as tests and notifications before or after deployment.
-- Configure the working directory and build-time or runtime environment variables.
+- 🚀 Switch between preview and production deployments.
+- 🏗️ Deploy the build result from GitHub Actions with `prebuilt: true`.
+- 🔗 Integrate deployments with pull request comments, commit statuses, and GitHub Deployments.
+- 🧩 Add custom steps such as tests and notifications before or after deployment.
 
 ## Usage
 
