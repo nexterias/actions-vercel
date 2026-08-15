@@ -13,6 +13,10 @@ Search the existing issues before opening a new one.
 
 Never include Vercel tokens, GitHub tokens, project IDs, organization IDs, or other secrets in an issue, workflow, screenshot, or log.
 
+## Report a security vulnerability
+
+Do not report security vulnerabilities in public issues, discussions, or pull requests. Report them privately by emailing [me@inkohx.dev](mailto:me@inkohx.dev) or through [GitHub Security Advisories](https://github.com/nexterias/actions-vercel/security/advisories).
+
 ## Set up the development environment
 
 Use Node.js 24 and pnpm 11. The exact versions used by the repository are declared in `.tool-versions` and the `packageManager` field in `package.json`.

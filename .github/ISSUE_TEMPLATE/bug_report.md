@@ -11,6 +11,7 @@ Thank you for reporting a bug.
 
 Before opening the issue:
 - Search the existing issues for the same problem.
+- Do not report security vulnerabilities in a public issue. Email me@inkohx.dev or use GitHub Security Advisories: https://github.com/nexterias/actions-vercel/security/advisories
 - Remove tokens, project IDs, organization IDs, and other secrets from all examples and logs.
 -->
 
