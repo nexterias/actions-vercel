@@ -15,6 +15,10 @@ Deploy to Vercel with GitHub Actions
 - 🔗 Integrate deployments with pull request comments, commit statuses, and GitHub Deployments.
 - 🧩 Add custom steps such as tests and notifications before or after deployment.
 
+## Documentation
+
+See the [documentation](https://actions-vercel.nexterias.dev/) for detailed setup instructions and reference information.
+
 ## Usage
 
 ```yml
