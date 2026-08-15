@@ -277,7 +277,10 @@ export const deleteDeploymentsByBranch = (branch: string) =>
     }
 
     if (errors.length) {
-      throw new AggregateError(errors, "Failed to delete Vercel deployments.");
+      throw new AggregateError(
+        errors,
+        `Failed to delete Vercel deployments: ${errors.map((error) => error.message).join(" ")}`,
+      );
     }
 
     return candidates.length;
