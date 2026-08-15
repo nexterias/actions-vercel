@@ -15,16 +15,8 @@ GitHubのブランチを削除したとき、そのブランチに紐づくVerce
 
 このワークフローファイルは、リポジトリのデフォルトブランチに配置してください。
 
-ワークフローは、ブランチの`delete`イベントで実行されます。
-
-削除専用のinputを追加する必要はありません。
-
-このワークフローではDeploymentを作成しないため、Deploymentに関するoutputも設定されません。
-
 ## 削除対象となるDeployment
 
-指定したVercel Projectから、削除したGitHubブランチに紐づくDeploymentを削除します。
-
-[Production Deployment](https://vercel.com/docs/glossary#production-deployment)は削除しません。
-
-タグの削除では、このワークフローは実行されません。
+- 指定したVercel Projectから、削除したGitHubブランチに紐づくDeploymentを削除します。
+- [Production Deployment](https://vercel.com/docs/glossary#production-deployment)は削除しません。
+- タグの削除では、このワークフローは実行されません。
