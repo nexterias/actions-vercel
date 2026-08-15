@@ -9,6 +9,27 @@ import * as input from "./input";
 import * as vercel from "./vercel";
 
 async function run() {
+  if (github.context.eventName === "delete") {
+    const { ref, ref_type: refType } = github.context.payload;
+
+    if (refType === "branch") {
+      if (typeof ref !== "string" || !ref) {
+        throw new Error('GitHub delete event for a branch requires a non-empty "ref".');
+      }
+
+      const deletedCount = await vercel.deleteDeploymentsByBranch(ref);
+      core.info(`Deleted ${deletedCount} Vercel deployments for deleted branch "${ref}".`);
+      return;
+    }
+
+    if (refType === "tag") {
+      core.info("Skipping Vercel cleanup for a deleted tag.");
+      return;
+    }
+
+    throw new Error(`Unsupported GitHub delete event ref_type: ${String(refType)}.`);
+  }
+
   const octokit = input.githubToken ? github.getOctokit(input.githubToken) : void 0;
   const projectName = await vercel.fetchProjectName();
   const isDebug = core.isDebug();
