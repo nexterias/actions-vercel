@@ -57,7 +57,3 @@ See the [documentation](https://actions-vercel.nexterias.dev/) for detailed setu
 ## Examples
 
 - [List of projects using actions-vercel](https://github.com/search?q=%22nexterias%2Factions-vercel%22+path%3A.github%2Fworkflows+-is%3Afork+-repo%3Anexterias%2Factions-vercel&type=code)
-
-## Clean up deleted branch deployments
-
-Run the Action for the [`delete` event](https://actions-vercel.nexterias.dev/guide/cleanup-deployments) to remove Preview deployments when a branch is deleted.
