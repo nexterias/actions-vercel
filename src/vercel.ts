@@ -3,28 +3,11 @@ import { exec, getExecOutput } from "@actions/exec";
 import * as github from "@actions/github";
 
 import * as input from "./input";
-import type { GetDeploymentByIdOrUrlResponse, Octokit } from "./types";
-
-interface VercelDeploymentSummary {
-  uid: string;
-  meta?: {
-    githubCommitOrg?: string;
-    githubCommitRepo?: string;
-    githubCommitRef?: string;
-  };
-  target?: unknown;
-}
-
-interface ListDeploymentsResponse {
-  deployments: VercelDeploymentSummary[];
-  pagination?: {
-    next?: number | string | null;
-  };
-}
+import type { GetDeploymentByIdOrUrlResponse, GetDeploymentsResponse, Octokit } from "./types";
 
 interface ListDeploymentsParameters {
   branch: string;
-  until?: number | string | null;
+  until?: number;
 }
 
 /**
@@ -235,11 +218,11 @@ const fetchDeployments = async ({ branch, until }: ListDeploymentsParameters) =>
     branch,
   });
 
-  if (until !== undefined && until !== null) {
+  if (until !== undefined) {
     parameters.set("until", String(until));
   }
 
-  const response = await fetch(`https://api.vercel.com/v6/deployments?${parameters.toString()}`, {
+  const response = await fetch(`https://api.vercel.com/v7/deployments?${parameters.toString()}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${input.token}`,
@@ -250,23 +233,21 @@ const fetchDeployments = async ({ branch, until }: ListDeploymentsParameters) =>
     throw new Error(`Failed to list Vercel deployments: HTTP ${response.status}.`);
   }
 
-  return response.json() as Promise<ListDeploymentsResponse>;
+  return response.json() as Promise<GetDeploymentsResponse>;
 };
 
 async function* paginateDeployments(branch: string) {
   const deploymentUids = new Set<string>();
-  const cursors = new Set<string>();
-  let until: number | string | null | undefined;
+  const cursors = new Set<number>();
+  let until: number | undefined;
 
   do {
-    if (until !== undefined && until !== null) {
-      const cursor = String(until);
-
-      if (cursors.has(cursor)) {
-        throw new Error(`Failed to list Vercel deployments: repeated pagination cursor ${cursor}.`);
+    if (until !== undefined) {
+      if (cursors.has(until)) {
+        throw new Error(`Failed to list Vercel deployments: repeated pagination cursor ${until}.`);
       }
 
-      cursors.add(cursor);
+      cursors.add(until);
     }
 
     const body = await fetchDeployments({ branch, until });
@@ -278,13 +259,13 @@ async function* paginateDeployments(branch: string) {
       yield deployment;
     }
 
-    until = body.pagination?.next;
-  } while (until !== undefined && until !== null);
+    until = body.pagination.next ?? undefined;
+  } while (until !== undefined);
 }
 
 export const deleteDeploymentsByBranch = (branch: string) =>
   core.group("Clean up deleted branch Vercel deployments", async () => {
-    const deployments: VercelDeploymentSummary[] = [];
+    const deployments: GetDeploymentsResponse["deployments"] = [];
 
     for await (const deployment of paginateDeployments(branch)) {
       if (deployment.meta?.githubCommitOrg !== github.context.repo.owner) continue;
