@@ -36309,6 +36309,7 @@ const input_token = getInput("token", {
 });
 const isProduction = getBooleanInput("production");
 const isPrebuilt = getBooleanInput("prebuilt");
+const isCleanupDeployment = getBooleanInput("cleanup-deployment");
 const isPublic = getBooleanInput("public");
 const cwd = getInput("cwd") || process.cwd();
 const domainAlias = getMultilineInput("domain-alias");
@@ -36632,6 +36633,85 @@ const fetchProjectName = async ()=>{
     core_debug(`fetchProjectName: ${JSON.stringify(body, null, 2)}`);
     return body.name;
 };
+const deleteDeploymentById = async (id)=>{
+    let response;
+    try {
+        response = await fetch(`https://api.vercel.com/v13/deployments/${encodeURIComponent(id)}?teamId=${encodeURIComponent(orgId)}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${input_token}`
+            }
+        });
+    } catch (error) {
+        throw new Error(`Failed to delete Vercel deployment ${id}: ${error instanceof Error ? error.message : String(error)}`, {
+            cause: error
+        });
+    }
+    if (!response.ok) {
+        throw new Error(`Failed to delete Vercel deployment ${id}: HTTP ${response.status}.`);
+    }
+};
+const fetchDeployments = async ({ branch, until })=>{
+    const parameters = new URLSearchParams({
+        projectId: projectId,
+        teamId: orgId,
+        branch
+    });
+    if (until !== undefined) {
+        parameters.set("until", String(until));
+    }
+    const response = await fetch(`https://api.vercel.com/v7/deployments?${parameters.toString()}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${input_token}`
+        }
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to list Vercel deployments: HTTP ${response.status}.`);
+    }
+    return response.json();
+};
+async function* paginateDeployments(branch) {
+    const deploymentUids = new Set();
+    const cursors = new Set();
+    let until;
+    do {
+        if (until !== undefined) {
+            if (cursors.has(until)) {
+                throw new Error(`Failed to list Vercel deployments: repeated pagination cursor ${until}.`);
+            }
+            cursors.add(until);
+        }
+        const body = await fetchDeployments({
+            branch,
+            until
+        });
+        for (const deployment of body.deployments){
+            if (deploymentUids.has(deployment.uid)) continue;
+            deploymentUids.add(deployment.uid);
+            yield deployment;
+        }
+        until = body.pagination.next ?? undefined;
+    }while (until !== undefined);
+}
+const deleteDeploymentsByBranch = (branch)=>group("Clean up deleted branch Vercel deployments", async ()=>{
+        const deployments = [];
+        for await (const deployment of paginateDeployments(branch)){
+            if (deployment.meta?.githubCommitOrg !== github_context.repo.owner) continue;
+            if (deployment.meta.githubCommitRepo !== github_context.repo.repo) continue;
+            if (deployment.meta.githubCommitRef !== branch) continue;
+            if (deployment.target !== null && deployment.target !== undefined) continue;
+            deployments.push(deployment);
+        }
+        const results = await Promise.allSettled(deployments.map((deployment)=>deleteDeploymentById(deployment.uid)));
+        const errors = results.flatMap((result)=>result.status === "rejected" ? [
+                result.reason instanceof Error ? result.reason : new Error(String(result.reason))
+            ] : []);
+        if (errors.length) {
+            throw new AggregateError(errors, `Failed to delete Vercel deployments: ${errors.map((error)=>error.message).join(" ")}`);
+        }
+        return deployments.length;
+    });
 
 ;// CONCATENATED MODULE: ./src/index.ts
 
@@ -36643,6 +36723,22 @@ const fetchProjectName = async ()=>{
 
 
 async function run() {
+    if (github_context.eventName === "delete" && isCleanupDeployment) {
+        const { ref, ref_type: refType } = github_context.payload;
+        if (refType === "branch") {
+            if (typeof ref !== "string" || !ref) {
+                throw new Error('GitHub delete event for a branch requires a non-empty "ref".');
+            }
+            const deletedCount = await deleteDeploymentsByBranch(ref);
+            core_info(`Deleted ${deletedCount} Vercel deployments for deleted branch "${ref}".`);
+            return;
+        }
+        if (refType === "tag") {
+            core_info("Skipping Vercel cleanup for a deleted tag.");
+            return;
+        }
+        throw new Error(`Unsupported GitHub delete event ref_type: ${String(refType)}.`);
+    }
     const octokit = githubToken ? getOctokit(githubToken) : void 0;
     const projectName = await fetchProjectName();
     const isDebug = core_isDebug();

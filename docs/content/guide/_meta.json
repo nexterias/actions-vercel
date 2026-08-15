@@ -14,6 +14,10 @@
       {
         "label": "Monorepoを使用する",
         "link": "/guide/monorepo"
+      },
+      {
+        "label": "削除したブランチのDeploymentを削除する",
+        "link": "/guide/cleanup-deployments"
       }
     ]
   }

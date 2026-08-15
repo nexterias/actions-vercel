@@ -3,7 +3,17 @@ import { exec, getExecOutput } from "@actions/exec";
 import * as github from "@actions/github";
 
 import * as input from "./input";
-import type { GetDeploymentByIdOrUrlResponse, Octokit } from "./types";
+import type {
+  Deployment,
+  GetDeploymentByIdOrUrlResponse,
+  GetDeploymentsResponse,
+  Octokit,
+} from "./types";
+
+interface ListDeploymentsParameters {
+  branch: string;
+  until?: number;
+}
 
 /**
  * Install Vercel CLI
@@ -180,3 +190,112 @@ export const fetchProjectName = async () => {
 
   return body.name;
 };
+
+const deleteDeploymentById = async (id: string) => {
+  let response: Response;
+
+  try {
+    response = await fetch(
+      `https://api.vercel.com/v13/deployments/${encodeURIComponent(id)}?teamId=${encodeURIComponent(input.orgId)}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${input.token}`,
+        },
+      },
+    );
+  } catch (error) {
+    throw new Error(
+      `Failed to delete Vercel deployment ${id}: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete Vercel deployment ${id}: HTTP ${response.status}.`);
+  }
+};
+
+const fetchDeployments = async ({ branch, until }: ListDeploymentsParameters) => {
+  const parameters = new URLSearchParams({
+    projectId: input.projectId,
+    teamId: input.orgId,
+    branch,
+  });
+
+  if (until !== undefined) {
+    parameters.set("until", String(until));
+  }
+
+  const response = await fetch(`https://api.vercel.com/v7/deployments?${parameters.toString()}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${input.token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to list Vercel deployments: HTTP ${response.status}.`);
+  }
+
+  return response.json() as Promise<GetDeploymentsResponse>;
+};
+
+async function* paginateDeployments(branch: string) {
+  const deploymentUids = new Set<string>();
+  const cursors = new Set<number>();
+  let until: number | undefined;
+
+  do {
+    if (until !== undefined) {
+      if (cursors.has(until)) {
+        throw new Error(`Failed to list Vercel deployments: repeated pagination cursor ${until}.`);
+      }
+
+      cursors.add(until);
+    }
+
+    const body = await fetchDeployments({ branch, until });
+
+    for (const deployment of body.deployments) {
+      if (deploymentUids.has(deployment.uid)) continue;
+
+      deploymentUids.add(deployment.uid);
+      yield deployment;
+    }
+
+    until = body.pagination.next ?? undefined;
+  } while (until !== undefined);
+}
+
+export const deleteDeploymentsByBranch = (branch: string) =>
+  core.group("Clean up deleted branch Vercel deployments", async () => {
+    const deployments: Deployment[] = [];
+
+    for await (const deployment of paginateDeployments(branch)) {
+      if (deployment.meta?.githubCommitOrg !== github.context.repo.owner) continue;
+      if (deployment.meta.githubCommitRepo !== github.context.repo.repo) continue;
+      if (deployment.meta.githubCommitRef !== branch) continue;
+      if (deployment.target !== null && deployment.target !== undefined) continue;
+
+      deployments.push(deployment);
+    }
+
+    const results = await Promise.allSettled(
+      deployments.map((deployment) => deleteDeploymentById(deployment.uid)),
+    );
+    const errors = results.flatMap((result) =>
+      result.status === "rejected"
+        ? [result.reason instanceof Error ? result.reason : new Error(String(result.reason))]
+        : [],
+    );
+
+    if (errors.length) {
+      throw new AggregateError(
+        errors,
+        `Failed to delete Vercel deployments: ${errors.map((error) => error.message).join(" ")}`,
+      );
+    }
+
+    return deployments.length;
+  });
