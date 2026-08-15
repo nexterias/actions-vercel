@@ -28,7 +28,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - uses: nexterias/actions-vercel@v2
         with:
@@ -42,3 +42,4 @@ jobs:
 ## Examples
 
 - [nexterias/homepage](https://github.com/nexterias/homepage)
+- [Projects using actions-vercel (GitHub Code Search)](https://github.com/search?q=%22nexterias%2Factions-vercel%22+path%3A.github%2Fworkflows+-is%3Afork+-repo%3Anexterias%2Factions-vercel&type=code)
