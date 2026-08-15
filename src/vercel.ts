@@ -276,7 +276,7 @@ export const deleteDeploymentsByBranch = (branch: string) =>
       teamId: input.orgId,
       branch,
     });
-    const candidates: VercelDeploymentSummary[] = [];
+    const deployments: VercelDeploymentSummary[] = [];
 
     for await (const deployment of paginateDeployments(parameters)) {
       if (
@@ -285,12 +285,12 @@ export const deleteDeploymentsByBranch = (branch: string) =>
         deployment.meta.githubCommitRef === branch &&
         (deployment.target === null || deployment.target === undefined)
       ) {
-        candidates.push(deployment);
+        deployments.push(deployment);
       }
     }
 
     const results = await Promise.allSettled(
-      candidates.map((deployment) => deleteDeploymentById(deployment.uid)),
+      deployments.map((deployment) => deleteDeploymentById(deployment.uid)),
     );
     const errors = results.flatMap((result) =>
       result.status === "rejected"
@@ -305,5 +305,5 @@ export const deleteDeploymentsByBranch = (branch: string) =>
       );
     }
 
-    return candidates.length;
+    return deployments.length;
   });
