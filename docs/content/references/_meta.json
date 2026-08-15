@@ -31,6 +31,10 @@
                 "link": "/references/inputs/optional/build-env"
               },
               {
+                "label": "cleanup-deployment",
+                "link": "/references/inputs/optional/cleanup-deployment"
+              },
+              {
                 "label": "cwd",
                 "link": "/references/inputs/optional/cwd"
               },

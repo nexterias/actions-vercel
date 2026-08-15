@@ -23,6 +23,9 @@ inputs:
   prebuilt:
     description: Use the --prebuilt option
     default: "false"
+  cleanup-deployment:
+    description: Delete Vercel deployments associated with a deleted branch
+    default: "false"
   cwd:
     description: "Current Working Directory (default: process.cwd())"
   domain-alias:

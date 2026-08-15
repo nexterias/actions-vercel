@@ -9,7 +9,7 @@ import * as input from "./input";
 import * as vercel from "./vercel";
 
 async function run() {
-  if (github.context.eventName === "delete") {
+  if (github.context.eventName === "delete" && input.isCleanupDeployment) {
     const { ref, ref_type: refType } = github.context.payload;
 
     if (refType === "branch") {
