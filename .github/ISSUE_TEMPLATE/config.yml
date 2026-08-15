@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and support
+    url: https://github.com/nexterias/actions-vercel/discussions/categories/q-a
+    about: Ask questions and get help with actions-vercel.
+  - name: Security vulnerability
+    url: https://github.com/nexterias/actions-vercel/security/advisories
+    about: Report vulnerabilities privately through GitHub Security Advisories or email me@inkohx.dev.

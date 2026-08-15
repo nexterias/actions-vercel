@@ -1,0 +1,24 @@
+[
+  {
+    "type": "custom-link",
+    "label": "introduction",
+    "items": [
+      {
+        "label": "overview",
+        "link": "/guide/what-is-actions-vercel"
+      },
+      {
+        "label": "gettingStarted",
+        "link": "/guide/getting-started"
+      },
+      {
+        "label": "monorepo",
+        "link": "/guide/monorepo"
+      },
+      {
+        "label": "cleanupDeployments",
+        "link": "/guide/cleanup-deployments"
+      }
+    ]
+  }
+]

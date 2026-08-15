@@ -1,0 +1,88 @@
+[
+  {
+    "type": "custom-link",
+    "label": "reference",
+    "items": [
+      {
+        "label": "Inputs",
+        "items": [
+          {
+            "label": "Required",
+            "items": [
+              {
+                "label": "token",
+                "link": "/references/inputs/required/token"
+              },
+              {
+                "label": "project-id",
+                "link": "/references/inputs/required/project-id"
+              },
+              {
+                "label": "org-id",
+                "link": "/references/inputs/required/org-id"
+              }
+            ]
+          },
+          {
+            "label": "Optional",
+            "items": [
+              {
+                "label": "build-env",
+                "link": "/references/inputs/optional/build-env"
+              },
+              {
+                "label": "cleanup-deployment",
+                "link": "/references/inputs/optional/cleanup-deployment"
+              },
+              {
+                "label": "cwd",
+                "link": "/references/inputs/optional/cwd"
+              },
+              {
+                "label": "domain-alias",
+                "link": "/references/inputs/optional/domain-alias"
+              },
+              {
+                "label": "env",
+                "link": "/references/inputs/optional/env"
+              },
+              {
+                "label": "github-deployment-environment",
+                "link": "/references/inputs/optional/github-deployment-environment"
+              },
+              {
+                "label": "github-token",
+                "link": "/references/inputs/optional/github-token"
+              },
+              {
+                "label": "prebuilt",
+                "link": "/references/inputs/optional/prebuilt"
+              },
+              {
+                "label": "production",
+                "link": "/references/inputs/optional/production"
+              },
+              {
+                "label": "public",
+                "link": "/references/inputs/optional/public"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Outputs",
+        "items": [
+          {
+            "label": "deployment-url",
+            "link": "/references/outputs/deployment-url"
+          },
+          {
+            "label": "deployment-status",
+            "link": "/references/outputs/deployment-status"
+          }
+        ]
+      }
+    ]
+  }
+]

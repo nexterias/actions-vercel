@@ -11,6 +11,7 @@ Deploy to Vercel with GitHub Actions
 ## Features
 
 - 🚀 Switch between preview and production deployments.
+- 🧹 Remove preview deployments from Vercel when their associated branches are deleted.
 - 🏗️ Deploy the build result from GitHub Actions with `prebuilt: true`.
 - 🔗 Integrate deployments with pull request comments, commit statuses, and GitHub Deployments.
 - 🧩 Add custom steps such as tests and notifications before or after deployment.
@@ -21,15 +22,17 @@ Deploy to Vercel with GitHub Actions
 name: Vercel
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.ref || github.ref }}
   cancel-in-progress: true
 
 on:
   push:
   pull_request:
+  delete:
 
 jobs:
   deploy:
+    if: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.event.deleted == false) }}
     name: Deploy
     runs-on: ubuntu-latest
     permissions:
@@ -48,6 +51,21 @@ jobs:
           project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
           production: ${{ github.ref == 'refs/heads/main' }}
           prebuilt: true # If set to true, build will be performed using GitHub Actions.
+
+  # (Optional) When a branch is deleted from the remote repository,
+  # this job removes all preview deployments created for that branch from Vercel.
+  cleanup:
+    if: ${{ github.event_name == 'delete' && github.event.ref_type == 'branch' }}
+    name: Cleanup deployments
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: nexterias/actions-vercel@v2
+        with:
+          token: ${{ secrets.YOUR_VERCEL_TOKEN }}
+          org-id: ${{ secrets.YOUR_VERCEL_ORG_ID }}
+          project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
+          cleanup-deployment: true
 ```
 
 ## Documentation

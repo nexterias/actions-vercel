@@ -4,6 +4,7 @@ export type Octokit = ReturnType<typeof getOctokit>;
 
 export interface Deployment {
   uid: string;
+  url: string;
   meta?: Record<string, string>;
   target?: "production" | "staging" | null;
 }
