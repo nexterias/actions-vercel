@@ -16,7 +16,7 @@
         "link": "/guide/monorepo"
       },
       {
-        "label": "削除済みブランチのPreviewデプロイを削除する",
+        "label": "削除済みブランチのPreview Deploymentを削除する",
         "link": "/guide/cleanup-deployments"
       }
     ]

@@ -1,42 +1,40 @@
 ---
 layout: doc
-title: 削除済みブランチのPreviewデプロイを削除する
+title: 削除済みブランチのPreview Deploymentを削除する
 ---
 
-# 削除済みブランチのPreviewデプロイを削除する
+# 削除済みブランチのPreview Deploymentを削除する
 
-ブランチの削除に合わせて、そのブランチのVercel Previewデプロイ履歴を削除できます。
+GitHubのブランチを削除したとき、そのブランチに紐づくVercelの[Preview Deployment](https://vercel.com/docs/glossary#preview-deployment)を自動的に削除できます。
 
-リポジトリの`.github/workflows/cleanup-vercel-deployments.yml`に、次のワークフローを作成してください。
+リポジトリの`.github/workflows/cleanup-deployments.yml`に、次のワークフローを作成してください。
 
 ```yaml file="/snippets/cleanup-workflow.yml"
 
 ```
 
-このワークフローファイルは、リポジトリのデフォルトブランチに存在している必要があります。
+このワークフローファイルは、リポジトリのデフォルトブランチに配置してください。
 
-`delete`イベントでは、同じActionがブランチ削除用の処理へ自動的に切り替わります。
+ワークフローは、ブランチの`delete`イベントで実行されます。
 
-そのため、削除専用のinputを追加する必要はありません。
+削除専用のinputを追加する必要はありません。
 
-削除時はデプロイを作成しないため、デプロイメントのoutputも設定されません。
+このワークフローではDeploymentを作成しないため、Deploymentに関するoutputも設定されません。
 
-## 削除されるデプロイ
+## 削除対象となるDeployment
 
-削除対象はVercel上のデプロイだけです。
+指定したVercel Projectから、削除したGitHubブランチに紐づくPreview Deploymentを削除します。
 
-対象プロジェクトについて、リポジトリの所有者、リポジトリ名、ブランチ名のメタデータがすべて削除イベントと一致する、targetを持たないPreviewデプロイ履歴を削除します。
+削除対象はPreview Deploymentに限られ、[Production Deployment](https://vercel.com/docs/glossary#production-deployment)は削除しません。
 
-Production、Staging、または名前付きtargetを持つデプロイは保持されます。
+タグの削除では、このワークフローは実行されません。
 
-タグの削除イベントは処理を行わずに終了します。
-
-一致するデプロイが0件でも、ワークフローは成功します。
+削除対象となるPreview Deploymentがなくても、ワークフローは成功します。
 
 ## フォークと同名ブランチの再作成
 
-フォーク側でブランチを削除しても、ベースリポジトリに置いたワークフローの対象にはなりません。
+フォーク側でブランチを削除しても、ベースリポジトリに配置したワークフローは実行されません。
 
-削除後に同名のブランチを再作成してデプロイすると、GitHub上でブランチが存在するか確認しないため、そのデプロイも削除対象に一致することがあります。
+削除ワークフローが完了する前に同名のブランチを再作成すると、新しいPreview Deploymentも削除される場合があります。
 
-この競合は、削除イベントと同名ブランチの再作成が近接した場合に受け入れるものです。
+同名のブランチは、削除ワークフローの完了後に再作成してください。
