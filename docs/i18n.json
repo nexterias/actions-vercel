@@ -1,0 +1,34 @@
+{
+  "home": {
+    "en": "Home",
+    "ja": "ホーム"
+  },
+  "guide": {
+    "en": "Guide",
+    "ja": "ガイド"
+  },
+  "reference": {
+    "en": "Reference",
+    "ja": "リファレンス"
+  },
+  "introduction": {
+    "en": "Introduction",
+    "ja": "導入"
+  },
+  "overview": {
+    "en": "Overview",
+    "ja": "概要"
+  },
+  "gettingStarted": {
+    "en": "Getting Started",
+    "ja": "始める"
+  },
+  "monorepo": {
+    "en": "Using a monorepo",
+    "ja": "Monorepoを使用する"
+  },
+  "cleanupDeployments": {
+    "en": "Clean up deployments for deleted branches",
+    "ja": "削除したブランチのDeploymentを削除する"
+  }
+}

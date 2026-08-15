@@ -13,7 +13,7 @@ title: はじめる
 - Vercelアカウント
 - Vercel CLI
 
-## リポジトリとVercelプロジェクトの作成
+## リポジトリとVercelプロジェクトの作成 {#vercel-project}
 
 まずは、GitHub上にリポジトリを作成します。
 
@@ -44,7 +44,7 @@ cat ./vercel/project.json | jq -r '.projectId'
 cat ./vercel/project.json | jq -r '.orgId'
 ```
 
-## Vercelのアクセストークンを作成
+## Vercelのアクセストークンを作成 {#vercel-access-token}
 
 [アカウントの設定](https://vercel.com/account/tokens)に移動し、アクセストークンを作成してください。
 
@@ -56,7 +56,7 @@ cat ./vercel/project.json | jq -r '.orgId'
 
 上記の項目を埋めて、**Create**を押すとアクセストークンが手に入るので値を控えてください。
 
-### シークレット情報の登録
+### シークレット情報の登録 {#github-secrets}
 
 1. [github,com](https://github.com)からリポジトリのページにアクセス
 1. **Settings**タブをクリック

@@ -4,8 +4,27 @@ export default defineConfig({
   llms: true,
   root: "content",
   title: "actions-vercel",
-  description: "Deploy to Vercel with GitHub Actions",
   lang: "ja",
+  locales: [
+    {
+      lang: "ja",
+      label: "日本語",
+      description:
+        "GitHub ActionsからVercelプロジェクトをデプロイする方法と、ビルド、環境変数、Deploymentの削除設定を説明します。",
+    },
+  ],
+  route: {
+    localeRedirect: "auto",
+  },
+  languageParity: {
+    enabled: true,
+  },
+  markdown: {
+    link: {
+      checkDeadLinks: true,
+      checkAnchors: true,
+    },
+  },
   themeConfig: {
     socialLinks: [
       {

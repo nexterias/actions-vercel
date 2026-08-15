@@ -1,15 +1,15 @@
 [
   {
-    "text": "ホーム",
+    "text": "home",
     "link": "/"
   },
   {
-    "text": "ガイド",
+    "text": "guide",
     "link": "/guide/what-is-actions-vercel",
     "activeMatch": "/guide/"
   },
   {
-    "text": "リファレンス",
+    "text": "reference",
     "link": "/references/inputs/required/token",
     "activeMatch": "/references/"
   }

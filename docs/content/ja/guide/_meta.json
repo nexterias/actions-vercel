@@ -1,22 +1,22 @@
 [
   {
     "type": "custom-link",
-    "label": "導入",
+    "label": "introduction",
     "items": [
       {
-        "label": "概要",
+        "label": "overview",
         "link": "/guide/what-is-actions-vercel"
       },
       {
-        "label": "始める",
+        "label": "gettingStarted",
         "link": "/guide/getting-started"
       },
       {
-        "label": "Monorepoを使用する",
+        "label": "monorepo",
         "link": "/guide/monorepo"
       },
       {
-        "label": "削除したブランチのDeploymentを削除する",
+        "label": "cleanupDeployments",
         "link": "/guide/cleanup-deployments"
       }
     ]

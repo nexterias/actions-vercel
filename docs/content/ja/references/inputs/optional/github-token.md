@@ -10,7 +10,7 @@ GitHubのPersonal Access Tokenまたは`secrets.GITHUB_TOKEN`を指定してく�
 デフォルトでは、**secrets.GITHUB_TOKEN**を使用します。
 
 ::: danger 注意
-`github-token`に入力する値は**機密情報**になるので、直接ファイルに記述せず[Secrets](/guide/getting-started#シークレット情報の登録)を利用してください。
+`github-token`に入力する値は**機密情報**になるので、直接ファイルに記述せず[Secrets](/guide/getting-started#github-secrets)を利用してください。
 :::
 
 ## 使用する場面
