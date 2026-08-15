@@ -8,7 +8,8 @@ Search the existing issues before opening a new one.
 
 - Use the bug report template for reproducible behavior that does not work as expected.
 - Use the feature request template for new behavior or improvements.
-- Use a blank issue for documentation, questions, or topics that do not fit either template.
+- Ask questions and get support in [GitHub Discussions](https://github.com/nexterias/actions-vercel/discussions/categories/q-a).
+- Use a blank issue for documentation or topics that do not fit either template.
 
 Never include Vercel tokens, GitHub tokens, project IDs, organization IDs, or other secrets in an issue, workflow, screenshot, or log.
 
