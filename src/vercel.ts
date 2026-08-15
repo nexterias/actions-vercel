@@ -281,8 +281,13 @@ export const deleteDeploymentsByBranch = (branch: string) =>
       deployments.push(deployment);
     }
 
+    core.info(`Found ${deployments.length} Vercel deployments for deleted branch "${branch}".`);
+
     const results = await Promise.allSettled(
-      deployments.map((deployment) => deleteDeploymentById(deployment.uid)),
+      deployments.map(async (deployment) => {
+        await deleteDeploymentById(deployment.uid);
+        core.info(`Deleted Vercel deployment "${deployment.uid}" (https://${deployment.url}).`);
+      }),
     );
     const errors = results.flatMap((result) =>
       result.status === "rejected"
