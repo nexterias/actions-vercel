@@ -223,18 +223,28 @@ const deleteDeploymentById = async (id: string) => {
   }
 };
 
-const fetchDeployments = async (branch: string) => {
-  const deploymentsByUid = new Map<string, VercelDeploymentSummary>();
+const fetchDeployments = async (parameters = new URLSearchParams()) => {
+  const response = await fetch(`https://api.vercel.com/v6/deployments?${parameters.toString()}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${input.token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to list Vercel deployments: HTTP ${response.status}.`);
+  }
+
+  return response.json() as Promise<ListDeploymentsResponse>;
+};
+
+async function* paginateDeployments(parameters = new URLSearchParams()) {
+  const pageParameters = new URLSearchParams(parameters);
+  const deploymentUids = new Set<string>();
   const cursors = new Set<string>();
-  let until: number | string | null | undefined;
+  let until: number | string | null | undefined = pageParameters.get("until");
 
   do {
-    const parameters = new URLSearchParams({
-      projectId: input.projectId,
-      teamId: input.orgId,
-      branch,
-    });
-
     if (until !== undefined && until !== null) {
       const cursor = String(until);
 
@@ -243,42 +253,42 @@ const fetchDeployments = async (branch: string) => {
       }
 
       cursors.add(cursor);
-      parameters.set("until", cursor);
+      pageParameters.set("until", cursor);
     }
 
-    const response = await fetch(`https://api.vercel.com/v6/deployments?${parameters.toString()}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${input.token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to list Vercel deployments: HTTP ${response.status}.`);
-    }
-
-    const body = (await response.json()) as ListDeploymentsResponse;
+    const body = await fetchDeployments(pageParameters);
 
     for (const deployment of body.deployments) {
-      deploymentsByUid.set(deployment.uid, deployment);
+      if (!deploymentUids.has(deployment.uid)) {
+        deploymentUids.add(deployment.uid);
+        yield deployment;
+      }
     }
 
     until = body.pagination?.next;
   } while (until !== undefined && until !== null);
-
-  return [...deploymentsByUid.values()];
-};
+}
 
 export const deleteDeploymentsByBranch = (branch: string) =>
   core.group("Clean up deleted branch Vercel deployments", async () => {
-    const deployments = await fetchDeployments(branch);
-    const candidates = deployments.filter(
-      (deployment) =>
+    const parameters = new URLSearchParams({
+      projectId: input.projectId,
+      teamId: input.orgId,
+      branch,
+    });
+    const candidates: VercelDeploymentSummary[] = [];
+
+    for await (const deployment of paginateDeployments(parameters)) {
+      if (
         deployment.meta?.githubCommitOrg === github.context.repo.owner &&
         deployment.meta.githubCommitRepo === github.context.repo.repo &&
         deployment.meta.githubCommitRef === branch &&
-        (deployment.target === null || deployment.target === undefined),
-    );
+        (deployment.target === null || deployment.target === undefined)
+      ) {
+        candidates.push(deployment);
+      }
+    }
+
     const results = await Promise.allSettled(
       candidates.map((deployment) => deleteDeploymentById(deployment.uid)),
     );
