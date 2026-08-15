@@ -279,14 +279,12 @@ export const deleteDeploymentsByBranch = (branch: string) =>
     const deployments: VercelDeploymentSummary[] = [];
 
     for await (const deployment of paginateDeployments(parameters)) {
-      if (
-        deployment.meta?.githubCommitOrg === github.context.repo.owner &&
-        deployment.meta.githubCommitRepo === github.context.repo.repo &&
-        deployment.meta.githubCommitRef === branch &&
-        (deployment.target === null || deployment.target === undefined)
-      ) {
-        deployments.push(deployment);
-      }
+      if (deployment.meta?.githubCommitOrg !== github.context.repo.owner) continue;
+      if (deployment.meta.githubCommitRepo !== github.context.repo.repo) continue;
+      if (deployment.meta.githubCommitRef !== branch) continue;
+      if (deployment.target !== null && deployment.target !== undefined) continue;
+
+      deployments.push(deployment);
     }
 
     const results = await Promise.allSettled(
