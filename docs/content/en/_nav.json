@@ -1,7 +1,8 @@
 [
   {
     "text": "home",
-    "link": "/"
+    "link": "/",
+    "activeMatch": "^/(?:ja/)?(?:index(?:\\.html)?)?$"
   },
   {
     "text": "guide",
