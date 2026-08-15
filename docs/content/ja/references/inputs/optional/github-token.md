@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: github-token
+description: GitHubのPersonal Access Tokenまたはsecrets.GITHUB_TOKENを指定し、デプロイメントやステータスの更新に使用します。
 ---
 
 # `github-token`

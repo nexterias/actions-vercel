@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: cwd
+description: actions-vercelを実行するプロジェクトのルートディレクトリのパスを指定するオプションです。デフォルトはprocess.cwd()の値です。
 ---
 
 # `cwd`

@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: build-env
+description: Vercel上でビルドを実行するときに設定する環境変数を指定するオプションです。prebuilt有効時はvercel build実行時に設定します。
 ---
 
 # `build-env`

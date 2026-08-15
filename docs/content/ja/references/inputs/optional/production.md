@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: production
+description: 本番環境へのデプロイを有効にするオプションです。trueを指定すると本番へデプロイされ、デフォルトはfalseです。
 ---
 
 # `production`

@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: prebuilt
+description: GitHub Actions側でビルドを実行し、vercel buildとvercel deploy --prebuiltでVercelへデプロイするオプションです。
 ---
 
 # `prebuilt`

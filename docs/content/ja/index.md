@@ -1,6 +1,7 @@
 ---
 pageType: home
 title: ホーム
+description: GitHub Actions に Vercel のデプロイを組み込み、セルフホストランナー対応の高度なワークフローを構築できるアクションです。
 
 hero:
   name: "Vercel Actions"
@@ -9,10 +10,10 @@ hero:
   actions:
     - theme: brand
       text: 概要
-      link: /guide/what-is-actions-vercel
+      link: /ja/guide/what-is-actions-vercel
     - theme: alt
       text: 始める
-      link: /guide/getting-started
+      link: /ja/guide/getting-started
     - theme: alt
       text: View on GitHub
       link: https://github.com/nexterias/actions-vercel

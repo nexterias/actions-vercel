@@ -1,0 +1,16 @@
+[
+  {
+    "text": "home",
+    "link": "/"
+  },
+  {
+    "text": "guide",
+    "link": "/guide/what-is-actions-vercel",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "reference",
+    "link": "/references/inputs/required/token",
+    "activeMatch": "/references/"
+  }
+]

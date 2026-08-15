@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: はじめる
+description: GitHub リポジトリ、Vercel プロジェクト、アクセストークン、シークレットを設定して、初回デプロイを始める手順です。
 ---
 
 # はじめる

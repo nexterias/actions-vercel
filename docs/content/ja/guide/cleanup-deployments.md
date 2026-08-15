@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: 削除したブランチのDeploymentを削除する
+description: 削除した GitHub ブランチに紐づく Vercel Deployment を、GitHub Actions で安全に自動削除する方法を説明します。
 ---
 
 # 削除したブランチのDeploymentを削除する

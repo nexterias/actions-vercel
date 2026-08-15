@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: public
+description: ソースコードを/_srcパスに公開するかを指定するオプションです。trueを指定すると公開され、デフォルトはfalseです。
 ---
 
 # `public`

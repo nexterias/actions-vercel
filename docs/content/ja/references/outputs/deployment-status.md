@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: deployment-status
+description: vercel deployの完了時ステータスを文字列として取得する出力です。デプロイ結果に応じた状態を確認できます。
 ---
 
 # `deployment-status`

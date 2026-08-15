@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: org-id
+description: 指定したVercelプロジェクトが所属する組織のIDを指定する必須入力です。プロジェクトの組織IDを設定します。
 ---
 
 # `org-id`

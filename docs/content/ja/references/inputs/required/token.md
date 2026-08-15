@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: token
+description: Vercelのアクセストークンを指定する必須入力です。機密情報はGitHub Secretsに安全に保存してください。
 ---
 
 # `token`

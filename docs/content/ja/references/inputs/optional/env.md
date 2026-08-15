@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: env
+description: 起動中のアプリケーションに渡す環境変数を指定するオプションです。Vercelのダッシュボードからも設定できます。
 ---
 
 # `env`

@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: ガイド
+description: nexterias/actions-vercel で GitHub Actions から Vercel をビルド・デプロイし、連携機能を活用する方法を紹介します。
 ---
 
 # 概要

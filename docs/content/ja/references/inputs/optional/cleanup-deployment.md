@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: cleanup-deployment
+description: deleteイベントで削除したGitHubブランチに紐づくVercel Deploymentを削除するオプションです。デフォルトはfalseです。
 ---
 
 # `cleanup-deployment`

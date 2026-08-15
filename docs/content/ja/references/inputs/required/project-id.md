@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: project-id
+description: VercelプロジェクトのIDを指定する必須入力です。対象プロジェクトに対応するIDを設定してください。
 ---
 
 # `project-id`

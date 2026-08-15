@@ -4,8 +4,14 @@ export default defineConfig({
   llms: true,
   root: "content",
   title: "actions-vercel",
-  lang: "ja",
+  lang: "en",
   locales: [
+    {
+      lang: "en",
+      label: "English",
+      description:
+        "Deploy Vercel projects from GitHub Actions with configurable builds, environment variables, and deployment cleanup.",
+    },
     {
       lang: "ja",
       label: "日本語",

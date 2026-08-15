@@ -1,6 +1,7 @@
 ---
 layout: doc
 title: domain-alias
+description: Vercelのドメインエイリアスを指定する非推奨のオプションです。v2で削除予定のため、ダッシュボードで設定します。
 ---
 
 # `domain-alias`
