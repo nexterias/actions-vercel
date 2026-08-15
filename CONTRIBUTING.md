@@ -1,10 +1,8 @@
 # Contributing
 
-Thank you for contributing to actions-vercel. Keep contributions focused, explain why each change is needed, and include enough information for maintainers to review it.
-
-## Follow the code of conduct
-
 By participating in this project, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+Thank you for contributing to actions-vercel. Keep contributions focused, explain why each change is needed, and include enough information for maintainers to review it.
 
 ## Open an issue
 
