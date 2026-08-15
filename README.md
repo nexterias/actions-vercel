@@ -11,6 +11,7 @@ Deploy to Vercel with GitHub Actions
 ## Features
 
 - 🚀 Switch between preview and production deployments.
+- 🧹 Remove preview deployments from Vercel when their associated branches are deleted.
 - 🏗️ Deploy the build result from GitHub Actions with `prebuilt: true`.
 - 🔗 Integrate deployments with pull request comments, commit statuses, and GitHub Deployments.
 - 🧩 Add custom steps such as tests and notifications before or after deployment.
@@ -51,6 +52,8 @@ jobs:
           production: ${{ github.ref == 'refs/heads/main' }}
           prebuilt: true # If set to true, build will be performed using GitHub Actions.
 
+  # When a branch is deleted from the remote repository,
+  # this job removes all preview deployments created for that branch from Vercel.
   cleanup:
     if: ${{ github.event_name == 'delete' && github.event.ref_type == 'branch' }}
     name: Cleanup deployments
