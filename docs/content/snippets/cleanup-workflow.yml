@@ -1,4 +1,4 @@
-name: Cleanup
+name: Cleanup Vercel deployments
 
 on:
   delete:
