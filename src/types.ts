@@ -2,12 +2,14 @@ import type { getOctokit } from "@actions/github";
 
 export type Octokit = ReturnType<typeof getOctokit>;
 
+export interface Deployment {
+  uid: string;
+  meta?: Record<string, string>;
+  target?: "production" | "staging" | null;
+}
+
 export type GetDeploymentsResponse = {
-  deployments: {
-    uid: string;
-    meta?: Record<string, string>;
-    target?: "production" | "staging" | null;
-  }[];
+  deployments: Deployment[];
   pagination: {
     count: number;
     next: number | null;

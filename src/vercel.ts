@@ -3,7 +3,12 @@ import { exec, getExecOutput } from "@actions/exec";
 import * as github from "@actions/github";
 
 import * as input from "./input";
-import type { GetDeploymentByIdOrUrlResponse, GetDeploymentsResponse, Octokit } from "./types";
+import type {
+  Deployment,
+  GetDeploymentByIdOrUrlResponse,
+  GetDeploymentsResponse,
+  Octokit,
+} from "./types";
 
 interface ListDeploymentsParameters {
   branch: string;
@@ -265,7 +270,7 @@ async function* paginateDeployments(branch: string) {
 
 export const deleteDeploymentsByBranch = (branch: string) =>
   core.group("Clean up deleted branch Vercel deployments", async () => {
-    const deployments: GetDeploymentsResponse["deployments"] = [];
+    const deployments: Deployment[] = [];
 
     for await (const deployment of paginateDeployments(branch)) {
       if (deployment.meta?.githubCommitOrg !== github.context.repo.owner) continue;
