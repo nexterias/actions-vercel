@@ -33,10 +33,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      deployments: write
-      statuses: write
-      pull-requests: write
+      contents: read # Required to check out the repository.
+      deployments: write # Create and update GitHub Deployments.
+      statuses: write # Create and update commit statuses.
+      pull-requests: write # Post comments on pull requests.
 
     steps:
       - uses: actions/checkout@v7
