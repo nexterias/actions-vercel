@@ -259,10 +259,10 @@ async function* paginateDeployments(parameters = new URLSearchParams()) {
     const body = await fetchDeployments(pageParameters);
 
     for (const deployment of body.deployments) {
-      if (!deploymentUids.has(deployment.uid)) {
-        deploymentUids.add(deployment.uid);
-        yield deployment;
-      }
+      if (deploymentUids.has(deployment.uid)) continue;
+
+      deploymentUids.add(deployment.uid);
+      yield deployment;
     }
 
     until = body.pagination?.next;
