@@ -21,15 +21,17 @@ Deploy to Vercel with GitHub Actions
 name: Vercel
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.ref || github.ref }}
   cancel-in-progress: true
 
 on:
   push:
   pull_request:
+  delete:
 
 jobs:
   deploy:
+    if: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.event.deleted == false) }}
     name: Deploy
     runs-on: ubuntu-latest
     permissions:
@@ -48,6 +50,19 @@ jobs:
           project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
           production: ${{ github.ref == 'refs/heads/main' }}
           prebuilt: true # If set to true, build will be performed using GitHub Actions.
+
+  cleanup:
+    if: ${{ github.event_name == 'delete' && github.event.ref_type == 'branch' }}
+    name: Cleanup deployments
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: nexterias/actions-vercel@v2
+        with:
+          token: ${{ secrets.YOUR_VERCEL_TOKEN }}
+          org-id: ${{ secrets.YOUR_VERCEL_ORG_ID }}
+          project-id: ${{ secrets.YOUR_VERCEL_PROJECT_ID }}
+          cleanup-deployment: true
 ```
 
 ## Documentation
