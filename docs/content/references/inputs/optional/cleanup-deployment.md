@@ -7,7 +7,9 @@ title: cleanup-deployment
 
 `true`にすると、削除したGitHubブランチに紐づくVercelの[Deployment](https://vercel.com/docs/glossary#deployment)を削除します。デフォルトは**false**です。
 
-GitHubの`delete`イベントで使用してください。それ以外のイベントでは、Deploymentの実行方法に影響しません。
+::: warning
+`delete`イベントをトリガーとするWorkflowで有効なオプションです。`delete`イベント以外ではこのオプションがtrueでも動作しません。
+:::
 
 ## 使用例
 

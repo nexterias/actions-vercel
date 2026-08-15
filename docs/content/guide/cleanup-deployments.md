@@ -7,7 +7,7 @@ title: 削除したブランチのDeploymentを削除する
 
 GitHubのブランチを削除したとき、そのブランチに紐づくVercelの[Deployment](https://vercel.com/docs/glossary#deployment)を自動的に削除できます。
 
-この機能は、`cleanup-deployment` Inputで有効にします。
+この機能は`delete`イベントかつ`cleanup-deployment`を`true`に設定しなければ有効になりません。
 
 リポジトリの`.github/workflows/cleanup-deployments.yml`に、次のワークフローを作成してください。
 
