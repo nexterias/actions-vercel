@@ -25,7 +25,7 @@ Do not report security vulnerabilities in public issues, discussions, or pull re
 
 Use Node.js 24 and pnpm 11. The exact versions used by the repository are declared in `.tool-versions` and the `packageManager` field in `package.json`.
 
-Fork and clone the repository, create a focused branch from the latest `main` branch, and install the dependencies:
+Fork and clone the repository, create a focused branch from the latest `develop` branch, and install the dependencies:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -63,7 +63,7 @@ docs: clarify prebuilt deployments
 
 ## Open a pull request
 
-Open pull requests against `main`. In the pull request description:
+Open pull requests against `develop`. In the pull request description:
 
 - Explain the problem and the chosen solution.
 - Link related issues.
