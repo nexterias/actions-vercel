@@ -269,7 +269,7 @@ async function* paginateDeployments(branch: string) {
 }
 
 export const deleteDeploymentsByBranch = (branch: string) =>
-  core.group("Clean up deleted branch Vercel deployments", async () => {
+  core.group("Cleanup deleted branch Vercel deployments", async () => {
     const deployments: Deployment[] = [];
 
     for await (const deployment of paginateDeployments(branch)) {

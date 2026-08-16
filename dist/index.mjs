@@ -37352,7 +37352,7 @@ async function* paginateDeployments(branch) {
         until = body.pagination.next ?? undefined;
     }while (until !== undefined);
 }
-const deleteDeploymentsByBranch = (branch)=>group("Clean up deleted branch Vercel deployments", async ()=>{
+const deleteDeploymentsByBranch = (branch)=>group("Cleanup deleted branch Vercel deployments", async ()=>{
         const deployments = [];
         for await (const deployment of paginateDeployments(branch)){
             if (deployment.meta?.githubCommitOrg !== github_context.repo.owner) continue;
