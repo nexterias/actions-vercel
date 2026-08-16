@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: nexterias/actions-vercel@1b60ba3b9c42b454b61389101e31b0badab1da33 # main
+      - uses: nexterias/actions-vercel@94817372addf2649ad2276773237091f72470ae2 # main
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           org-id: ${{ secrets.VERCEL_ORG_ID }}
