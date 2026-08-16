@@ -1,8 +1,13 @@
 # actions-vercel
 
 [![CI](https://github.com/nexterias/actions-vercel/actions/workflows/ci.yml/badge.svg)](https://github.com/nexterias/actions-vercel/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/nexterias/actions-vercel?style=flat-square)](https://github.com/nexterias/actions-vercel/releases/latest)
+[![Marketplace](https://img.shields.io/badge/Marketplace-Vercel%20Actions-000000?logo=github&style=flat-square)](https://github.com/marketplace/actions/vercel-actions)
+[![License](https://img.shields.io/github/license/nexterias/actions-vercel?style=flat-square)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/nexterias/actions-vercel?logo=github&style=flat-square)](https://github.com/nexterias/actions-vercel)
+[![Used by](https://img.shields.io/badge/used%20by-projects-181717?logo=github&style=flat-square)](https://github.com/search?q=%22nexterias%2Factions-vercel%22+path%3A.github%2Fworkflows+-is%3Afork+-repo%3Anexterias%2Factions-vercel&type=code)
 
-Deploy to Vercel with GitHub Actions
+Deploy Vercel projects from GitHub Actions with control over builds, environments, and integrations.
 
 ## Overview
 
