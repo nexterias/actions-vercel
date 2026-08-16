@@ -9,7 +9,7 @@ permissions:
 jobs:
   cleanup:
     if: ${{ github.event.ref_type == 'branch' }}
-    name: Clean up deployments
+    name: Cleanup deployments
     runs-on: ubuntu-latest
 
     steps:
