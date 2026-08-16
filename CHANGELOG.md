@@ -6,7 +6,3 @@
 ### Bug Fixes
 
 * standardize cleanup log wording ([53363dd](https://github.com/nexterias/actions-vercel/commit/53363dd3acc4cabe9ebbe6e5618b2da860e97917))
-
-## Changelog
-
-All notable changes to this project will be documented in this file.
