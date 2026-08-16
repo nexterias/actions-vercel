@@ -28,7 +28,7 @@
     "ja": "Monorepoを使用する"
   },
   "cleanupDeployments": {
-    "en": "Clean up deployments for deleted branches",
+    "en": "Cleanup deployments for deleted branches",
     "ja": "削除したブランチのDeploymentを削除する"
   }
 }
