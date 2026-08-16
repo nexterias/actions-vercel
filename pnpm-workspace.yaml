@@ -2,3 +2,4 @@ packages:
   - docs
 allowBuilds:
   esbuild: true
+  lefthook: true

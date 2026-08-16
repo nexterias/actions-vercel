@@ -1,0 +1,16 @@
+pre-commit:
+  commands:
+    lint:
+      priority: 1
+      glob: "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,svelte,astro}"
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true
+
+    fmt:
+      priority: 2
+      glob:
+        - "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,json5}"
+        - "**/*.{css,scss,less,pcss,postcss,graphql,gql,graphqls,toml,yml,yaml}"
+        - "**/*.{html,htm,xhtml,vue,md,markdown,mdx,hbs,handlebars,mjml}"
+      run: pnpm exec oxfmt {staged_files}
+      stage_fixed: true
