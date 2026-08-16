@@ -30,4 +30,4 @@ pnpm fmt:check
 [optional footer(s)]
 ```
 
-使用できる`type`については、`./cliff.toml`を参照すること
+使用できる`type`は、`feat`、`fix`、`docs`、`perf`、`refactor`、`style`、`test`、`chore`とすること

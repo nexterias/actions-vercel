@@ -6,15 +6,13 @@ concurrency:
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths-ignore:
       - dist/*
   push:
     branches: [main]
     paths-ignore:
       - dist/*
-    tags:
-      - v*.*.*
 
 jobs:
   build:
@@ -92,61 +90,3 @@ jobs:
       - run: |
           echo ${{ steps.vercel.outputs.deployment-url }}
           echo ${{ steps.vercel.outputs.deployment-status }}
-
-  release:
-    name: Release
-    needs: [build]
-    if: startsWith(github.ref, 'refs/tags/') && github.actor != 'github-actions'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          fetch-depth: 0
-
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
-        with:
-          cache: "pnpm"
-          node-version: 24
-
-      - name: Setup git-cliff
-        uses: kenji-miyake/setup-git-cliff@2778609c643a39a2576c4bae2e493b855eb4aee8 # v2
-
-      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        id: git-cliff
-        with:
-          result-encoding: string
-          script: |
-            const { stdout } = await exec.getExecOutput('git', ['cliff', '-l', '--strip', 'header'])
-            return stdout
-
-      - name: Create draft release
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
-        with:
-          draft: true
-          body: ${{ steps.git-cliff.outputs.result }}
-
-  tag:
-    needs: [build]
-    name: Tag
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') && github.actor != 'github-actions'
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          fetch-depth: 0
-
-      - name: Get target tag
-        id: tag
-        run: echo "name=$(echo '${{ github.ref }}' | sed -r 's/refs\/tags\/(v[0-9]+)\..*/\1/')" >> $GITHUB_OUTPUT
-
-      - name: Update & Push tag
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git tag -f ${{ steps.tag.outputs.name }} ${{ github.ref }}
-          git push -f --tags origin ${{ steps.tag.outputs.name }}
