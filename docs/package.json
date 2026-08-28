@@ -8,6 +8,6 @@
     "preview": "rspress preview"
   },
   "devDependencies": {
-    "@rspress/core": "2.0.19"
+    "@rspress/core": "2.0.20"
   }
 }
