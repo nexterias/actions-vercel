@@ -32818,7 +32818,7 @@ function withDefaults(oldDefaults, newDefaults) {
 var dist_bundle_endpoint = withDefaults(null, DEFAULTS);
 
 
-;// CONCATENATED MODULE: ./node_modules/.pnpm/content-type@3.1.0/node_modules/content-type/dist/index.js
+;// CONCATENATED MODULE: ./node_modules/.pnpm/content-type@3.1.1/node_modules/content-type/dist/index.js
 /*!
  * content-type
  * Copyright(c) 2015 Douglas Christopher Wilson
@@ -32873,13 +32873,12 @@ const NullObject = /* @__PURE__ */ (() => {
 /**
  * Validate a type string against RFC 9110.
  */
-function isTypeValid(type) {
-    const len = type.length;
+function isTypeValid(type, start = 0, end = type.length) {
     let hasSlash = false;
-    for (let index = 0; index < len; index++) {
+    for (let index = start; index < end; index++) {
         const code = type.charCodeAt(index);
         if (code === 47 /* / */) {
-            if (hasSlash || index === 0 || index === len - 1)
+            if (hasSlash || index === start || index >= end - 1)
                 return false;
             hasSlash = true;
         }
@@ -32892,12 +32891,11 @@ function isTypeValid(type) {
 /**
  * Validate a token against RFC 9110.
  */
-function isTokenValid(name) {
-    const len = name.length;
-    if (len === 0)
+function isTokenValid(token, start = 0, end = token.length) {
+    if (start >= end)
         return false;
-    for (let index = 0; index < len; index++) {
-        if (!isTokenCode(name.charCodeAt(index)))
+    for (let index = start; index < end; index++) {
+        if (!isTokenCode(token.charCodeAt(index)))
             return false;
     }
     return true;
