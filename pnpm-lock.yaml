@@ -18,8 +18,8 @@ importers:
         specifier: ^9.1.1
         version: 9.1.1
       dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
+        specifier: ^18.0.1
+        version: 18.0.1
     devDependencies:
       '@rspack/cli':
         specifier: 2.1.10
@@ -936,9 +936,10 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  dotenv@17.4.2:
-    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
+  dotenv@18.0.1:
+    resolution: {integrity: sha512-0eR4m4D/jH5eaI3evo2ZqqMii5mrTCR12v12VChdie6O1gPHs7XAjzTep0CWc1Bd+oNx3vVfbi734dK4zghigw==}
     engines: {node: '>=12'}
+    hasBin: true
 
   entities@6.0.1:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
@@ -2324,7 +2325,7 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  dotenv@17.4.2: {}
+  dotenv@18.0.1: {}
 
   entities@6.0.1: {}
 
