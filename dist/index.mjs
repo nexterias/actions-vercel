@@ -838,433 +838,6 @@ class DecodedURL extends URL {
 //# sourceMappingURL=proxy.js.map
 
 },
-3008(module, __unused_rspack_exports, __webpack_require__) {
-const fs = __webpack_require__(9896)
-const path = __webpack_require__(6928)
-const os = __webpack_require__(857)
-const crypto = __webpack_require__(6982)
-
-// Array of tips to display randomly
-const TIPS = [
-  '◈ encrypted .env [www.dotenvx.com]',
-  '◈ secrets for agents [www.dotenvx.com]',
-  '⌁ auth for agents [www.vestauth.com]',
-  '⌘ custom filepath { path: \'/custom/path/.env\' }',
-  '⌘ enable debugging { debug: true }',
-  '⌘ override existing { override: true }',
-  '⌘ suppress logs { quiet: true }',
-  '⌘ multiple files { path: [\'.env.local\', \'.env\'] }'
-]
-
-// Get a random tip from the tips array
-function _getRandomTip () {
-  return TIPS[Math.floor(Math.random() * TIPS.length)]
-}
-
-function parseBoolean (value) {
-  if (typeof value === 'string') {
-    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
-  }
-  return Boolean(value)
-}
-
-function supportsAnsi () {
-  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
-}
-
-function dim (text) {
-  return supportsAnsi() ? `\x1b[2m${text}\x1b[0m` : text
-}
-
-const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
-
-// Parse src into an Object
-function parse (src) {
-  const obj = {}
-
-  // Convert buffer to string
-  let lines = src.toString()
-
-  // Convert line breaks to same format
-  lines = lines.replace(/\r\n?/mg, '\n')
-
-  let match
-  while ((match = LINE.exec(lines)) != null) {
-    const key = match[1]
-
-    // Default undefined or null to empty string
-    let value = (match[2] || '')
-
-    // Remove whitespace
-    value = value.trim()
-
-    // Check if double quoted
-    const maybeQuote = value[0]
-
-    // Remove surrounding quotes
-    value = value.replace(/^(['"`])([\s\S]*)\1$/mg, '$2')
-
-    // Expand newlines if double quoted
-    if (maybeQuote === '"') {
-      value = value.replace(/\\n/g, '\n')
-      value = value.replace(/\\r/g, '\r')
-    }
-
-    // Add to object
-    obj[key] = value
-  }
-
-  return obj
-}
-
-function _parseVault (options) {
-  options = options || {}
-
-  const vaultPath = _vaultPath(options)
-  options.path = vaultPath // parse .env.vault
-  const result = DotenvModule.configDotenv(options)
-  if (!result.parsed) {
-    const err = new Error(`MISSING_DATA: Cannot parse ${vaultPath} for an unknown reason`)
-    err.code = 'MISSING_DATA'
-    throw err
-  }
-
-  // handle scenario for comma separated keys - for use with key rotation
-  // example: DOTENV_KEY="dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=prod,dotenv://:key_7890@dotenvx.com/vault/.env.vault?environment=prod"
-  const keys = _dotenvKey(options).split(',')
-  const length = keys.length
-
-  let decrypted
-  for (let i = 0; i < length; i++) {
-    try {
-      // Get full key
-      const key = keys[i].trim()
-
-      // Get instructions for decrypt
-      const attrs = _instructions(result, key)
-
-      // Decrypt
-      decrypted = DotenvModule.decrypt(attrs.ciphertext, attrs.key)
-
-      break
-    } catch (error) {
-      // last key
-      if (i + 1 >= length) {
-        throw error
-      }
-      // try next key
-    }
-  }
-
-  // Parse decrypted .env string
-  return DotenvModule.parse(decrypted)
-}
-
-function _warn (message) {
-  console.error(`⚠ ${message}`)
-}
-
-function _debug (message) {
-  console.log(`┆ ${message}`)
-}
-
-function _log (message) {
-  console.log(`◇ ${message}`)
-}
-
-function _dotenvKey (options) {
-  // prioritize developer directly setting options.DOTENV_KEY
-  if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
-    return options.DOTENV_KEY
-  }
-
-  // secondary infra already contains a DOTENV_KEY environment variable
-  if (process.env.DOTENV_KEY && process.env.DOTENV_KEY.length > 0) {
-    return process.env.DOTENV_KEY
-  }
-
-  // fallback to empty string
-  return ''
-}
-
-function _instructions (result, dotenvKey) {
-  // Parse DOTENV_KEY. Format is a URI
-  let uri
-  try {
-    uri = new URL(dotenvKey)
-  } catch (error) {
-    if (error.code === 'ERR_INVALID_URL') {
-      const err = new Error('INVALID_DOTENV_KEY: Wrong format. Must be in valid uri format like dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=development')
-      err.code = 'INVALID_DOTENV_KEY'
-      throw err
-    }
-
-    throw error
-  }
-
-  // Get decrypt key
-  const key = uri.password
-  if (!key) {
-    const err = new Error('INVALID_DOTENV_KEY: Missing key part')
-    err.code = 'INVALID_DOTENV_KEY'
-    throw err
-  }
-
-  // Get environment
-  const environment = uri.searchParams.get('environment')
-  if (!environment) {
-    const err = new Error('INVALID_DOTENV_KEY: Missing environment part')
-    err.code = 'INVALID_DOTENV_KEY'
-    throw err
-  }
-
-  // Get ciphertext payload
-  const environmentKey = `DOTENV_VAULT_${environment.toUpperCase()}`
-  const ciphertext = result.parsed[environmentKey] // DOTENV_VAULT_PRODUCTION
-  if (!ciphertext) {
-    const err = new Error(`NOT_FOUND_DOTENV_ENVIRONMENT: Cannot locate environment ${environmentKey} in your .env.vault file.`)
-    err.code = 'NOT_FOUND_DOTENV_ENVIRONMENT'
-    throw err
-  }
-
-  return { ciphertext, key }
-}
-
-function _vaultPath (options) {
-  let possibleVaultPath = null
-
-  if (options && options.path && options.path.length > 0) {
-    if (Array.isArray(options.path)) {
-      for (const filepath of options.path) {
-        if (fs.existsSync(filepath)) {
-          possibleVaultPath = filepath.endsWith('.vault') ? filepath : `${filepath}.vault`
-        }
-      }
-    } else {
-      possibleVaultPath = options.path.endsWith('.vault') ? options.path : `${options.path}.vault`
-    }
-  } else {
-    possibleVaultPath = path.resolve(process.cwd(), '.env.vault')
-  }
-
-  if (fs.existsSync(possibleVaultPath)) {
-    return possibleVaultPath
-  }
-
-  return null
-}
-
-function _resolveHome (envPath) {
-  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
-}
-
-function _configVault (options) {
-  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
-  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
-
-  if (debug || !quiet) {
-    _log('loading env from encrypted .env.vault')
-  }
-
-  const parsed = DotenvModule._parseVault(options)
-
-  let processEnv = process.env
-  if (options && options.processEnv != null) {
-    processEnv = options.processEnv
-  }
-
-  DotenvModule.populate(processEnv, parsed, options)
-
-  return { parsed }
-}
-
-function configDotenv (options) {
-  const dotenvPath = path.resolve(process.cwd(), '.env')
-  let encoding = 'utf8'
-  let processEnv = process.env
-  if (options && options.processEnv != null) {
-    processEnv = options.processEnv
-  }
-  let debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || (options && options.debug))
-  let quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || (options && options.quiet))
-
-  if (options && options.encoding) {
-    encoding = options.encoding
-  } else {
-    if (debug) {
-      _debug('no encoding is specified (UTF-8 is used by default)')
-    }
-  }
-
-  let optionPaths = [dotenvPath] // default, look for .env
-  if (options && options.path) {
-    if (!Array.isArray(options.path)) {
-      optionPaths = [_resolveHome(options.path)]
-    } else {
-      optionPaths = [] // reset default
-      for (const filepath of options.path) {
-        optionPaths.push(_resolveHome(filepath))
-      }
-    }
-  }
-
-  // Build the parsed data in a temporary object (because we need to return it).  Once we have the final
-  // parsed data, we will combine it with process.env (or options.processEnv if provided).
-  let lastError
-  const parsedAll = {}
-  for (const path of optionPaths) {
-    try {
-      // Specifying an encoding returns a string instead of a buffer
-      const parsed = DotenvModule.parse(fs.readFileSync(path, { encoding }))
-
-      DotenvModule.populate(parsedAll, parsed, options)
-    } catch (e) {
-      if (debug) {
-        _debug(`failed to load ${path} ${e.message}`)
-      }
-      lastError = e
-    }
-  }
-
-  const populated = DotenvModule.populate(processEnv, parsedAll, options)
-
-  // handle user settings DOTENV_CONFIG_ options inside .env file(s)
-  debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || debug)
-  quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || quiet)
-
-  if (debug || !quiet) {
-    const keysCount = Object.keys(populated).length
-    const shortPaths = []
-    for (const filePath of optionPaths) {
-      try {
-        const relative = path.relative(process.cwd(), filePath)
-        shortPaths.push(relative)
-      } catch (e) {
-        if (debug) {
-          _debug(`failed to load ${filePath} ${e.message}`)
-        }
-        lastError = e
-      }
-    }
-
-    _log(`injected env (${keysCount}) from ${shortPaths.join(',')} ${dim(`// tip: ${_getRandomTip()}`)}`)
-  }
-
-  if (lastError) {
-    return { parsed: parsedAll, error: lastError }
-  } else {
-    return { parsed: parsedAll }
-  }
-}
-
-// Populates process.env from .env file
-function config (options) {
-  // fallback to original dotenv if DOTENV_KEY is not set
-  if (_dotenvKey(options).length === 0) {
-    return DotenvModule.configDotenv(options)
-  }
-
-  const vaultPath = _vaultPath(options)
-
-  // dotenvKey exists but .env.vault file does not exist
-  if (!vaultPath) {
-    _warn(`you set DOTENV_KEY but you are missing a .env.vault file at ${vaultPath}`)
-
-    return DotenvModule.configDotenv(options)
-  }
-
-  return DotenvModule._configVault(options)
-}
-
-function decrypt (encrypted, keyStr) {
-  const key = Buffer.from(keyStr.slice(-64), 'hex')
-  let ciphertext = Buffer.from(encrypted, 'base64')
-
-  const nonce = ciphertext.subarray(0, 12)
-  const authTag = ciphertext.subarray(-16)
-  ciphertext = ciphertext.subarray(12, -16)
-
-  try {
-    const aesgcm = crypto.createDecipheriv('aes-256-gcm', key, nonce)
-    aesgcm.setAuthTag(authTag)
-    return `${aesgcm.update(ciphertext)}${aesgcm.final()}`
-  } catch (error) {
-    const isRange = error instanceof RangeError
-    const invalidKeyLength = error.message === 'Invalid key length'
-    const decryptionFailed = error.message === 'Unsupported state or unable to authenticate data'
-
-    if (isRange || invalidKeyLength) {
-      const err = new Error('INVALID_DOTENV_KEY: It must be 64 characters long (or more)')
-      err.code = 'INVALID_DOTENV_KEY'
-      throw err
-    } else if (decryptionFailed) {
-      const err = new Error('DECRYPTION_FAILED: Please check your DOTENV_KEY')
-      err.code = 'DECRYPTION_FAILED'
-      throw err
-    } else {
-      throw error
-    }
-  }
-}
-
-// Populate process.env with parsed values
-function populate (processEnv, parsed, options = {}) {
-  const debug = Boolean(options && options.debug)
-  const override = Boolean(options && options.override)
-  const populated = {}
-
-  if (typeof parsed !== 'object') {
-    const err = new Error('OBJECT_REQUIRED: Please check the processEnv argument being passed to populate')
-    err.code = 'OBJECT_REQUIRED'
-    throw err
-  }
-
-  // Set process.env
-  for (const key of Object.keys(parsed)) {
-    if (Object.prototype.hasOwnProperty.call(processEnv, key)) {
-      if (override === true) {
-        processEnv[key] = parsed[key]
-        populated[key] = parsed[key]
-      }
-
-      if (debug) {
-        if (override === true) {
-          _debug(`"${key}" is already defined and WAS overwritten`)
-        } else {
-          _debug(`"${key}" is already defined and was NOT overwritten`)
-        }
-      }
-    } else {
-      processEnv[key] = parsed[key]
-      populated[key] = parsed[key]
-    }
-  }
-
-  return populated
-}
-
-const DotenvModule = {
-  configDotenv,
-  _configVault,
-  _parseVault,
-  config,
-  decrypt,
-  parse,
-  populate
-}
-
-module.exports.configDotenv = DotenvModule.configDotenv
-module.exports._configVault = DotenvModule._configVault
-module.exports._parseVault = DotenvModule._parseVault
-module.exports.config = DotenvModule.config
-module.exports.decrypt = DotenvModule.decrypt
-module.exports.parse = DotenvModule.parse
-module.exports.populate = DotenvModule.populate
-
-module.exports = DotenvModule
-
-
-},
 23(module, __unused_rspack_exports, __webpack_require__) {
 module.exports = __webpack_require__(4145);
 
@@ -29104,160 +28677,7 @@ module.exports = {
 
 
 },
-2613(module) {
-module.exports = __rspack_createRequire_require("assert");
-
-},
-6982(module) {
-module.exports = __rspack_createRequire_require("crypto");
-
-},
-4434(module) {
-module.exports = __rspack_createRequire_require("events");
-
-},
-9896(module) {
-module.exports = __rspack_createRequire_require("fs");
-
-},
-8611(module) {
-module.exports = __rspack_createRequire_require("http");
-
-},
-5692(module) {
-module.exports = __rspack_createRequire_require("https");
-
-},
-9278(module) {
-module.exports = __rspack_createRequire_require("net");
-
-},
-4589(module) {
-module.exports = __rspack_createRequire_require("node:assert");
-
-},
-6698(module) {
-module.exports = __rspack_createRequire_require("node:async_hooks");
-
-},
-4573(module) {
-module.exports = __rspack_createRequire_require("node:buffer");
-
-},
-7540(module) {
-module.exports = __rspack_createRequire_require("node:console");
-
-},
-7598(module) {
-module.exports = __rspack_createRequire_require("node:crypto");
-
-},
-3053(module) {
-module.exports = __rspack_createRequire_require("node:diagnostics_channel");
-
-},
-610(module) {
-module.exports = __rspack_createRequire_require("node:dns");
-
-},
-8474(module) {
-module.exports = __rspack_createRequire_require("node:events");
-
-},
-7067(module) {
-module.exports = __rspack_createRequire_require("node:http");
-
-},
-2467(module) {
-module.exports = __rspack_createRequire_require("node:http2");
-
-},
-7030(module) {
-module.exports = __rspack_createRequire_require("node:net");
-
-},
-643(module) {
-module.exports = __rspack_createRequire_require("node:perf_hooks");
-
-},
-1792(module) {
-module.exports = __rspack_createRequire_require("node:querystring");
-
-},
-7075(module) {
-module.exports = __rspack_createRequire_require("node:stream");
-
-},
-1692(module) {
-module.exports = __rspack_createRequire_require("node:tls");
-
-},
-3136(module) {
-module.exports = __rspack_createRequire_require("node:url");
-
-},
-7975(module) {
-module.exports = __rspack_createRequire_require("node:util");
-
-},
-3429(module) {
-module.exports = __rspack_createRequire_require("node:util/types");
-
-},
-5919(module) {
-module.exports = __rspack_createRequire_require("node:worker_threads");
-
-},
-8522(module) {
-module.exports = __rspack_createRequire_require("node:zlib");
-
-},
-857(module) {
-module.exports = __rspack_createRequire_require("os");
-
-},
-6928(module) {
-module.exports = __rspack_createRequire_require("path");
-
-},
-3193(module) {
-module.exports = __rspack_createRequire_require("string_decoder");
-
-},
-4756(module) {
-module.exports = __rspack_createRequire_require("tls");
-
-},
-9023(module) {
-module.exports = __rspack_createRequire_require("util");
-
-},
-
-});
-// The module cache
-var __webpack_module_cache__ = {};
-
-// The require function
-function __webpack_require__(moduleId) {
-
-// Check if module is in cache
-var cachedModule = __webpack_module_cache__[moduleId];
-if (cachedModule !== undefined) {
-return cachedModule.exports;
-}
-// Create a new module (and put it into the cache)
-var module = (__webpack_module_cache__[moduleId] = {
-exports: {}
-});
-// Execute the module function
-__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
-// Return the exports of the module
-return module.exports;
-
-}
-
-var __webpack_exports__ = {};
+4072(__unused_rspack_module, __unused_rspack___webpack_exports__, __webpack_require__) {
 
 // EXTERNAL MODULE: external "os"
 var external_os_ = __webpack_require__(857);
@@ -29389,8 +28809,8 @@ function escapeProperty(s) {
         .replace(/,/g, '%2C');
 }
 //# sourceMappingURL=command.js.map
-// EXTERNAL MODULE: external "crypto"
-var external_crypto_ = __webpack_require__(6982);
+;// CONCATENATED MODULE: external "crypto"
+const external_crypto_namespaceObject = __rspack_createRequire_require("crypto");
 // EXTERNAL MODULE: external "fs"
 var external_fs_ = __webpack_require__(9896);
 ;// CONCATENATED MODULE: ./node_modules/.pnpm/@actions+core@3.0.1/node_modules/@actions/core/lib/file-command.js
@@ -29414,7 +28834,7 @@ function file_command_issueFileCommand(command, message) {
     });
 }
 function file_command_prepareKeyValueMessage(key, value) {
-    const delimiter = `ghadelimiter_${external_crypto_.randomUUID()}`;
+    const delimiter = `ghadelimiter_${external_crypto_namespaceObject.randomUUID()}`;
     const convertedValue = utils_toCommandValue(value);
     // These should realistically never happen, but just in case someone finds a
     // way to exploit uuid generation let's not allow keys or values that contain
@@ -30695,8 +30115,8 @@ function toPlatformPath(pth) {
 var external_string_decoder_ = __webpack_require__(3193);
 // EXTERNAL MODULE: external "events"
 var external_events_ = __webpack_require__(4434);
-;// CONCATENATED MODULE: external "child_process"
-const external_child_process_namespaceObject = __rspack_createRequire_require("child_process");
+// EXTERNAL MODULE: external "child_process"
+var external_child_process_ = __webpack_require__(5317);
 // EXTERNAL MODULE: external "assert"
 var external_assert_ = __webpack_require__(2613);
 ;// CONCATENATED MODULE: ./node_modules/.pnpm/@actions+io@3.0.2/node_modules/@actions/io/lib/io-util.js
@@ -31538,7 +30958,7 @@ class ToolRunner extends external_events_.EventEmitter {
                     return reject(new Error(`The cwd: ${this.options.cwd} does not exist!`));
                 }
                 const fileName = this._getSpawnFileName();
-                const cp = external_child_process_namespaceObject.spawn(fileName, this._getSpawnArgs(optionsNonNull), this._getSpawnOptions(this.options, fileName));
+                const cp = external_child_process_.spawn(fileName, this._getSpawnArgs(optionsNonNull), this._getSpawnOptions(this.options, fileName));
                 let stdbuffer = '';
                 if (cp.stdout) {
                     cp.stdout.on('data', (data) => {
@@ -37195,8 +36615,8 @@ function getOctokit(token, options, ...additionalPlugins) {
 //# sourceMappingURL=github.js.map
 // EXTERNAL MODULE: external "node:crypto"
 var external_node_crypto_ = __webpack_require__(7598);
-// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@17.4.2/node_modules/dotenv/lib/main.js
-var main = __webpack_require__(3008);
+// EXTERNAL MODULE: ./node_modules/.pnpm/dotenv@18.0.1/node_modules/dotenv/dist/index.cjs
+var dist = __webpack_require__(2066);
 ;// CONCATENATED MODULE: ./src/input.ts
 
 
@@ -37217,8 +36637,8 @@ const cwd = getInput("cwd") || process.cwd();
 const domainAlias = getMultilineInput("domain-alias");
 const githubToken = getInput("github-token") || void 0;
 const githubDeploymentEnvironment = getInput("github-deployment-environment") || void 0;
-const buildEnvironments = (0,main.parse)(getInput("build-env"));
-const environments = (0,main.parse)(getInput("env"));
+const buildEnvironments = (0,dist.parse)(getInput("build-env"));
+const environments = (0,dist.parse)(getInput("env"));
 if (domainAlias.length) warning('"domain-alias" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/domain-alias');
 if (githubDeploymentEnvironment) warning('"github-deployment-environment" is deprecated. See https://actions-vercel.vercel.app/references/inputs/optional/github-deployment-environment');
 
@@ -37742,3 +37162,190 @@ async function run() {
 }
 run().catch((error)=>setFailed(error));
 
+
+},
+2613(module) {
+module.exports = __rspack_createRequire_require("assert");
+
+},
+5317(module) {
+module.exports = __rspack_createRequire_require("child_process");
+
+},
+4434(module) {
+module.exports = __rspack_createRequire_require("events");
+
+},
+9896(module) {
+module.exports = __rspack_createRequire_require("fs");
+
+},
+8611(module) {
+module.exports = __rspack_createRequire_require("http");
+
+},
+5692(module) {
+module.exports = __rspack_createRequire_require("https");
+
+},
+9278(module) {
+module.exports = __rspack_createRequire_require("net");
+
+},
+4589(module) {
+module.exports = __rspack_createRequire_require("node:assert");
+
+},
+6698(module) {
+module.exports = __rspack_createRequire_require("node:async_hooks");
+
+},
+4573(module) {
+module.exports = __rspack_createRequire_require("node:buffer");
+
+},
+7540(module) {
+module.exports = __rspack_createRequire_require("node:console");
+
+},
+7598(module) {
+module.exports = __rspack_createRequire_require("node:crypto");
+
+},
+3053(module) {
+module.exports = __rspack_createRequire_require("node:diagnostics_channel");
+
+},
+610(module) {
+module.exports = __rspack_createRequire_require("node:dns");
+
+},
+8474(module) {
+module.exports = __rspack_createRequire_require("node:events");
+
+},
+7067(module) {
+module.exports = __rspack_createRequire_require("node:http");
+
+},
+2467(module) {
+module.exports = __rspack_createRequire_require("node:http2");
+
+},
+7030(module) {
+module.exports = __rspack_createRequire_require("node:net");
+
+},
+643(module) {
+module.exports = __rspack_createRequire_require("node:perf_hooks");
+
+},
+1792(module) {
+module.exports = __rspack_createRequire_require("node:querystring");
+
+},
+7075(module) {
+module.exports = __rspack_createRequire_require("node:stream");
+
+},
+1692(module) {
+module.exports = __rspack_createRequire_require("node:tls");
+
+},
+3136(module) {
+module.exports = __rspack_createRequire_require("node:url");
+
+},
+7975(module) {
+module.exports = __rspack_createRequire_require("node:util");
+
+},
+3429(module) {
+module.exports = __rspack_createRequire_require("node:util/types");
+
+},
+5919(module) {
+module.exports = __rspack_createRequire_require("node:worker_threads");
+
+},
+8522(module) {
+module.exports = __rspack_createRequire_require("node:zlib");
+
+},
+857(module) {
+module.exports = __rspack_createRequire_require("os");
+
+},
+6928(module) {
+module.exports = __rspack_createRequire_require("path");
+
+},
+3193(module) {
+module.exports = __rspack_createRequire_require("string_decoder");
+
+},
+4756(module) {
+module.exports = __rspack_createRequire_require("tls");
+
+},
+7016(module) {
+module.exports = __rspack_createRequire_require("url");
+
+},
+9023(module) {
+module.exports = __rspack_createRequire_require("util");
+
+},
+2066(module, __unused_rspack_exports, __webpack_require__) {
+/* module decorator */ module = __webpack_require__.nmd(module);
+//#!/usr/bin/env node
+var O=(e,o)=>()=>{try{return o||e((o={exports:{}}).exports,o),o.exports}catch(t){throw o=0,t}};var q=O((Ce,j)=>{function I(e){return typeof e=="string"?!["false","0","no","off",""].includes(e.toLowerCase()):!!e}function B(){let e={};for(let o of["ENCODING","PATH","QUIET","DEBUG","OVERRIDE","FAST"]){let t=process.env[`DOTENV_${o}`]!=null?process.env[`DOTENV_${o}`]:process.env[`DOTENV_CONFIG_${o}`];t!=null&&(e[o.toLowerCase()]=o==="ENCODING"||o==="PATH"?t:I(t))}return e}j.exports={parseBoolean:I,optionsFromEnv:B}});var y=O((we,C)=>{var H=__webpack_require__(9896),x=__webpack_require__(6928),L=__webpack_require__(857),{URL:M,fileURLToPath:W}=__webpack_require__(7016),{parseBoolean:T,optionsFromEnv:Q}=q(),J=/(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg,v=new Uint8Array(256);for(let e=48;e<=57;e++)v[e]=1;for(let e=65;e<=90;e++)v[e]=1;for(let e=97;e<=122;e++)v[e]=1;v[45]=1;v[46]=1;v[95]=1;function K(e){let o={},t=e.toString();t=t.replace(/\r\n?/mg,`
+`);let n;for(;(n=J.exec(t))!=null;){let r=n[1],s=n[2]||"";s=s.trim();let i=s[0];s=s.replace(/^(['"`])([\s\S]*)\1$/mg,"$2"),i==='"'&&(s=s.replace(/\\n/g,`
+`),s=s.replace(/\\r/g,"\r")),o[r]=s}return o}function X(e){let o={},t=typeof e=="string"?e:e.toString();t.indexOf("\r")!==-1&&(t=t.replace(/\r\n?/g,`
+`));let n=t.length,r=0;for(;r<n;){let s=t.charCodeAt(r);for(;r<n&&(s===32||s===9||s===10||s===65279);)r++,s=t.charCodeAt(r);if(r>=n)break;if(s===35){for(;r<n&&t.charCodeAt(r)!==10;)r++;continue}if(s===101&&r+6<n&&t.charCodeAt(r+1)===120&&t.charCodeAt(r+2)===112&&t.charCodeAt(r+3)===111&&t.charCodeAt(r+4)===114&&t.charCodeAt(r+5)===116){let f=t.charCodeAt(r+6);if(f===32||f===9)for(r+=7;r<n&&((s=t.charCodeAt(r))===32||s===9);)r++;else s=t.charCodeAt(r)}let i=r,l=0;for(;r<n&&(l=t.charCodeAt(r),v[l]);)r++;if(r===i){for(;r<n&&t.charCodeAt(r)!==10;)r++;continue}let h=t.slice(i,r);if(r>=n&&(l=0),l===32||l===9)do r++,l=r<n?t.charCodeAt(r):0;while(l===32||l===9);if(l===61)r++;else if(l===58&&r+1<n&&(t.charCodeAt(r+1)===32||t.charCodeAt(r+1)===9))r++;else{for(;r<n&&t.charCodeAt(r)!==10;)r++;continue}for(;r<n&&((s=t.charCodeAt(r))===32||s===9);)r++;let u;if(s=r<n?t.charCodeAt(r):0,s===39||s===34||s===96){let f=s,c=r+1,a=c;for(;a<n;){let d=t.charCodeAt(a);if(d===92&&a+1<n){let p=t.charCodeAt(a+1);if(p===f||p===92){a+=2;continue}}if(d===f)break;a++}if(a>=n){let d=r,p=r;for(;p<n;){let w=t.charCodeAt(p);if(w===35||w===10)break;p++}let m=p;for(;m>d;){let w=t.charCodeAt(m-1);if(w===32||w===9)m--;else break}if(u=t.slice(d,m),r=p,r<n&&t.charCodeAt(r)===35)for(;r<n&&t.charCodeAt(r)!==10;)r++}else{for(u=t.slice(c,a),r=a+1,f===34&&u.indexOf("\\")!==-1&&(u=u.replace(/\\n/g,`
+`).replace(/\\r/g,"\r"));r<n&&((s=t.charCodeAt(r))===32||s===9);)r++;if(r<n&&t.charCodeAt(r)===35)for(;r<n&&t.charCodeAt(r)!==10;)r++}}else{let f=r,c=t.indexOf(`
+`,r);c===-1&&(c=n);let a=t.indexOf("#",r);(a===-1||a>c)&&(a=c);let d=a;for(;d>f;){let p=t.charCodeAt(d-1);if(p===32||p===9)d--;else break}u=f===d?"":t.slice(f,d),r=a===c?a:c}o[h]=u}return o}function Y(e,o){return o&&T(o.fast)?X(e):K(e)}function b(e){console.log(`\u2506 ${e}`)}function z(e){console.error(`\u25C7 ${e}`)}function N(e){return e[0]==="~"?x.join(L.homedir(),e.slice(1)):e}function Z(e={}){return{...Q(),...e}}function ee(e){e=Z(e);let o=x.resolve(process.cwd(),".env"),t="utf8",n=process.env;e&&e.processEnv!=null&&(n=e.processEnv);let r=T(e&&e.debug),s=T(e&&e.quiet);e&&e.encoding?t=e.encoding:r&&b("no encoding is specified (UTF-8 is used by default)");let i=[o];if(e&&e.path)if(!Array.isArray(e.path))i=[N(e.path)];else{i=[];for(let c of e.path)i.push(N(c))}let l,h={},u={fast:e.fast};for(let c of i)try{let a=g.parse(H.readFileSync(c,{encoding:t}),u);g.populate(h,a,e)}catch(a){r&&b(`failed to load ${c} ${a.message}`),l=a}let f=g.populate(n,h,e);if(r||!s){let c=Object.keys(f).length,a=[];for(let d of i)try{let p=x.relative(process.cwd(),d instanceof M?W(d):d);a.push(p)}catch(p){r&&b(`failed to load ${d} ${p.message}`),l=p}z(`injected env (${c}) from ${a.join(",")}`)}return l?{parsed:h,error:l}:{parsed:h}}function te(e){return g.configDotenv(e)}function re(e,o,t={}){let n=!!(t&&t.debug),r=!!(t&&t.override),s={};if(e===null||typeof e!="object"||o===null||typeof o!="object"){let i=new Error("OBJECT_REQUIRED: Please check the processEnv argument being passed to populate");throw i.code="OBJECT_REQUIRED",i}for(let i of Object.keys(o))Object.prototype.hasOwnProperty.call(e,i)?(r===!0&&(e[i]=o[i],s[i]=o[i]),n&&b(r===!0?`"${i}" is already defined and WAS overwritten`:`"${i}" is already defined and was NOT overwritten`)):(e[i]=o[i],s[i]=o[i]);return s}var g={configDotenv:ee,config:te,parse:Y,populate:re};C.exports.configDotenv=g.configDotenv;C.exports.config=g.config;C.exports.parse=g.parse;C.exports.populate=g.populate;C.exports=g});var F=O((be,R)=>{var $=__webpack_require__(5317),oe=__webpack_require__(9896),P=__webpack_require__(6928);function ne(e){let o=['"'],t=0;for(let n of e){if(n==="\\"){t++;continue}n==='"'?o.push("\\".repeat(t*2+1),'"'):o.push("\\".repeat(t),n),t=0}return o.push("\\".repeat(t*2),'"'),o.join("")}function _(e,o=1){for(let t=0;t<o;t++){let n=[];for(let r of e){let s=r.charCodeAt(0),i=s>=48&&s<=57||s>=65&&s<=90||s>=97&&s<=122,l="\\/:._-".includes(r);!i&&!l&&s<128&&n.push("^"),n.push(r)}e=n.join("")}return e}function D(e,o){let t=Object.keys(e).reverse().find(n=>n.toUpperCase()===o);return t===void 0?void 0:e[t]}function se(e,o,t){let n=(D(o,"PATHEXT")||".COM;.EXE;.BAT;.CMD").split(";").filter(Boolean),s=n.some(l=>e.toLowerCase().endsWith(l.toLowerCase()))?["",...n]:[...n,""],i=/[\\/]/.test(e)?[t]:[t,...(D(o,"PATH")||"").split(";")];for(let l of i)for(let h of s){let u=P.resolve(t,l.replace(/^"|"$/g,""),e+h);try{if(oe.statSync(u).isFile())return u}catch{}}}function ie(e,o,t){if(process.platform!=="win32")return $.spawn(e,o,t);let n=t.env||process.env,r=se(e,n,t.cwd||process.cwd());if(r&&/\.(?:exe|com)$/i.test(r))return $.spawn(r,o,t);let s=/\.(?:bat|cmd)$/i.test(r||e),i=[_(P.normalize(r||e))];for(let h of o)i.push(_(ne(h),s?2:1));let l=i.join(" ");return $.spawn(D(n,"COMSPEC")||"cmd.exe",["/d","/v:off","/s","/c",`"${l}"`],{...t,windowsVerbatimArguments:!0})}R.exports=ie});var V=O((Ae,S)=>{var ce=__webpack_require__(9896),ae=__webpack_require__(857),G=__webpack_require__(6928),le=__webpack_require__(5317),fe=F(),k=y(),{optionsFromEnv:ue}=q();function A(){console.log(["Usage: dotenv run [--help] [-q|--quiet] [--debug] [--override] [--fast] [-f|--file <paths>] [--] <command> [args...]","","Run a command with environment variables from a .env file.","Place dotenv options before the command; all following arguments go to the command.","","Options:","  -f, --file <paths>  .env paths, comma-separated or repeated (default: .env)","  -q, --quiet suppress the injected env message","  --debug     enable debug logging","  --override  override existing environment variables","  --fast      use the faster character-scanner parser","","Environment variables (DOTENV_CONFIG_* names remain as fallbacks):","  DOTENV_PATH, DOTENV_ENCODING, DOTENV_QUIET,","  DOTENV_DEBUG, DOTENV_OVERRIDE,","  DOTENV_FAST"].join(`
+`))}function de(e){let o=[],t=!1,n,r,s,i,l=-1;for(let u=0;u<e.length;u++){let f=e[u];if(f==="--"){l=u+1;break}if(f==="--help"||f==="-h")return{help:!0};if(f==="--quiet"||f==="-q"){n=!0;continue}if(f==="--debug"){r=!0;continue}if(f==="--override"){s=!0;continue}if(f==="--fast"){i=!0;continue}if(f==="-f"||f==="--file"||f.startsWith("-f=")||f.startsWith("--file=")){let c=f.indexOf("="),a=c===-1?f:f.slice(0,c),d=c===-1?e[++u]:f.slice(c+1);if(!d||d==="--")return{error:`${a} requires a path`};let p=d.split(",").map(m=>m.trim()).filter(Boolean);if(p.length===0)return{error:`${a} requires a path`};o.push(...p),t=!0;continue}if(f.startsWith("-"))return{error:`unknown option: ${f}`};l=u;break}let h=l===-1?[]:e.slice(l);return{paths:o,pathSet:t,quiet:n,debug:r,override:s,fast:i,command:h}}function pe(e){return e[0]==="~"?G.join(ae.homedir(),e.slice(1)):e}function he(e){let o=ue(),t={encoding:o.encoding||"utf8",quiet:o.quiet===!0,debug:o.debug===!0,override:o.override===!0,fast:o.fast===!0,paths:[".env"],defaultPath:!0};return o.path!=null&&(t.paths=[o.path],t.defaultPath=!1),e.pathSet&&(t.paths=e.paths,t.defaultPath=!1),e.quiet!=null&&(t.quiet=e.quiet),e.debug!=null&&(t.debug=e.debug),e.override!=null&&(t.override=e.override),e.fast!=null&&(t.fast=e.fast),t}function ge(e){let o={},t=[],n={override:e.override,debug:e.debug};for(let s of e.paths){let i=G.resolve(process.cwd(),pe(s));try{let l=k.parse(ce.readFileSync(i,{encoding:e.encoding}),{fast:e.fast});k.populate(o,l,n),t.push(s)}catch(l){if(e.debug&&console.log(`\u2506 failed to load ${s} ${l.message}`),!(e.defaultPath&&l.code==="ENOENT"))throw l}}return{injected:k.populate(process.env,o,n),loadedPaths:t}}function U(e){let o=e[0];if(o==="--help"||o==="-h"){A();return}if(o!=="run"){A(),process.exitCode=1;return}let t=de(e.slice(1));if(t.help){A();return}if(t.error){console.error(`dotenv: ${t.error}`),A(),process.exitCode=1;return}if(t.command.length===0){A(),process.exitCode=1;return}let n=he(t);try{let c=ge(n);if(!n.quiet){let a=`\u25C7 injected env (${Object.keys(c.injected).length})`;c.loadedPaths.length>0&&(a+=` from ${c.loadedPaths.join(", ")}`),console.error(a)}}catch(c){console.error(`dotenv: ${c.message}`),process.exitCode=1;return}let r=!!process.stdin.isTTY,s=process.platform!=="win32"&&!r,i=fe(t.command[0],t.command.slice(1),{stdio:"inherit",detached:s}),l=new Map,h=0;function u(c){if(!(!i.pid||i.exitCode!==null||i.signalCode!==null)){if(process.platform==="win32"){le.spawnSync("taskkill",["/pid",String(i.pid),"/T","/F"],{stdio:"ignore"});return}try{process.kill(s?-i.pid:i.pid,c)}catch(a){if(a.code!=="ESRCH")throw a}}}function f(){for(let[c,a]of l)process.removeListener(c,a)}for(let c of["SIGINT","SIGTERM","SIGHUP","SIGQUIT"]){let a=()=>{if(c==="SIGINT"){if(h++,r&&process.platform!=="win32"&&h===1)return;if(h>1){u(h===2?"SIGTERM":"SIGKILL");return}}u(c)};l.set(c,a),process.on(c,a)}i.on("error",function(c){f(),console.error(`dotenv: ${c.message}`),process.exitCode=1}),i.on("exit",function(c,a){f(),typeof c=="number"?process.exit(c):(setInterval(()=>{},1e3),process.kill(process.pid,a))})}S.exports=U;__webpack_require__.c[__webpack_require__.s]===S&&U(process.argv.slice(2))});var E=y(),ve=V();module.exports=E;module.exports.config=E.config;module.exports.configDotenv=E.configDotenv;module.exports.parse=E.parse;module.exports.populate=E.populate;__webpack_require__.c[__webpack_require__.s]===module&&ve(process.argv.slice(2));
+
+
+},
+
+});
+// The module cache
+var __webpack_module_cache__ = {};
+
+// The require function
+function __webpack_require__(moduleId) {
+
+// Check if module is in cache
+var cachedModule = __webpack_module_cache__[moduleId];
+if (cachedModule !== undefined) {
+return cachedModule.exports;
+}
+// Create a new module (and put it into the cache)
+var module = (__webpack_module_cache__[moduleId] = {
+exports: {}
+});
+// Execute the module function
+__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+// Return the exports of the module
+return module.exports;
+
+}
+
+// expose the module cache
+__webpack_require__.c = __webpack_module_cache__;
+
+// webpack/runtime/node_module_decorator
+(() => {
+__webpack_require__.nmd = (module) => {
+  module.paths = [];
+  if (!module.children) module.children = [];
+  return module;
+};
+})();
+// module cache are used so entry inlining is disabled
+// startup
+// Load entry module and return exports
+var __webpack_exports__ = __webpack_require__(__webpack_require__.s = 4072);
