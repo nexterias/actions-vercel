@@ -43,7 +43,7 @@ jobs:
           cache: "pnpm"
           node-version: 24
 
-      - run: pnpm i --frozen-lock
+      - run: pnpm i --frozen-lockfile
 
       - run: pnpm lint
 
