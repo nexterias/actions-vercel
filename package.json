@@ -18,8 +18,8 @@
     "dotenv": "^18.0.2"
   },
   "devDependencies": {
-    "@rspack/cli": "2.2.6",
-    "@rspack/core": "2.2.6",
+    "@rspack/cli": "2.2.7",
+    "@rspack/core": "2.2.7",
     "@types/node": "24.13.6",
     "lefthook": "2.1.14",
     "license-webpack-plugin": "4.0.2",
