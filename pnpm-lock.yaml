@@ -176,7 +176,7 @@ importers:
         specifier: ^9.1.1
         version: 9.1.1
       dotenv:
-        specifier: ^18.0.3
+        specifier: ^18.0.4
         version: 18.0.4
     devDependencies:
       '@rspack/cli':
