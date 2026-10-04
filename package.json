@@ -21,7 +21,7 @@
     "@rspack/cli": "2.2.8",
     "@rspack/core": "2.2.8",
     "@types/node": "24.19.0",
-    "lefthook": "2.1.14",
+    "lefthook": "2.1.16",
     "license-webpack-plugin": "4.0.2",
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0",
