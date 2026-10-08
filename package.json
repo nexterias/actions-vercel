@@ -23,7 +23,7 @@
     "@types/node": "24.19.1",
     "lefthook": "2.1.17",
     "license-webpack-plugin": "4.0.2",
-    "oxfmt": "0.70.0",
+    "oxfmt": "0.72.0",
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2003",
     "typescript": "7.0.2"
