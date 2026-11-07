@@ -41,7 +41,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           cache: "pnpm"
-          node-version: 24
+          node-version: 26
 
       - run: pnpm i --frozen-lockfile
 
@@ -84,7 +84,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           cache: "pnpm"
-          node-version: 24
+          node-version: 26
 
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
